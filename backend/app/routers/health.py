@@ -1,3 +1,5 @@
+import asyncio
+
 from fastapi import APIRouter
 from redis.asyncio import from_url as redis_from_url
 from sqlalchemy import text
@@ -15,18 +17,22 @@ async def health_check():
     db_status = "disconnected"
     redis_status = "disconnected"
 
+    # DB check with 3s timeout
     try:
-        async with engine.connect() as conn:
-            await conn.execute(text("SELECT 1"))
-        db_status = "connected"
+        async with asyncio.timeout(3):
+            async with engine.connect() as conn:
+                await conn.execute(text("SELECT 1"))
+            db_status = "connected"
     except Exception:
         pass
 
+    # Redis check with 3s timeout
     try:
-        r = redis_from_url(settings.redis_url)
-        await r.ping()
-        await r.aclose()
-        redis_status = "connected"
+        async with asyncio.timeout(3):
+            r = redis_from_url(settings.redis_url)
+            await r.ping()
+            await r.aclose()
+            redis_status = "connected"
     except Exception:
         pass
 
