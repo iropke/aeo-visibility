@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AEO Visibility Report</title>
+</head>
+<body style="margin:0;padding:0;background:#f4f5f7;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f4f5f7;padding:40px 20px;">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="600" cellspacing="0" cellpadding="0" style="background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.06);">
+
+          <!-- Header -->
+          <tr>
+            <td style="background:linear-gradient(135deg,#153430,#0b1f1c);padding:32px 40px;text-align:center;">
+              <h1 style="margin:0;color:#ffffff;font-size:24px;font-weight:700;letter-spacing:-0.02em;">
+                AEO Visibility Report
+              </h1>
+              <p style="margin:8px 0 0;color:rgba(255,255,255,0.7);font-size:14px;">
+                {{ domain }}
+              </p>
+            </td>
+          </tr>
+
+          <!-- Overall Score -->
+          <tr>
+            <td style="padding:32px 40px;text-align:center;">
+              <div style="display:inline-block;width:120px;height:120px;border-radius:50%;background:{{ grade_color }};line-height:120px;text-align:center;">
+                <span style="color:#ffffff;font-size:42px;font-weight:700;">{{ overall_score }}</span>
+              </div>
+              <p style="margin:12px 0 0;font-size:20px;font-weight:700;color:#232329;">
+                Grade: <span style="color:{{ grade_color }};">{{ grade }}</span>
+              </p>
+              <p style="margin:8px 0 0;color:#68687b;font-size:14px;line-height:1.6;">
+                {{ summary }}
+              </p>
+            </td>
+          </tr>
+
+          <!-- Category Scores -->
+          <tr>
+            <td style="padding:0 40px 24px;">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
+                {% for name, score_val in [("Technical", technical_score), ("Structured Data", structured_score), ("Content Quality", content_score), ("Authority", authority_score), ("AI Visibility", visibility_score)] %}
+                <tr>
+                  <td style="padding:10px 0;">
+                    <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td style="font-size:13px;font-weight:600;color:#232329;padding-bottom:4px;">{{ name }}</td>
+                        <td style="font-size:13px;font-weight:700;color:#5eb6b2;text-align:right;padding-bottom:4px;">{{ score_val }}/100</td>
+                      </tr>
+                      <tr>
+                        <td colspan="2">
+                          <div style="background:#e8e8ec;border-radius:999px;height:8px;overflow:hidden;">
+                            <div style="background:linear-gradient(90deg,#5eb6b2,#22908b);width:{{ score_val }}%;height:100%;border-radius:999px;"></div>
+                          </div>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                {% endfor %}
+              </table>
+            </td>
+          </tr>
+
+          <!-- Recommendations -->
+          {% if recommendations %}
+          <tr>
+            <td style="padding:0 40px 32px;">
+              <h2 style="margin:0 0 16px;font-size:18px;font-weight:700;color:#232329;">
+                Top Recommendations
+              </h2>
+              {% for rec in recommendations[:5] %}
+              <div style="padding:12px 16px;margin-bottom:8px;background:#f8f9fa;border-radius:10px;border-left:3px solid {% if rec.priority == 'high' %}#e74c3c{% elif rec.priority == 'medium' %}#e6a817{% else %}#5eb6b2{% endif %};">
+                <p style="margin:0;font-size:14px;font-weight:600;color:#232329;">{{ rec.title }}</p>
+                <p style="margin:4px 0 0;font-size:13px;color:#68687b;line-height:1.5;">{{ rec.description }}</p>
+              </div>
+              {% endfor %}
+            </td>
+          </tr>
+          {% endif %}
+
+          <!-- CTA -->
+          <tr>
+            <td style="padding:0 40px 32px;text-align:center;">
+              <a href="{{ frontend_url }}/en/result/{{ analysis_id }}"
+                 style="display:inline-block;padding:14px 32px;background:#5eb6b2;color:#ffffff;text-decoration:none;border-radius:999px;font-size:14px;font-weight:600;">
+                View Full Report
+              </a>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="padding:24px 40px;background:#f8f9fa;text-align:center;border-top:1px solid #e8e8ec;">
+              <p style="margin:0;font-size:12px;color:#a1a1af;">
+                AEO Visibility by Searchless &mdash; Powered by AI
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

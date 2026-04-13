@@ -1,0 +1,68 @@
+{
+  "site_title": "AEO Visibility Diagnostic",
+  "site_description": "Analyze how visible your website is in AI search engines",
+
+  "hero_eyebrow": "AI VISIBILITY DIAGNOSTIC",
+  "hero_title": "Is Your Website\nVisible to AI?",
+  "hero_description": "Enter your website URL to discover how well AI search engines like ChatGPT, Claude, and Google AI can find and reference your content.",
+
+  "input_placeholder": "Enter your website URL (e.g., example.com)",
+  "input_button": "Analyze",
+  "input_analyzing": "Analyzing...",
+  "input_error_empty": "Please enter a URL",
+  "input_error_invalid": "Please enter a valid URL",
+
+  "loading_title": "Analyzing Your Website",
+  "loading_subtitle": "We're examining your site across 5 key dimensions",
+  "step_technical": "Technical Foundation",
+  "step_structured": "Structured Data",
+  "step_content": "Content Quality",
+  "step_authority": "Authority Signals",
+  "step_visibility": "AI Visibility",
+
+  "result_title": "Your AEO Score",
+  "result_subtitle": "Here's how your site performs in AI search environments",
+
+  "cat_technical": "Technical",
+  "cat_structured": "Structured Data",
+  "cat_content": "Content Quality",
+  "cat_authority": "Authority",
+  "cat_visibility": "AI Visibility",
+
+  "cat_desc_technical": "Crawlability, speed, SSL, and mobile readiness",
+  "cat_desc_structured": "Schema markup, meta tags, and heading structure",
+  "cat_desc_content": "Content depth, readability, and freshness",
+  "cat_desc_authority": "Domain trust, social presence, and security",
+  "cat_desc_visibility": "Actual AI engine mentions and citations",
+
+  "recommendations_title": "Recommendations",
+  "recommendations_subtitle": "Key improvements to boost your AI visibility",
+
+  "priority_high": "High Priority",
+  "priority_medium": "Medium",
+  "priority_low": "Low",
+
+  "email_cta": "Get Full Report via Email",
+  "email_title": "Receive Your Detailed Report",
+  "email_description": "We'll send a comprehensive analysis with actionable steps to improve your AEO score.",
+  "email_placeholder": "Enter your email address",
+  "email_submit": "Send Report",
+  "email_sending": "Sending...",
+  "email_success": "Report sent! Check your inbox.",
+  "email_error": "Failed to send. Please try again.",
+
+  "grade_a": "Excellent",
+  "grade_b": "Good",
+  "grade_c": "Average",
+  "grade_d": "Below Average",
+  "grade_f": "Needs Work",
+
+  "footer_powered": "Powered by Searchless",
+  "footer_privacy": "Privacy Policy",
+
+  "error_title": "Analysis Failed",
+  "error_description": "Something went wrong while analyzing your website. Please try again.",
+  "error_retry": "Try Again",
+
+  "new_analysis": "Analyze Another URL"
+}

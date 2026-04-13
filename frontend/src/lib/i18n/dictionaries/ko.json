@@ -1,0 +1,68 @@
+{
+  "site_title": "AEO 가시성 진단",
+  "site_description": "AI 검색 엔진에서 웹사이트가 얼마나 잘 노출되는지 분석합니다",
+
+  "hero_eyebrow": "AI 가시성 진단",
+  "hero_title": "당신의 웹사이트,\nAI에서 보이나요?",
+  "hero_description": "웹사이트 URL을 입력하면 ChatGPT, Claude, Google AI 등의 AI 검색 엔진에서 콘텐츠가 얼마나 잘 검색되고 인용되는지 확인할 수 있습니다.",
+
+  "input_placeholder": "웹사이트 URL을 입력하세요 (예: example.com)",
+  "input_button": "분석하기",
+  "input_analyzing": "분석 중...",
+  "input_error_empty": "URL을 입력해주세요",
+  "input_error_invalid": "올바른 URL을 입력해주세요",
+
+  "loading_title": "웹사이트 분석 중",
+  "loading_subtitle": "5가지 핵심 항목을 기준으로 사이트를 분석하고 있습니다",
+  "step_technical": "기술 기반",
+  "step_structured": "구조화된 데이터",
+  "step_content": "콘텐츠 품질",
+  "step_authority": "권위 신호",
+  "step_visibility": "AI 가시성",
+
+  "result_title": "AEO 점수",
+  "result_subtitle": "AI 검색 환경에서 사이트의 성과를 확인하세요",
+
+  "cat_technical": "기술",
+  "cat_structured": "구조화 데이터",
+  "cat_content": "콘텐츠 품질",
+  "cat_authority": "권위",
+  "cat_visibility": "AI 가시성",
+
+  "cat_desc_technical": "크롤링 가능성, 속도, SSL, 모바일 최적화",
+  "cat_desc_structured": "스키마 마크업, 메타 태그, 헤딩 구조",
+  "cat_desc_content": "콘텐츠 깊이, 가독성, 최신성",
+  "cat_desc_authority": "도메인 신뢰도, 소셜 프레즌스, 보안",
+  "cat_desc_visibility": "실제 AI 엔진에서의 언급 및 인용",
+
+  "recommendations_title": "개선 권장사항",
+  "recommendations_subtitle": "AI 가시성을 높이기 위한 핵심 개선 항목",
+
+  "priority_high": "높은 우선순위",
+  "priority_medium": "중간",
+  "priority_low": "낮음",
+
+  "email_cta": "이메일로 상세 리포트 받기",
+  "email_title": "상세 분석 리포트 받기",
+  "email_description": "AEO 점수를 향상시키기 위한 구체적인 실행 방안이 포함된 종합 분석 리포트를 보내드립니다.",
+  "email_placeholder": "이메일 주소를 입력하세요",
+  "email_submit": "리포트 받기",
+  "email_sending": "전송 중...",
+  "email_success": "리포트가 전송되었습니다! 이메일을 확인해주세요.",
+  "email_error": "전송에 실패했습니다. 다시 시도해주세요.",
+
+  "grade_a": "우수",
+  "grade_b": "양호",
+  "grade_c": "보통",
+  "grade_d": "미흡",
+  "grade_f": "개선 필요",
+
+  "footer_powered": "Powered by Searchless",
+  "footer_privacy": "개인정보처리방침",
+
+  "error_title": "분석 실패",
+  "error_description": "웹사이트 분석 중 오류가 발생했습니다. 다시 시도해주세요.",
+  "error_retry": "다시 시도",
+
+  "new_analysis": "다른 URL 분석하기"
+}
