@@ -4,7 +4,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models.tables import AnalysisResult
-from app.scoring import technical, structured, content, authority, visibility
+from app.scoring.v1 import technical, structured, content, authority, visibility
 from app.services.cache import set_cached_result
 from app.services.crawler import crawl_site
 
