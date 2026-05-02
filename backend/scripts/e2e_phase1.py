@@ -7,6 +7,8 @@ Validates:
   4. POST /api/workspaces ALSO triggers start_trial_for_new_workspace (subscriptions row)
   5. GET /api/workspaces returns the new workspace
   6. RLS isolation: a second user does NOT see the first user's workspace
+  7. Sites CRUD enforcement on free plan (max_sites=1, competitors_per_site=0,
+     soft delete + 30-day cooldown)
 
 Run from backend/ with .venv active:
     python scripts/e2e_phase1.py
@@ -209,6 +211,75 @@ async def main() -> None:
             if r.status_code not in (403, 404):
                 fail(f"expected 403/404 for cross-user fetch, got {r.status_code} {r.text}")
             ok(f"cross-user fetch blocked: {r.status_code}")
+
+            banner("Step 9b: User A creates an own site (free plan max_sites=1)")
+            r = await client.post(
+                f"{BACKEND_URL}/api/workspaces/{ws_a['id']}/sites",
+                headers={"Authorization": f"Bearer {token_a}"},
+                json={"url": "https://example.com", "type": "own"},
+            )
+            if r.status_code != 201:
+                fail(f"create site: {r.status_code} {r.text}")
+            site_a = r.json()
+            ok(f"own site created: id={site_a['id']}, domain={site_a['domain']}")
+
+            banner("Step 9c: 2nd own site blocked by free plan max_sites=1")
+            r = await client.post(
+                f"{BACKEND_URL}/api/workspaces/{ws_a['id']}/sites",
+                headers={"Authorization": f"Bearer {token_a}"},
+                json={"url": "https://other.com", "type": "own"},
+            )
+            if r.status_code != 403:
+                fail(f"expected 403 for 2nd own site, got {r.status_code} {r.text}")
+            ok("2nd own site blocked by max_sites limit")
+
+            banner("Step 9d: Competitor site blocked by free plan competitors_per_site=0")
+            r = await client.post(
+                f"{BACKEND_URL}/api/workspaces/{ws_a['id']}/sites",
+                headers={"Authorization": f"Bearer {token_a}"},
+                json={"url": "https://competitor.com", "type": "competitor"},
+            )
+            if r.status_code != 403:
+                fail(f"expected 403 for competitor on free plan, got {r.status_code} {r.text}")
+            ok("competitor site blocked by competitors_per_site=0 limit")
+
+            banner("Step 9e: List sites returns 1 active site")
+            r = await client.get(
+                f"{BACKEND_URL}/api/workspaces/{ws_a['id']}/sites",
+                headers={"Authorization": f"Bearer {token_a}"},
+            )
+            if r.status_code != 200:
+                fail(f"list sites: {r.status_code} {r.text}")
+            sites_list = r.json()
+            if len(sites_list) != 1 or sites_list[0]["id"] != site_a["id"]:
+                fail(f"unexpected site list: {sites_list}")
+            ok("list sites returns 1 active site")
+
+            banner("Step 9f: Soft delete site (deleted_at + delete_cooldown_until set)")
+            r = await client.delete(
+                f"{BACKEND_URL}/api/workspaces/{ws_a['id']}/sites/{site_a['id']}",
+                headers={"Authorization": f"Bearer {token_a}"},
+            )
+            if r.status_code != 204:
+                fail(f"delete site: {r.status_code} {r.text}")
+            r = await client.get(
+                f"{SUPABASE_URL}/rest/v1/sites?id=eq.{site_a['id']}",
+                headers={"apikey": SERVICE_ROLE, "Authorization": f"Bearer {SERVICE_ROLE}"},
+            )
+            rows = r.json()
+            if not rows or not rows[0].get("deleted_at") or not rows[0].get("delete_cooldown_until"):
+                fail(f"expected soft-deleted row with deleted_at + delete_cooldown_until, got {rows}")
+            ok(f"site soft-deleted: deleted_at set, cooldown_until={rows[0]['delete_cooldown_until']}")
+
+            banner("Step 9g: Re-creating same domain blocked by 30-day cooldown (409)")
+            r = await client.post(
+                f"{BACKEND_URL}/api/workspaces/{ws_a['id']}/sites",
+                headers={"Authorization": f"Bearer {token_a}"},
+                json={"url": "https://example.com", "type": "own"},
+            )
+            if r.status_code != 409:
+                fail(f"expected 409 cooldown, got {r.status_code} {r.text}")
+            ok("re-creation of same domain blocked (30-day cooldown)")
 
             banner("Step 10: User A deletes the workspace")
             r = await client.delete(

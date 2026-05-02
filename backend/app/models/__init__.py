@@ -7,6 +7,7 @@
 from app.models.base import Base
 from app.models.plan import Plan
 from app.models.profile import Profile
+from app.models.site import Site, SiteType
 from app.models.subscription import Subscription, SubscriptionStatus
 from app.models.workspace import Workspace, WorkspaceMember, WorkspaceRole
 
@@ -14,6 +15,8 @@ __all__ = [
     "Base",
     "Plan",
     "Profile",
+    "Site",
+    "SiteType",
     "Subscription",
     "SubscriptionStatus",
     "Workspace",

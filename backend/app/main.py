@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import get_settings
-from app.routers import analysis, health, leads, members, workspaces
+from app.routers import analysis, health, leads, members, sites, workspaces
 
 
 @asynccontextmanager
@@ -38,6 +38,7 @@ def create_app() -> FastAPI:
     # v2 라우터 (prefix는 라우터 자체에 포함됨).
     app.include_router(workspaces.router)
     app.include_router(members.router)
+    app.include_router(sites.router)
 
     return app
 
