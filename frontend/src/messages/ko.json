@@ -1,0 +1,77 @@
+{
+  "common": {
+    "site_title": "AEO Visibility",
+    "site_description": "AI 답변 엔진에서 사이트 가시성을 측정합니다",
+    "loading": "불러오는 중…",
+    "error": "오류가 발생했습니다",
+    "save": "저장",
+    "cancel": "취소",
+    "delete": "삭제",
+    "back": "뒤로"
+  },
+  "auth": {
+    "magic_link_form": {
+      "email_label": "이메일 주소",
+      "email_placeholder": "you@example.com",
+      "submit": "매직 링크 받기",
+      "checking": "보내는 중…",
+      "errors": {
+        "invalid_email": "올바른 이메일 주소를 입력해주세요",
+        "send_failed": "링크 전송에 실패했습니다. 다시 시도해주세요."
+      }
+    },
+    "signup": {
+      "title": "회원가입",
+      "subtitle": "이메일로 매직 링크를 보내드려요. 비밀번호 필요 없음.",
+      "have_account": "이미 계정이 있으신가요?",
+      "login_link": "로그인"
+    },
+    "login": {
+      "title": "로그인",
+      "subtitle": "이메일을 입력하시면 매직 링크를 보내드립니다.",
+      "no_account": "아직 계정이 없으신가요?",
+      "signup_link": "회원가입"
+    },
+    "verify": {
+      "title": "이메일을 확인해주세요",
+      "subtitle": "{email} 으로 매직 링크를 보냈습니다. 이메일의 링크를 클릭해 계속 진행하세요.",
+      "resend": "다시 보내기",
+      "did_not_receive": "받지 못하셨나요? 스팸함을 확인하거나 다른 이메일을 사용해보세요."
+    },
+    "onboarding": {
+      "title": "워크스페이스 만들기",
+      "subtitle": "워크스페이스는 사이트와 분석을 담는 공간입니다.",
+      "name_label": "워크스페이스 이름",
+      "name_placeholder": "Acme 마케팅",
+      "language_label": "기본 언어",
+      "timezone_label": "타임존",
+      "submit": "워크스페이스 만들기",
+      "creating": "만드는 중…"
+    },
+    "callback": {
+      "completing": "로그인 처리 중…",
+      "failed_title": "로그인 실패",
+      "failed_subtitle": "링크가 만료되었을 수 있습니다. 새 링크를 요청해주세요."
+    }
+  },
+  "app": {
+    "nav": {
+      "dashboard": "대시보드",
+      "sites": "사이트",
+      "reports": "리포트",
+      "qa": "Q&A",
+      "settings": "설정",
+      "logout": "로그아웃"
+    },
+    "dashboard": {
+      "title": "대시보드",
+      "no_workspace": "아직 워크스페이스가 없습니다.",
+      "create_workspace": "첫 워크스페이스 만들기",
+      "your_workspaces": "내 워크스페이스",
+      "role_owner": "Owner",
+      "role_admin": "Admin",
+      "role_member": "Member",
+      "role_viewer": "Viewer"
+    }
+  }
+}

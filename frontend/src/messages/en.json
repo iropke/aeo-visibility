@@ -1,0 +1,77 @@
+{
+  "common": {
+    "site_title": "AEO Visibility",
+    "site_description": "Measure how visible your site is to AI answer engines",
+    "loading": "Loading…",
+    "error": "Something went wrong",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "back": "Back"
+  },
+  "auth": {
+    "magic_link_form": {
+      "email_label": "Email address",
+      "email_placeholder": "you@example.com",
+      "submit": "Send magic link",
+      "checking": "Sending…",
+      "errors": {
+        "invalid_email": "Please enter a valid email address",
+        "send_failed": "Could not send the link. Please try again."
+      }
+    },
+    "signup": {
+      "title": "Create your account",
+      "subtitle": "We'll email you a magic link — no password required.",
+      "have_account": "Already have an account?",
+      "login_link": "Sign in"
+    },
+    "login": {
+      "title": "Sign in",
+      "subtitle": "Enter your email and we'll send a magic link.",
+      "no_account": "Don't have an account?",
+      "signup_link": "Create one"
+    },
+    "verify": {
+      "title": "Check your email",
+      "subtitle": "We sent a magic link to {email}. Click the link in the email to continue.",
+      "resend": "Resend the link",
+      "did_not_receive": "Didn't receive it? Check spam, or use a different email."
+    },
+    "onboarding": {
+      "title": "Set up your workspace",
+      "subtitle": "Workspaces hold your sites and analyses.",
+      "name_label": "Workspace name",
+      "name_placeholder": "Acme Marketing",
+      "language_label": "Primary language",
+      "timezone_label": "Timezone",
+      "submit": "Create workspace",
+      "creating": "Creating…"
+    },
+    "callback": {
+      "completing": "Signing you in…",
+      "failed_title": "Sign-in failed",
+      "failed_subtitle": "The link may have expired. Try requesting a new one."
+    }
+  },
+  "app": {
+    "nav": {
+      "dashboard": "Dashboard",
+      "sites": "Sites",
+      "reports": "Reports",
+      "qa": "Q&A",
+      "settings": "Settings",
+      "logout": "Sign out"
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "no_workspace": "You don't have a workspace yet.",
+      "create_workspace": "Create your first workspace",
+      "your_workspaces": "Your workspaces",
+      "role_owner": "Owner",
+      "role_admin": "Admin",
+      "role_member": "Member",
+      "role_viewer": "Viewer"
+    }
+  }
+}

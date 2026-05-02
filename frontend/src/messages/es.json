@@ -1,0 +1,77 @@
+{
+  "common": {
+    "site_title": "AEO Visibility",
+    "site_description": "Mide la visibilidad de tu sitio en los motores de respuesta de IA",
+    "loading": "Cargando…",
+    "error": "Algo salió mal",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "back": "Atrás"
+  },
+  "auth": {
+    "magic_link_form": {
+      "email_label": "Correo electrónico",
+      "email_placeholder": "tu@ejemplo.com",
+      "submit": "Enviar enlace mágico",
+      "checking": "Enviando…",
+      "errors": {
+        "invalid_email": "Por favor, introduce un correo válido",
+        "send_failed": "No se pudo enviar el enlace. Inténtalo de nuevo."
+      }
+    },
+    "signup": {
+      "title": "Crea tu cuenta",
+      "subtitle": "Te enviaremos un enlace mágico por correo — sin contraseñas.",
+      "have_account": "¿Ya tienes cuenta?",
+      "login_link": "Inicia sesión"
+    },
+    "login": {
+      "title": "Inicia sesión",
+      "subtitle": "Introduce tu correo y te enviaremos un enlace mágico.",
+      "no_account": "¿No tienes cuenta?",
+      "signup_link": "Crea una"
+    },
+    "verify": {
+      "title": "Revisa tu correo",
+      "subtitle": "Enviamos un enlace mágico a {email}. Haz clic en el enlace del correo para continuar.",
+      "resend": "Reenviar enlace",
+      "did_not_receive": "¿No lo recibiste? Revisa spam o usa otro correo."
+    },
+    "onboarding": {
+      "title": "Configura tu workspace",
+      "subtitle": "Los workspaces contienen tus sitios y análisis.",
+      "name_label": "Nombre del workspace",
+      "name_placeholder": "Acme Marketing",
+      "language_label": "Idioma principal",
+      "timezone_label": "Zona horaria",
+      "submit": "Crear workspace",
+      "creating": "Creando…"
+    },
+    "callback": {
+      "completing": "Iniciando sesión…",
+      "failed_title": "Error al iniciar sesión",
+      "failed_subtitle": "El enlace puede haber expirado. Solicita uno nuevo."
+    }
+  },
+  "app": {
+    "nav": {
+      "dashboard": "Panel",
+      "sites": "Sitios",
+      "reports": "Informes",
+      "qa": "P&R",
+      "settings": "Configuración",
+      "logout": "Cerrar sesión"
+    },
+    "dashboard": {
+      "title": "Panel",
+      "no_workspace": "Aún no tienes workspace.",
+      "create_workspace": "Crea tu primer workspace",
+      "your_workspaces": "Tus workspaces",
+      "role_owner": "Owner",
+      "role_admin": "Admin",
+      "role_member": "Member",
+      "role_viewer": "Viewer"
+    }
+  }
+}
