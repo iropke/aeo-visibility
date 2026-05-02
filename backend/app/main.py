@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import get_settings
-from app.routers import analysis, health, leads
+from app.routers import analysis, health, leads, members, workspaces
 
 
 @asynccontextmanager
@@ -32,8 +32,12 @@ def create_app() -> FastAPI:
     )
 
     app.include_router(health.router, prefix="/api", tags=["health"])
+    # v1 (legacy MVP) — v2 마이그레이션 002 적용 후 런타임 실패. 이후 제거 예정.
     app.include_router(analysis.router, prefix="/api", tags=["analysis"])
     app.include_router(leads.router, prefix="/api", tags=["leads"])
+    # v2 라우터 (prefix는 라우터 자체에 포함됨).
+    app.include_router(workspaces.router)
+    app.include_router(members.router)
 
     return app
 

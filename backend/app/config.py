@@ -10,6 +10,7 @@ class Settings(BaseSettings):
     supabase_url: str
     supabase_anon_key: str
     supabase_service_role_key: str
+    supabase_jwt_secret: str = ""  # v2 Auth: JWT 검증용. 빈 값이면 인증 의존성에서 명시적 에러.
 
     # Redis (caching)
     redis_url: str
