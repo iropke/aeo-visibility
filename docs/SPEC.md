@@ -316,24 +316,35 @@ CREATE TABLE profiles (
 #### plans (마스터 시드)
 ```sql
 CREATE TABLE plans (
-    id TEXT PRIMARY KEY,  -- 'free' | 'basic' | 'medium' | 'pro' | 'premium'
+    id TEXT PRIMARY KEY,  -- 'free'(7-day trial) | 'basic' | 'pro' | 'business' | 'enterprise'
     name TEXT NOT NULL,
-    price_monthly_usd NUMERIC(10,2) NOT NULL,
+    price_monthly_usd NUMERIC(10,2) NOT NULL,   -- 정가 (list price). 프로모션은 coupons 테이블로 관리.
     price_annual_usd NUMERIC(10,2),
-    max_sites INT NOT NULL,
-    max_competitors INT NOT NULL DEFAULT 0,
+    max_sites INT NOT NULL,                     -- -1 = 무제한
+    max_competitors INT NOT NULL DEFAULT 0,     -- 워크스페이스 합계 한도. -1 = 무제한
     max_members_default INT NOT NULL DEFAULT 1,
-    max_members_hardcap INT NOT NULL DEFAULT 1,
-    custom_analyses_per_month INT NOT NULL DEFAULT 0,
-    timeseries_months INT NOT NULL DEFAULT 0,  -- 0 = 무제한
+    max_members_hardcap INT NOT NULL DEFAULT 1, -- 시트 add-on 포함 상한. -1 = 무제한
+    custom_analyses_per_month INT NOT NULL DEFAULT 0,  -- -1 = 무제한
+    timeseries_months INT NOT NULL DEFAULT 0,   -- 0 = 그래프 미제공, -1 = 무제한
     csv_export BOOLEAN NOT NULL DEFAULT FALSE,
     competitor_comparison BOOLEAN NOT NULL DEFAULT FALSE,
     competitor_trend_graph BOOLEAN NOT NULL DEFAULT FALSE,
+    default_ai_engines INT NOT NULL DEFAULT 3,         -- -1 = 모든 엔진 (Enterprise)
+    competitors_per_site INT NOT NULL DEFAULT 0,       -- 자사 사이트당 경쟁사 한도
+    industry_benchmark BOOLEAN NOT NULL DEFAULT FALSE, -- Business 이상
+    audit_log_days INT NOT NULL DEFAULT 0,             -- 0 = 미제공, -1 = 무제한
+    data_retention_years INT NOT NULL DEFAULT 5,       -- 분석 결과 활성 보관 (만료 후 1년 grace 별도)
+    support_tier TEXT NOT NULL DEFAULT 'self'
+        CHECK (support_tier IN ('self','email','email_chat','email_chat_sla4h','dedicated')),
+    is_enterprise BOOLEAN NOT NULL DEFAULT FALSE,      -- annual commit 강제, wire transfer 허용
     stripe_price_id_monthly TEXT,
     stripe_price_id_annual TEXT,
     is_active BOOLEAN NOT NULL DEFAULT TRUE
 );
 ```
+
+> `plans.price_*_usd`는 **정가(list price)** 만 보관. 시간 한정 프로모션(예: Cyber Monday 30% off)은
+> §14 `coupons` 테이블의 `auto_apply` 모드로 관리되며, pricing 페이지/Checkout에서 동적으로 차감된다.
 
 #### workspaces
 ```sql
@@ -415,7 +426,27 @@ CREATE INDEX idx_subscriptions_status ON subscriptions(status);
 
 #### subscription_addons
 ```sql
-CREATE TYPE addon_type AS ENUM ('extra_member', 'extra_site', 'extra_competitor');
+-- §4-1 매트릭스의 모든 add-on 종류를 cover.
+-- recurring(월구독): seat / viewer_seat / own_site / competitor_site / ai_engine /
+--                    custom_pack_basic / custom_pack_pro / looker_studio /
+--                    api_access / extra_workspace / data_retention_extension
+-- one-time(1회 구매): pdf_branding
+-- on-demand(횟수 차감): payg_custom (사용 시 INSERT 1건/회)
+CREATE TYPE addon_type AS ENUM (
+    'seat',                       -- 멤버 시트 추가 ($2.99/u/월, 전 유료 티어)
+    'viewer_seat',                -- 외부 컨설턴트 Viewer 시트 ($1.99/u/월, Pro+)
+    'own_site',                   -- 자사 사이트 추가 ($9.99/site/월, 전 유료 티어)
+    'competitor_site',            -- 경쟁사 사이트 추가 ($39.99/site/월, Pro+)
+    'ai_engine',                  -- AI 엔진 추가 ($19.99/engine/월, 전 유료 티어)
+    'custom_pack_basic',          -- Custom 재분석 +5회/월 ($4.99, Basic·Pro)
+    'custom_pack_pro',            -- Custom 재분석 +20회/월 ($14.99, Pro·Business)
+    'payg_custom',                -- Custom 재분석 단건 PAYG ($2.99/회)
+    'looker_studio',              -- Looker Studio Connector ($19.99/월, Pro+)
+    'api_access',                 -- API 액세스 ($99/월, Pro+)
+    'extra_workspace',            -- 추가 워크스페이스 ($99/월/ws, Pro+)
+    'data_retention_extension',   -- 데이터 보관 5→7년 ($49/월, Business+)
+    'pdf_branding'                -- PDF 브랜딩 커스텀 ($19.99 1회, Enterprise 무료)
+);
 
 CREATE TABLE subscription_addons (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -423,10 +454,20 @@ CREATE TABLE subscription_addons (
     addon_type addon_type NOT NULL,
     quantity INT NOT NULL DEFAULT 1 CHECK (quantity > 0),
     unit_price_usd NUMERIC(10,2) NOT NULL,
-    stripe_subscription_item_id TEXT,
+    is_recurring BOOLEAN NOT NULL DEFAULT TRUE,  -- false = pdf_branding 같은 1회성
+    stripe_subscription_item_id TEXT,            -- recurring: Stripe Subscription Item
+    stripe_invoice_item_id TEXT,                 -- one-time: Stripe Invoice Item
+    activated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    canceled_at TIMESTAMPTZ,                     -- recurring 해지 시점 (Stripe와 동기화)
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
+
+CREATE INDEX idx_addons_subscription ON subscription_addons(subscription_id)
+    WHERE canceled_at IS NULL;
 ```
+
+> `payg_custom`은 1건 사용 시마다 row INSERT (quantity=1, is_recurring=false). 월간 청구 시
+> 해당 워크스페이스의 미청구 PAYG row를 합산해 Stripe Invoice Item으로 청구.
 
 #### sites
 ```sql
@@ -601,9 +642,12 @@ CREATE TYPE coupon_applies_to AS ENUM ('first_payment', 'all_renewals', 'first_n
 
 CREATE TABLE coupons (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    code TEXT UNIQUE,  -- NULL for blind coupons
+    code TEXT UNIQUE,  -- NULL for blind / auto_apply 쿠폰 (코드 입력 불필요)
     is_blind BOOLEAN NOT NULL DEFAULT FALSE,
-    target_plans TEXT[] NOT NULL,  -- ['basic', 'medium', ...] or ['all']
+    auto_apply BOOLEAN NOT NULL DEFAULT FALSE,  -- TRUE = pricing/Checkout에서 자동 적용
+    target_plans TEXT[] NOT NULL,                -- ['basic','pro','business','enterprise'] or ['all']
+    target_billing_cycles TEXT[] NOT NULL DEFAULT ARRAY['monthly','annual']::TEXT[],
+        -- ['monthly'] / ['annual'] / ['monthly','annual']
     discount_type coupon_discount_type NOT NULL,
     discount_value NUMERIC(10,2) NOT NULL,
     valid_from TIMESTAMPTZ NOT NULL,
@@ -622,12 +666,25 @@ CREATE TABLE coupons (
     -- 메타
     is_active BOOLEAN NOT NULL DEFAULT TRUE,
     created_by UUID NOT NULL REFERENCES profiles(id),
-    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    -- auto_apply는 코드 입력 없이 발효되므로 code 충돌 방지를 위해 NULL 강제.
+    CHECK ((auto_apply = FALSE) OR (code IS NULL)),
+    -- 동일 plan/cycle에 동시 active auto_apply 1개로 제한 (운영 가드는 admin UI + 트리거).
+    CHECK ((is_blind = FALSE AND auto_apply = FALSE) = (code IS NOT NULL))
 );
 
 CREATE INDEX idx_coupons_code ON coupons(code) WHERE is_active;
 CREATE INDEX idx_coupons_blind ON coupons(is_blind, is_active) WHERE is_blind;
+CREATE INDEX idx_coupons_auto_apply ON coupons(auto_apply, valid_from, valid_until)
+    WHERE auto_apply AND is_active;
 ```
+
+> **세 가지 쿠폰 모드** (배타적):
+> - **코드형** (`code IS NOT NULL`, `is_blind=false`, `auto_apply=false`) — 사용자가 직접 코드 입력
+> - **블라인드** (`code IS NULL`, `is_blind=true`, `auto_apply=false`) — 사용자별 고유 토큰 발송
+> - **자동 적용** (`code IS NULL`, `is_blind=false`, `auto_apply=true`) — 기간 한정 프로모션
+>   (예: Cyber Monday 2026-11-11 ~ 11-30, Pro monthly 30% off). pricing 페이지가 active 프로모션을
+>   조회해 `~~$79.99~~ $55.99` 형태로 노출, Checkout이 Stripe Coupon ID를 자동 attach.
 
 #### coupon_redemptions
 ```sql
@@ -1282,12 +1339,39 @@ wiki_articles UPDATE/INSERT
 - `marketing_consent = false`인 사용자에게는 **이메일 발송 ❌** (in_app만 가능)
 - 트랜잭셔널 이메일에 블라인드 쿠폰 임베드 ❌
 
-### 14-3. Stripe 동기화
+### 14-3. 자동 적용 쿠폰 (스케줄형 프로모션)
+
+**용도**: 코드 입력 없이 기간 한정으로 자동 적용되는 시즌 프로모션. 예: Cyber Monday, 신규 출시 기념 등.
+
+**Admin 패널 입력 필드**:
+- `auto_apply` = TRUE (코드형/블라인드 토글로 모드 분기)
+- `target_plans` (체크박스 다중 선택, 'all' 가능)
+- `target_billing_cycles` (`['monthly']` / `['annual']` / `['monthly','annual']`)
+- `discount_type` / `discount_value` (예: percent / 30)
+- `valid_from` / `valid_until` (예: 2026-11-11 00:00 ~ 2026-11-30 23:59)
+- `max_uses` (총 한도, 옵션) / `max_uses_per_user` (보통 1)
+- `applies_to` (보통 'first_payment')
+
+**적용 흐름**:
+1. Admin이 자동 적용 쿠폰 생성 → Stripe Coupon API 동기화 (코드 없음, 즉 PromotionCode 미생성)
+2. Pricing 페이지 렌더링 시 `coupons WHERE auto_apply AND is_active AND NOW() BETWEEN valid_from AND valid_until` 조회
+   - 매칭 plan/cycle에 대해 정가 옆에 할인가 함께 노출 (예: `~~$79.99~~ **$55.99** Cyber Monday 30% off`)
+   - 만료까지 남은 시간을 카운트다운 표시 (UX 결정)
+3. Checkout Session 생성 시 backend가 active auto_apply 쿠폰을 자동 첨부 (`discounts: [{coupon: stripe_coupon_id}]`)
+4. 결제 완료 → `coupon_redemptions` INSERT (사용자가 코드를 의식하지 않아도 추적 가능)
+
+**가드**:
+- 동일 `plan_id × billing_cycle`에 동시 active 자동 적용 쿠폰은 1개만 허용 (Admin UI에서 차단, DB는 일정 위배 시 admin 경고)
+- §4-4 정책: "연간 할인과 쿠폰 중복 ❌" — 자동 적용 쿠폰도 연간 할인과 중복 불가
+- 코드형/블라인드 쿠폰과 자동 적용이 동시 매칭되는 경우 우선순위: **블라인드(개별 토큰) > 코드(사용자 명시) > auto_apply(기본 적용)** — 사용자에게 가장 큰 할인 1건만 적용
+
+### 14-4. Stripe 동기화
 
 ```
 DB coupon INSERT/UPDATE
   → Stripe Coupon API 호출 (생성)
-  → Stripe PromotionCode API 호출 (코드 발급)
+  → 코드형: Stripe PromotionCode API 호출 (사용자 입력 코드)
+  → auto_apply: PromotionCode 미생성 (Checkout에서 직접 coupon ID attach)
   → coupons.stripe_coupon_id, .stripe_promotion_code_id 저장
 DB coupon DELETE 또는 is_active=false
   → Stripe Coupon delete or PromotionCode active=false

@@ -684,40 +684,47 @@ SUPABASE_URL=
 
 ### 7-2. 마이그레이션 적용 순서
 
+> 실제 적용 번호는 작업 진행 중 청크 분할에 따라 일부 갱신됨. 아래는 현재 시점(2026-05-02)의 정합 순서.
+
 ```
 1. 기존 MVP 마이그레이션 (001_initial_schema.sql) 그대로 유지
-   → v2에서 사용하지 않는 테이블은 002에서 DROP 또는 _legacy_ 접두어 변경
+   → v2에서 사용하지 않는 테이블은 002에서 DROP
 
-2. Phase 1 마이그레이션 (003 ~ 015)
-   - 003_profiles.sql
-   - 004_plans.sql + plans_seed.sql
+2. Phase 1 마이그레이션 (003 ~ 016)
+   ── 청크 A (적용 완료) ──
+   - 002_drop_mvp_tables.sql
+   - 003_profiles.sql                + handle_new_user / set_updated_at
+   - 004_plans.sql                   (구 시드 — 008에서 가격/한도 갱신됨)
    - 005_workspaces.sql
-   - 006_workspace_members.sql + ENUM workspace_role
-   - 007_subscriptions.sql + ENUM subscription_status
-   - 008_sites.sql + ENUM site_type
-   - 009_analysis_results.sql + ENUM analysis_trigger_type
-   - 010_monthly_usage.sql
-   - 011_reports.sql
-   - 012_audit_logs.sql
-   - 013_deletion_grace.sql
-   - 014_rls_policies.sql            ← 모든 테이블 생성 후
-   - 015_pg_cron_setup.sql            ← 마지막
+   - 006_workspace_members.sql       + ENUM workspace_role + add_owner_to_workspace_members
+   - 007_rls_phase1_workspace.sql    (profiles/plans/workspaces/workspace_members RLS)
+   ── 청크 D0 (가격 정책 확정 반영) ──
+   - 008_plans_repricing.sql         컬럼 7개 ADD + 5-tier → 4-tier+trial+enterprise 시드 갱신
+   ── 청크 D 이후 ──
+   - 009_subscriptions.sql           + ENUM subscription_status (trial 자동 시작 포함)
+   - 010_sites.sql                   + ENUM site_type (own/competitor) + 30일 cooldown
+   - 011_analysis_results.sql        + ENUM analysis_trigger_type
+   - 012_monthly_usage.sql           (Custom 카운터: base/basic_pack/pro_pack/payg 분리)
+   - 013_reports.sql
+   - 014_audit_logs.sql
+   - 015_deletion_grace_queue.sql
+   - 016_pg_cron_setup.sql           매월 분석 + 트라이얼 만료 시퀀스
 
-3. Phase 2 마이그레이션 (016 ~ 017)
-   - 016_subscription_addons.sql
-   - 017_workspace_invitations.sql
+3. Phase 2 마이그레이션 (017 ~ 019) — 결제 + 쿠폰
+   - 017_subscription_addons.sql     + ENUM addon_type (13종, SPEC §5-2)
+   - 018_workspace_invitations.sql
+   - 019_coupons.sql + coupon_redemptions.sql  (Phase 4 → Phase 2 당김)
+                                     + auto_apply 모드 (시즌 프로모션)
 
-4. Phase 3 마이그레이션 (018 ~ 019)
-   - 018_pdf_csv_storage_buckets.sql  ← Supabase Storage 정책
+4. Phase 3 마이그레이션
+   - 020_pdf_csv_storage_buckets.sql  ← Supabase Storage 정책
 
-5. Phase 4 마이그레이션 (020 ~ 026)
-   - 020_pgvector_extension.sql       ← CREATE EXTENSION vector
-   - 021_wiki_articles.sql
-   - 022_wiki_embeddings.sql
-   - 023_qa_sessions.sql
-   - 024_qa_messages.sql
-   - 025_coupons.sql
-   - 026_coupon_redemptions.sql
+5. Phase 4 마이그레이션 (Wiki + Q&A 중심, 쿠폰은 Phase 2로 이미 이동됨)
+   - 021_pgvector_extension.sql       ← CREATE EXTENSION vector
+   - 022_wiki_articles.sql
+   - 023_wiki_embeddings.sql
+   - 024_qa_sessions.sql
+   - 025_qa_messages.sql
 ```
 
 ### 7-3. 마이그레이션 작성 규칙
@@ -736,15 +743,51 @@ SUPABASE_URL=
 #### plans_seed.sql
 
 ```sql
--- 가격은 잠정 (시장조사 후 확정)
-INSERT INTO plans (id, name, price_monthly_usd, price_annual_usd, max_sites, max_competitors, max_members_default, max_members_hardcap, custom_analyses_per_month, timeseries_months, csv_export, competitor_comparison, competitor_trend_graph, is_active) VALUES
-('free',    'Free Trial', 0.00,   NULL,    1, 0, 1, 1,   0,  0, false, false, false, true),
-('basic',   'Basic',      7.99,   81.49,   1, 0, 1, 1,   3,  3, false, false, false, true),
-('medium',  'Medium',     23.99,  244.69,  3, 0, 3, 30,  10, 12, false, false, false, true),
-('pro',     'Pro',        59.99,  611.89,  1, 1, 3, 30,  20, 24, true,  true,  false, true),
-('premium', 'Premium',    99.99,  1019.89, 1, 3, 5, 50,  30, 0,  true,  true,  true,  true);
--- 가격 calculation: monthly * 12 * 0.85 (15% annual discount, 잠정)
--- 최종 가격 결정 후 stripe_price_id_* 컬럼에 Stripe Price ID 입력
+-- 2026-05-02 시장조사 결과로 확정. SPEC §4 / reboot-service-concept §1 정합.
+-- -1 = 무제한 표기.
+-- 정가만 보관 — 시즌 프로모션은 §14 coupons 테이블의 auto_apply 모드로 별도 관리.
+INSERT INTO plans (
+    id, name, price_monthly_usd, price_annual_usd,
+    max_sites, max_competitors, max_members_default, max_members_hardcap,
+    custom_analyses_per_month, timeseries_months,
+    csv_export, competitor_comparison, competitor_trend_graph,
+    default_ai_engines, competitors_per_site, industry_benchmark,
+    audit_log_days, data_retention_years, support_tier, is_enterprise,
+    is_active
+) VALUES
+-- 7-day trial 한도 (보수적): 자사 1 / 경쟁사 0 / 멤버 1 / Custom 0
+('free',       'Free Trial',    0.00,    NULL,
+    1, 0, 1, 1,  0, 0,
+    false, false, false,
+    3, 0, false,
+    0, 5, 'self', false,
+    true),
+('basic',      'Basic',        19.99,   203.88,    -- $16.99 × 12
+    1, 0, 1, 5,  5, 6,
+    false, false, false,
+    3, 0, false,
+    0, 5, 'email', false,
+    true),
+('pro',        'Pro',          79.99,   815.88,    -- $67.99 × 12
+    3, 0, 3, 30,  30, 12,
+    true, true, false,
+    3, 1, false,
+    30, 5, 'email_chat', false,
+    true),
+('business',   'Business',    299.99,  3059.88,    -- $254.99 × 12
+    5, 0, 5, 100,  100, 24,
+    true, true, true,
+    3, 3, true,
+    90, 5, 'email_chat_sla4h', false,
+    true),
+('enterprise', 'Enterprise', 1499.99, 15299.88,    -- $1,274.99 × 12 (annual commit 필수)
+    -1, -1, 20, -1,  -1, -1,
+    true, true, true,
+    -1, 5, true,
+    -1, 7, 'dedicated', true,
+    true);
+-- 연간가 = 월 환산가 × 12 (15% 할인 후 단가). reboot-service-concept §1-1 표기 일치.
+-- Stripe 상품 생성 후 stripe_price_id_monthly / _annual 컬럼에 Price ID UPDATE.
 ```
 
 ### 7-5. 로컬 마이그레이션 워크플로우
@@ -1571,25 +1614,35 @@ Closes #123
 - [ ] Stripe Checkout / Customer Portal 통합
 - [ ] Stripe Webhook 핸들러 (모든 시나리오)
 - [ ] 구독 상태 동기화 + audit_logs
-- [ ] 시트 / 사이트 add-on 처리
-- [ ] 트라이얼 → 유료 전환 로직
+- [ ] add-on 13종 처리 (seat / viewer_seat / own_site / competitor_site / ai_engine /
+      custom_pack_basic·pro / payg_custom / looker_studio / api_access /
+      extra_workspace / data_retention_extension / pdf_branding) — SPEC §5-2 `addon_type` ENUM
+- [ ] 트라이얼 → 유료 전환 로직 (카드 등록은 첫 결제 시점)
+- [ ] 트라이얼 만료 후 자동 이메일 시퀀스 (Day 7 / Day 30 / Day 90, SPEC §4-3)
 - [ ] 워크스페이스 7일 grace + grace_processor 작업
 - [ ] 데이터 보관 1년 grace 처리
 - [ ] 강제 소유권 이양 로직
-- [ ] Admin 라우터 기본 (users, workspaces, subscriptions, stats)
+- [ ] **쿠폰 시스템 (Phase 4 → Phase 2 당김)**: SPEC §14 전체 — 코드형/블라인드/auto_apply 3모드.
+      Phase 2 출시 시 시즌 프로모션(Cyber Monday 등) 가능 필수.
+- [ ] Stripe Coupon / PromotionCode 동기화
+- [ ] Pricing 페이지 active auto_apply 쿠폰 조회 API
+- [ ] Admin 라우터 기본 (users, workspaces, subscriptions, coupons, stats)
 - [ ] 결제 관련 이메일 템플릿
 
 **Frontend**:
-- [ ] Pricing 페이지 (월간/연간 토글)
-- [ ] Stripe Checkout 리디렉션
+- [ ] Pricing 페이지 (월간/연간 토글, 4-tier 카드 + Free Trial CTA + Enterprise "Contact Sales")
+- [ ] Pricing 페이지 active auto_apply 프로모션 노출 (`~~정가~~ 할인가` + 만료 카운트다운)
+- [ ] Stripe Checkout 리디렉션 (auto_apply 쿠폰 자동 attach, 사용자 코드 입력 옵션)
 - [ ] Customer Portal 링크
-- [ ] 사용량 표시 (잔여 횟수, 멤버 수)
-- [ ] 티어 한도 도달 시 업그레이드 프롬프트
+- [ ] 사용량 표시 (잔여 Custom 횟수 — base / basic_pack / pro_pack / payg 분리, 멤버 수)
+- [ ] 티어 한도 도달 시 업그레이드 / add-on 구매 프롬프트
 - [ ] 워크스페이스 삭제 흐름 (Danger Zone)
-- [ ] Admin 패널 기본
+- [ ] Admin 패널 기본 + 쿠폰 빌더 (코드형 / 블라인드 / auto_apply 3모드 토글)
 
 **DB**:
-- [ ] 마이그레이션 016-017
+- [ ] 마이그레이션 016 — subscriptions / subscription_addons (addon_type 13종)
+- [ ] 마이그레이션 017 — workspace_invitations
+- [ ] 마이그레이션 018 — coupons / coupon_redemptions (Phase 4 → Phase 2 당김)
 
 ### 20-3. Phase 3: PDF + 경쟁사 + i18n (~5-7주)
 
@@ -1615,7 +1668,9 @@ Closes #123
 **DB**:
 - [ ] 마이그레이션 018 (Storage 정책)
 
-### 20-4. Phase 4: Wiki + Q&A + 쿠폰 (~5-7주)
+### 20-4. Phase 4: Wiki + Q&A + Admin 고도화 (~5-7주)
+
+> 쿠폰 시스템은 Phase 2로 당겨졌음 (§20-2 참조). Phase 4는 Wiki + Q&A 중심.
 
 **Backend**:
 - [ ] pgvector 확장 활성화
@@ -1623,11 +1678,8 @@ Closes #123
 - [ ] Wiki 임베딩 자동 생성 작업
 - [ ] Q&A RAG 파이프라인 (`services/qa_service.py`)
 - [ ] Q&A 응답 캐싱 (Redis)
-- [ ] 쿠폰 일반/블라인드 로직
-- [ ] Stripe Coupon 동기화
-- [ ] 블라인드 쿠폰 세그먼트 쿼리 빌더
 - [ ] 마케팅 이메일 발송 (rate limit, 동의 검증)
-- [ ] Admin Wiki/쿠폰 라우터
+- [ ] Admin Wiki 라우터
 
 **Frontend**:
 - [ ] Wiki 공개 페이지 (다국어 라우트)
@@ -1638,12 +1690,10 @@ Closes #123
 - [ ] Q&A 전체 페이지 + floating widget
 - [ ] Q&A 출처 카드
 - [ ] Admin Wiki 에디터 (다국어 탭)
-- [ ] Admin 쿠폰 빌더
-- [ ] 블라인드 쿠폰 미리보기 / 발송 UI
 - [ ] Audit logs 뷰어
 
 **DB**:
-- [ ] 마이그레이션 020-026
+- [ ] 마이그레이션 — pgvector / wiki / qa 관련 (쿠폰 제외, Phase 2에 이미 적용됨)
 
 ---
 
