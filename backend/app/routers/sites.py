@@ -31,6 +31,7 @@ from app.auth.jwt import AuthenticatedUser
 from app.deps import (
     DbSession,
     require_workspace_role,
+    require_writable_workspace_role,
 )
 from app.models.plan import Plan
 from app.models.site import Site, SiteType
@@ -44,13 +45,14 @@ WorkspaceMemberCtx = Annotated[
     tuple[AuthenticatedUser, WorkspaceRole],
     Depends(require_workspace_role(WorkspaceRole.viewer)),
 ]
+# 쓰기 엔드포인트 — 트라이얼 만료/해지 시 402 차단.
 WorkspaceWriterCtx = Annotated[
     tuple[AuthenticatedUser, WorkspaceRole],
-    Depends(require_workspace_role(WorkspaceRole.member)),
+    Depends(require_writable_workspace_role(WorkspaceRole.member)),
 ]
 WorkspaceAdminCtx = Annotated[
     tuple[AuthenticatedUser, WorkspaceRole],
-    Depends(require_workspace_role(WorkspaceRole.admin)),
+    Depends(require_writable_workspace_role(WorkspaceRole.admin)),
 ]
 
 

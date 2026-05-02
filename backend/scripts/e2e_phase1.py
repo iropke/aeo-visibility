@@ -9,6 +9,7 @@ Validates:
   6. RLS isolation: a second user does NOT see the first user's workspace
   7. Sites CRUD enforcement on free plan (max_sites=1, competitors_per_site=0,
      soft delete + 30-day cooldown)
+  8. Trial-expired gating: backdating trial_ends_at causes write endpoints to 402
 
 Run from backend/ with .venv active:
     python scripts/e2e_phase1.py
@@ -19,6 +20,7 @@ import asyncio
 import secrets
 import sys
 import uuid
+from datetime import datetime, timedelta, timezone
 
 import httpx
 
@@ -280,6 +282,38 @@ async def main() -> None:
             if r.status_code != 409:
                 fail(f"expected 409 cooldown, got {r.status_code} {r.text}")
             ok("re-creation of same domain blocked (30-day cooldown)")
+
+            banner("Step 9h: Backdate trial_ends_at → write endpoints return 402")
+            past = (datetime.now(timezone.utc) - timedelta(hours=1)).isoformat()
+            r = await client.patch(
+                f"{SUPABASE_URL}/rest/v1/subscriptions?workspace_id=eq.{ws_a['id']}",
+                headers={
+                    "apikey": SERVICE_ROLE,
+                    "Authorization": f"Bearer {SERVICE_ROLE}",
+                    "Content-Type": "application/json",
+                    "Prefer": "return=minimal",
+                },
+                json={"trial_ends_at": past},
+            )
+            if r.status_code not in (200, 204):
+                fail(f"backdate trial_ends_at: {r.status_code} {r.text}")
+            # POST a fresh domain — should hit 402 from trial-expired gate, not 409 from cooldown.
+            r = await client.post(
+                f"{BACKEND_URL}/api/workspaces/{ws_a['id']}/sites",
+                headers={"Authorization": f"Bearer {token_a}"},
+                json={"url": "https://fresh-domain.com", "type": "own"},
+            )
+            if r.status_code != 402:
+                fail(f"expected 402 trial-expired gate, got {r.status_code} {r.text}")
+            ok("POST /sites blocked by trial-expired gating (402)")
+            # Also verify GET (read) still works during read-only state.
+            r = await client.get(
+                f"{BACKEND_URL}/api/workspaces/{ws_a['id']}/sites",
+                headers={"Authorization": f"Bearer {token_a}"},
+            )
+            if r.status_code != 200:
+                fail(f"expected 200 for read during trial-expired, got {r.status_code} {r.text}")
+            ok("GET /sites still works (read-only allowed when trial expired)")
 
             banner("Step 10: User A deletes the workspace")
             r = await client.delete(

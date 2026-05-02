@@ -16,7 +16,12 @@ from app.auth.jwt import (
     JWTSecretMissingError,
     decode_supabase_jwt,
 )
-from app.auth.permissions import assert_workspace_role, get_user_role
+from app.auth.permissions import (
+    WorkspaceReadOnlyError,
+    assert_workspace_role,
+    assert_workspace_writable,
+    get_user_role,
+)
 from app.models.database import get_db
 from app.models.workspace import WorkspaceRole
 
@@ -86,6 +91,37 @@ def require_workspace_role(required: WorkspaceRole) -> Callable:
             # 멤버가 아닌 경우와 권한 부족을 동일하게 403 처리 (워크스페이스 존재 노출 방지).
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
+                detail=str(exc),
+            ) from exc
+        return user, role
+
+    return _dependency
+
+
+def require_writable_workspace_role(required: WorkspaceRole) -> Callable:
+    """역할 검증 + 쓰기 가능 상태 (트라이얼 만료/해지) 검사를 결합한 의존성 팩토리.
+
+    role 부족 → 403, 읽기 전용 상태 → 402 Payment Required.
+    쓰기 엔드포인트 (POST / PATCH / DELETE)에 사용. 읽기는 ``require_workspace_role`` 사용.
+    Stripe Checkout / Customer Portal 흐름에는 적용하지 않음 (만료 후에도 업그레이드 가능해야 함).
+    """
+    async def _dependency(
+        workspace_id: Annotated[UUID, Path()],
+        user: CurrentUser,
+        db: DbSession,
+    ) -> tuple[AuthenticatedUser, WorkspaceRole]:
+        try:
+            role = await assert_workspace_role(db, user.id, workspace_id, required)
+        except PermissionError as exc:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail=str(exc),
+            ) from exc
+        try:
+            await assert_workspace_writable(db, workspace_id)
+        except WorkspaceReadOnlyError as exc:
+            raise HTTPException(
+                status_code=status.HTTP_402_PAYMENT_REQUIRED,
                 detail=str(exc),
             ) from exc
         return user, role
