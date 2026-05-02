@@ -4,8 +4,9 @@ Validates:
   1. Supabase Admin API user creation triggers handle_new_user (profiles row created)
   2. Backend JWT verification accepts the issued access_token
   3. POST /api/workspaces creates a workspace AND triggers add_owner_to_workspace_members
-  4. GET /api/workspaces returns the new workspace
-  5. RLS isolation: a second user does NOT see the first user's workspace
+  4. POST /api/workspaces ALSO triggers start_trial_for_new_workspace (subscriptions row)
+  5. GET /api/workspaces returns the new workspace
+  6. RLS isolation: a second user does NOT see the first user's workspace
 
 Run from backend/ with .venv active:
     python scripts/e2e_phase1.py
@@ -150,6 +151,28 @@ async def main() -> None:
             if members[0]["user_id"] != user_a_id or members[0]["role"] != "owner":
                 fail(f"unexpected member row: {members[0]}")
             ok("trigger created owner member row")
+
+            banner("Step 6b: Verify start_trial_for_new_workspace trigger fired (7-day trial)")
+            r = await client.get(
+                f"{SUPABASE_URL}/rest/v1/subscriptions?workspace_id=eq.{ws_a['id']}",
+                headers={
+                    "apikey": SERVICE_ROLE,
+                    "Authorization": f"Bearer {SERVICE_ROLE}",
+                },
+            )
+            subs = r.json()
+            if len(subs) != 1:
+                fail(f"expected 1 subscriptions row, got {len(subs)}")
+            sub = subs[0]
+            if sub["status"] != "trial":
+                fail(f"expected status=trial, got {sub['status']}")
+            if sub["plan_id"] != "free":
+                fail(f"expected plan_id=free, got {sub['plan_id']}")
+            if sub["billing_cycle"] != "monthly":
+                fail(f"expected billing_cycle=monthly, got {sub['billing_cycle']}")
+            if not sub.get("trial_ends_at"):
+                fail("expected trial_ends_at to be set")
+            ok(f"trial subscription auto-created: status={sub['status']}, plan={sub['plan_id']}, trial_ends_at={sub['trial_ends_at']}")
 
             banner("Step 7: User A lists their workspaces")
             r = await client.get(
