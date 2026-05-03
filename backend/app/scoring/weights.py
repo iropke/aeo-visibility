@@ -59,11 +59,16 @@ CONTENT_METRIC_WEIGHTS: dict[str, float] = {
     "content_freshness":  0.25,
 }
 
+# Authority 카테고리 — G5-authority-redesign (2026-05-03) 에서 v1 SEO 휴리스틱
+# (domain_age/social_links/contact_info/security_headers) 4종을 AEO 직접 신호
+# 메트릭 4종으로 교체. Phase 1 베타 = raw_metrics 사용자 데이터 ❌ → 호환성
+# 부담 ❌ 로 신규 키 깔끔 교체. 외부 API 의존 후보 (wikipedia_mention,
+# external_backlinks) 는 Phase 2 add-on 으로 미룸.
 AUTHORITY_METRIC_WEIGHTS: dict[str, float] = {
-    "domain_age":          0.30,
-    "social_links":        0.25,
-    "contact_info":        0.20,
-    "security_headers":    0.25,
+    "organization_schema": 0.35,  # JSON-LD Organization + sameAs (강한 AEO 신호)
+    "author_entity":       0.25,  # author/Person + sameAs (E-E-A-T 직접 표시)
+    "citation_metadata":   0.20,  # datePublished/dateModified/author/publisher
+    "domain_age":          0.20,  # WHOIS creation_date (enable_external_apis 게이팅)
 }
 
 VISIBILITY_METRIC_WEIGHTS: dict[str, float] = {

@@ -912,7 +912,7 @@ CREATE POLICY wiki_select_members ON wiki_articles FOR SELECT
 | **Technical** | SSL, robots.txt, sitemap, 페이지 속도, mobile-friendly, HTTP 응답 |
 | **Structured** | JSON-LD, schema.org, OpenGraph, Twitter Card, hreflang, canonical |
 | **Content** | 콘텐츠 길이, 가독성, 키워드 분포, 헤딩 구조, 이미지 alt, 인용 가능성 |
-| **Authority** | 도메인 신뢰도, whois 정보, 백링크 추정, HTTPS 평가, E-E-A-T 신호 |
+| **Authority** | AEO 직접 신호 — Schema.org Organization + sameAs (Knowledge Graph), Article author/Person entity (E-E-A-T), citation metadata (datePublished/dateModified/author/publisher), 도메인 나이 (WHOIS) |
 | **Visibility** | LLM 인용 가능성 (Claude API에 query → 답변에 사이트 등장 여부), 검색 결과 노출 추정 |
 
 #### 메트릭 키 레지스트리 (analysis_version `v2.0`, 22 keys)
@@ -937,16 +937,18 @@ CREATE POLICY wiki_select_members ON wiki_articles FOR SELECT
 | | `readability` | 0.25 |
 | | `faq_presence` | 0.20 |
 | | `content_freshness` | 0.25 |
-| **authority** (0.20) | `domain_age` | 0.30 |
-| | `social_links` | 0.25 |
-| | `contact_info` | 0.20 |
-| | `security_headers` | 0.25 |
+| **authority** (0.20) | `organization_schema` | 0.35 |
+| | `author_entity` | 0.25 |
+| | `citation_metadata` | 0.20 |
+| | `domain_age` | 0.20 |
 | **visibility** (0.20) | `llm_brand_mention` | 0.50 |
 | | `llm_domain_mention` | 0.30 |
 | | `queries_tested` | 0.20 |
 
 i18n 사전 키 컨벤션: `scoring.{category}.{metric_key}.{display|description}` (`backend/app/scoring/_common.py::_key`).
 가중치 합이 1.0 ± 1e-3 인지 모듈 import 시점에 `validate_weights()` 가 즉시 검증 → 오타는 빌드 타임에 차단.
+
+> **Authority 재정의 (2026-05-03, G5-authority-redesign 청크)**: 기존 v1 SEO 휴리스틱 4종 (`domain_age`/`social_links`/`contact_info`/`security_headers`) 이 "AI Visibility" 제품 명분이 약하다는 사용자 피드백으로 AEO 직접 신호 4종으로 교체. `organization_schema` (JSON-LD Organization + sameAs) / `author_entity` (Person/Article.author/meta) / `citation_metadata` (datePublished/dateModified/author/publisher 4종 중 ≥3) / `domain_age` (WHOIS, `enable_external_apis=True` 일 때만 측정 — 기본 stub). 외부 API 의존 후보 (`wikipedia_mention`/`external_backlinks`) 는 Phase 2 add-on 으로 보류. Phase 1 베타 = `raw_metrics` 사용자 데이터 ❌ 라 호환성 부담 없이 신규 키로 깔끔 교체.
 
 ### 7-2. 표준 결과 스키마
 

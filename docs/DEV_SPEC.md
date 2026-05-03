@@ -1597,7 +1597,7 @@ Closes #123
 - [ ] 라우터 잔여 — reports, internal(cron HMAC), qa[mock]
 - [x] 분석 엔진 표준 스키마 정의 (`scoring/schemas.py`) (G2)
 - [x] 5개 카테고리 모듈 skeleton — 메트릭 키 22종 + weight 합 1.0 (G2)
-- [ ] **5개 카테고리 모듈 메트릭 채움 — v1 → v2 마이그레이션 (G5)**
+- [x] **5개 카테고리 모듈 메트릭 채움 — v1 → v2 마이그레이션 (G5)** — technical(6) / structured(5) / content(4) / authority-redesign(4 신규 키, AEO 직접 신호) / visibility(3 + multi-engine 슬롯)
 - [ ] LLM 통합 호출 (`services/llm_synthesizer.py`) — G3 stub 완료, 실 Claude 호출 교체 필요
 - [x] BackgroundTasks 통합 (G4-partial — POST /analyze 202 + run_analysis)
 - [x] usage_service Pack 차감 + monthly_usage row lock 패턴 (G3)
