@@ -19,10 +19,10 @@ from typing import Callable
 import httpx
 from bs4 import BeautifulSoup
 
+from app.scoring._common import MainPage, fetch_main_page
 from app.scoring.schemas import AnalysisOptions
 from app.scoring.technical import (
     PAGE_SPEED_THRESHOLD_MS,
-    _MainPage,
     _check_canonical,
     _check_mobile_viewport,
     _check_page_speed,
@@ -30,7 +30,6 @@ from app.scoring.technical import (
     _check_sitemap,
     _check_ssl,
     _domain_from_url,
-    _fetch_main_page,
     analyze,
 )
 
@@ -113,7 +112,7 @@ async def test_fetch_main_page_200() -> None:
         return httpx.Response(200, text=GOOD_HTML, headers={"Content-Type": "text/html"})
 
     async with _make_client(handler) as client:
-        page = await _fetch_main_page(client, "https://example.test/")
+        page = await fetch_main_page(client, "https://example.test/")
 
     assertion(page.status_code == 200, "status_code=200")
     assertion(page.error is None, "no error")
@@ -128,7 +127,7 @@ async def test_fetch_main_page_404() -> None:
         return httpx.Response(404, text="not found")
 
     async with _make_client(handler) as client:
-        page = await _fetch_main_page(client, "https://example.test/")
+        page = await fetch_main_page(client, "https://example.test/")
 
     assertion(page.status_code == 404, "status_code=404")
     assertion(page.error == "HTTP 404", "error=HTTP 404")
@@ -142,7 +141,7 @@ async def test_fetch_main_page_connection_error() -> None:
         raise httpx.ConnectError("dns failure")
 
     async with _make_client(handler) as client:
-        page = await _fetch_main_page(client, "https://nonexistent.test/")
+        page = await fetch_main_page(client, "https://nonexistent.test/")
 
     assertion(page.status_code == 0, "status_code=0 on connect error")
     assertion(page.error is not None and "dns failure" in page.error, "error captured")
@@ -153,7 +152,7 @@ async def test_fetch_main_page_connection_error() -> None:
 
 def test_check_ssl_https() -> None:
     print("\n[T05] _check_ssl — https final_url passes")
-    page = _MainPage(200, 100.0, 1024, "https://example.test/", None, None)
+    page = MainPage(200, 100.0, 1024, "https://example.test/", None, None)
     m = _check_ssl(page)
     assertion(m.passed is True, "passed=True")
     assertion(m.value is True, "value=True")
@@ -162,7 +161,7 @@ def test_check_ssl_https() -> None:
 
 def test_check_ssl_http() -> None:
     print("\n[T06] _check_ssl — http final_url fails")
-    page = _MainPage(200, 100.0, 1024, "http://example.test/", None, None)
+    page = MainPage(200, 100.0, 1024, "http://example.test/", None, None)
     m = _check_ssl(page)
     assertion(m.passed is False, "passed=False")
     assertion(m.value is False, "value=False")
@@ -170,7 +169,7 @@ def test_check_ssl_http() -> None:
 
 def test_check_ssl_fetch_failure() -> None:
     print("\n[T07] _check_ssl — fetch failure → passed=False + evidence")
-    page = _MainPage(0, 0.0, 0, "https://x.test/", None, "dns failure")
+    page = MainPage(0, 0.0, 0, "https://x.test/", None, "dns failure")
     m = _check_ssl(page)
     assertion(m.passed is False, "passed=False on fetch failure")
     assertion(m.evidence is not None and "fetch failed" in m.evidence, "evidence carries error")
@@ -334,7 +333,7 @@ def test_viewport_absent() -> None:
 
 def test_page_speed_fast() -> None:
     print("\n[T21] _check_page_speed — under threshold passes")
-    page = _MainPage(200, 250.0, 1024, "https://example.test/", BeautifulSoup("", "lxml"), None)
+    page = MainPage(200, 250.0, 1024, "https://example.test/", BeautifulSoup("", "lxml"), None)
     m = _check_page_speed(page)
     assertion(m.passed is True, "passed=True")
     assertion(m.threshold == PAGE_SPEED_THRESHOLD_MS, "threshold set")
@@ -343,7 +342,7 @@ def test_page_speed_fast() -> None:
 
 def test_page_speed_slow() -> None:
     print("\n[T22] _check_page_speed — over threshold fails")
-    page = _MainPage(200, 3500.0, 50_000, "https://slow.test/", None, None)
+    page = MainPage(200, 3500.0, 50_000, "https://slow.test/", None, None)
     m = _check_page_speed(page)
     assertion(m.passed is False, "passed=False")
     assertion(m.value == 3500.0, "value=3500ms preserved")
@@ -351,7 +350,7 @@ def test_page_speed_slow() -> None:
 
 def test_page_speed_fetch_error() -> None:
     print("\n[T23] _check_page_speed — fetch failure")
-    page = _MainPage(0, 0.0, 0, "https://x.test/", None, "dns failure")
+    page = MainPage(0, 0.0, 0, "https://x.test/", None, "dns failure")
     m = _check_page_speed(page)
     assertion(m.passed is False, "passed=False")
     assertion(m.value is None, "value=None")

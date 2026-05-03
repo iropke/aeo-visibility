@@ -14,14 +14,17 @@ from __future__ import annotations
 
 import logging
 import re
-import time
-from dataclasses import dataclass
 from urllib.parse import urlparse
 
 import httpx
 from bs4 import BeautifulSoup
 
-from app.scoring._common import build_category_metrics, build_metric
+from app.scoring._common import (
+    MainPage,
+    build_category_metrics,
+    build_metric,
+    fetch_main_page,
+)
 from app.scoring.schemas import AnalysisOptions, CategoryMetrics, MetricResult
 from app.scoring.weights import TECHNICAL_METRIC_WEIGHTS
 
@@ -34,17 +37,6 @@ CATEGORY_NAME = "technical"
 PAGE_SPEED_THRESHOLD_MS: float = 2000.0
 
 
-@dataclass(frozen=True)
-class _MainPage:
-    """메인 페이지 fetch 결과 — ssl/canonical/viewport/page_speed 메트릭이 공유."""
-    status_code: int
-    elapsed_ms: float
-    content_size: int
-    final_url: str
-    soup: BeautifulSoup | None
-    error: str | None
-
-
 def _domain_from_url(url: str) -> str:
     parsed = urlparse(url)
     if parsed.hostname:
@@ -53,41 +45,7 @@ def _domain_from_url(url: str) -> str:
     return url.split("/", 1)[0]
 
 
-async def _fetch_main_page(client: httpx.AsyncClient, url: str) -> _MainPage:
-    """메인 페이지 GET — 실패 시 ``_MainPage(error=...)`` 반환, 예외 raise ❌."""
-    # httpx.Response.elapsed 는 실제 transport 에서만 자동 셋. MockTransport / 일부
-    # 경로에선 RuntimeError → 직접 측정으로 통일 (실 fetch에서도 동일하게 정확).
-    start = time.perf_counter()
-    try:
-        resp = await client.get(url)
-        # client.get() 은 기본 read=True 지만 명시 .content 접근으로 read 트리거 고정.
-        content_bytes = resp.content
-        text = resp.text if resp.status_code < 400 else ""
-    except (httpx.HTTPError, OSError) as exc:
-        return _MainPage(
-            status_code=0, elapsed_ms=0.0, content_size=0,
-            final_url=url, soup=None, error=str(exc)[:200],
-        )
-
-    elapsed_ms = (time.perf_counter() - start) * 1000
-    soup: BeautifulSoup | None = None
-    if resp.status_code < 400 and text:
-        try:
-            soup = BeautifulSoup(text, "lxml")
-        except Exception as exc:  # noqa: BLE001
-            log.warning("HTML parse failed for %s: %s", url, exc)
-
-    return _MainPage(
-        status_code=resp.status_code,
-        elapsed_ms=elapsed_ms,
-        content_size=len(content_bytes),
-        final_url=str(resp.url),
-        soup=soup,
-        error=None if resp.status_code < 400 else f"HTTP {resp.status_code}",
-    )
-
-
-def _check_ssl(main_page: _MainPage) -> MetricResult:
+def _check_ssl(main_page: MainPage) -> MetricResult:
     """ssl_enabled — fetch 성공한 final_url 이 https:// 로 시작하면 passed."""
     weight = TECHNICAL_METRIC_WEIGHTS["ssl_enabled"]
     if main_page.error and main_page.status_code == 0:
@@ -231,7 +189,7 @@ def _check_mobile_viewport(soup: BeautifulSoup | None, fetch_error: str | None) 
     )
 
 
-def _check_page_speed(main_page: _MainPage) -> MetricResult:
+def _check_page_speed(main_page: MainPage) -> MetricResult:
     """page_speed — main page 응답 시간이 임계값(<2000ms) 미만이면 passed."""
     weight = TECHNICAL_METRIC_WEIGHTS["page_speed"]
     if main_page.error and main_page.status_code == 0:
@@ -276,7 +234,7 @@ async def analyze(url: str, options: AnalysisOptions) -> CategoryMetrics:
     async with httpx.AsyncClient(
         headers=headers, follow_redirects=True, timeout=timeout, verify=True,
     ) as client:
-        main_page = await _fetch_main_page(client, url)
+        main_page = await fetch_main_page(client, url)
         robots_metric = await _check_robots_txt(client, domain)
         sitemap_metric = await _check_sitemap(client, domain)
 
