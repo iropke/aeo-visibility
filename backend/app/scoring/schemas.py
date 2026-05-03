@@ -157,6 +157,42 @@ class AnalysisOptions(BaseModel):
         default=False,
         description="visibility 카테고리에서 Claude API 호출 (G3 이후)"
     )
+
+    # ─── visibility 확장 슬롯 (reboot-service-concept §1-4 비전, Phase 2/3 구현) ───
+    # Phase 1 은 ``["claude"]`` 만 실제 호출. 다른 키는 receive 하더라도 무시 +
+    # 경고 로그. SPEC line 170 "기본 AI 엔진 (3 / 모든 엔진 (10+))" + reboot
+    # §1-4 정확한 목록.
+    visibility_engines: list[str] = Field(
+        default_factory=lambda: ["claude"],
+        description=(
+            "visibility 메트릭을 측정할 AI 엔진 키 목록. Phase 1 은 'claude' 만 실제 호출. "
+            "전 티어 기본 3종: google_ai_overviews / claude / chatgpt. "
+            "유료 add-on 5종: perplexity / gemini / copilot / grok / ai_mode (각 $19.99/월). "
+            "Enterprise: 모든 엔진 자동 포함 (10+)."
+        )
+    )
+
+    # Phase 2/3 사용자 입력 카테고리/상품명 query (예: '5축 가공기 제조회사 추천').
+    # 빈 리스트면 자동 생성 (도메인 분석 → LLM 5 query, v1 _generate_queries 패턴).
+    visibility_user_queries: list[str] = Field(
+        default_factory=list,
+        description=(
+            "사용자 입력 카테고리/상품명 query. 빈 리스트면 도메인 분석 후 "
+            "LLM 으로 5개 자동 생성 (v1 _generate_queries 패턴). "
+            "Phase 2/3 UX: 사용자가 '5축 가공기 제조회사 추천' 같은 자연어 입력."
+        )
+    )
+
+    # Phase 3 경쟁사 비교 — [{'brand': '...', 'domain': '...'}, ...].
+    # 빈 리스트면 자사 brand/domain 만 매치.
+    visibility_compare_brands: list[dict[str, str]] = Field(
+        default_factory=list,
+        description=(
+            "경쟁사 brand/domain 매핑 목록 — Phase 3 비교 시각화. "
+            "각 dict: {'brand': '...', 'domain': '...'}. 빈 리스트면 자사만 매치."
+        )
+    )
+
     extra: dict[str, Any] = Field(
         default_factory=dict,
         description="확장용 — 카테고리 모듈이 자유 사용"
