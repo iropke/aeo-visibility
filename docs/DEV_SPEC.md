@@ -684,13 +684,14 @@ SUPABASE_URL=
 
 ### 7-2. 마이그레이션 적용 순서
 
-> 실제 적용 번호는 작업 진행 중 청크 분할에 따라 일부 갱신됨. 아래는 현재 시점(2026-05-02)의 정합 순서.
+> 실제 적용 번호는 작업 진행 중 청크 분할에 따라 일부 갱신됨. 아래는 현재 시점(2026-05-03, 청크 G4-partial 완료)의 정합 순서.
+> 마이그레이션 작성 전 항상 `ls supabase/migrations/ | sort | tail -3` 으로 다음 번호 확정 — 이 문서의 예약 번호는 참고용 (race condition 시 시프트).
 
 ```
 1. 기존 MVP 마이그레이션 (001_initial_schema.sql) 그대로 유지
    → v2에서 사용하지 않는 테이블은 002에서 DROP
 
-2. Phase 1 마이그레이션 (003 ~ 016)
+2. Phase 1 마이그레이션 (002 ~ 017)
    ── 청크 A (적용 완료) ──
    - 002_drop_mvp_tables.sql
    - 003_profiles.sql                + handle_new_user / set_updated_at
@@ -698,33 +699,37 @@ SUPABASE_URL=
    - 005_workspaces.sql
    - 006_workspace_members.sql       + ENUM workspace_role + add_owner_to_workspace_members
    - 007_rls_phase1_workspace.sql    (profiles/plans/workspaces/workspace_members RLS)
-   ── 청크 D0 (가격 정책 확정 반영) ──
+   ── 청크 D0 (가격 정책 확정 반영, 적용 완료) ──
    - 008_plans_repricing.sql         컬럼 7개 ADD + 5-tier → 4-tier+trial+enterprise 시드 갱신
-   ── 청크 D 이후 ──
-   - 009_subscriptions.sql           + ENUM subscription_status (trial 자동 시작 포함)
+   ── 청크 D~F (적용 완료) ──
+   - 009_subscriptions.sql           + ENUM subscription_status (trial 자동 시작 트리거 포함)
    - 010_sites.sql                   + ENUM site_type (own/competitor) + 30일 cooldown
-   - 011_analysis_results.sql        + ENUM analysis_trigger_type
-   - 012_monthly_usage.sql           (Custom 카운터: base/basic_pack/pro_pack/payg 분리)
-   - 013_reports.sql
-   - 014_audit_logs.sql
-   - 015_deletion_grace_queue.sql
-   - 016_pg_cron_setup.sql           매월 분석 + 트라이얼 만료 시퀀스
+   ── 청크 G1~G4-partial (적용 완료, 2026-05-03) ──
+   - 011_analysis_results.sql        + ENUM analysis_trigger_type / analysis_funding_source / analysis_status
+                                     + CHECK trigger_funding_consistency
+   - 012_monthly_usage.sql           Custom 카운터 4-way (base/basic_pack/pro_pack/payg) + auto_run_completed_at
+   - 013_analysis_active_uniq.sql    partial UNIQUE — 워크스페이스 단위 진행 중 1건 강제 (race window 안전망)
+   ── 잔여 청크 (G5 / 이메일 / cron) ──
+   - 014_reports.sql                 PDF/CSV 메타
+   - 015_audit_logs.sql
+   - 016_deletion_grace_queue.sql    워크스페이스 7일 + 데이터 1년 grace + sites cooldown 만료
+   - 017_pg_cron_setup.sql           매월 자동 분석 + 트라이얼 만료 시퀀스 + grace_processor
 
-3. Phase 2 마이그레이션 (017 ~ 019) — 결제 + 쿠폰
-   - 017_subscription_addons.sql     + ENUM addon_type (13종, SPEC §5-2)
-   - 018_workspace_invitations.sql
-   - 019_coupons.sql + coupon_redemptions.sql  (Phase 4 → Phase 2 당김)
+3. Phase 2 마이그레이션 (018 ~ 020) — 결제 + 쿠폰
+   - 018_subscription_addons.sql     + ENUM addon_type (13종, SPEC §5-2)
+   - 019_workspace_invitations.sql
+   - 020_coupons.sql + coupon_redemptions.sql  (Phase 4 → Phase 2 당김)
                                      + auto_apply 모드 (시즌 프로모션)
 
 4. Phase 3 마이그레이션
-   - 020_pdf_csv_storage_buckets.sql  ← Supabase Storage 정책
+   - 021_pdf_csv_storage_buckets.sql  ← Supabase Storage 정책
 
 5. Phase 4 마이그레이션 (Wiki + Q&A 중심, 쿠폰은 Phase 2로 이미 이동됨)
-   - 021_pgvector_extension.sql       ← CREATE EXTENSION vector
-   - 022_wiki_articles.sql
-   - 023_wiki_embeddings.sql
-   - 024_qa_sessions.sql
-   - 025_qa_messages.sql
+   - 022_pgvector_extension.sql       ← CREATE EXTENSION vector
+   - 023_wiki_articles.sql
+   - 024_wiki_embeddings.sql
+   - 025_qa_sessions.sql
+   - 026_qa_messages.sql
 ```
 
 ### 7-3. 마이그레이션 작성 규칙
@@ -1582,31 +1587,44 @@ Closes #123
 
 ### 20-1. Phase 1: 코어 (~6-8주)
 
+> 진행 상태: 2026-05-03 청크 G4-partial 완료 (커밋 `2e16faf`).
+
 **Backend**:
-- [ ] Supabase Auth JWT 검증 미들웨어
-- [ ] 모델 (profiles, workspaces, members, sites, analysis_results, monthly_usage, audit_logs)
-- [ ] 라우터 (workspaces, members, sites, analyses, qa[mock])
-- [ ] 분석 엔진 표준 스키마 정의 (`scoring/schema.py`)
-- [ ] 5개 카테고리 모듈 재작성
-- [ ] LLM 통합 호출 (`services/llm_synthesizer.py`)
-- [ ] BackgroundTasks 통합
-- [ ] pg_cron 자동 분석 스케줄러
-- [ ] Resend 트랜잭셔널 이메일 (Magic Link, 분석 완료, 초대)
+- [x] Supabase Auth JWT 검증 미들웨어 (청크 B)
+- [x] 모델 (profiles, workspaces, members, sites, analysis_results, monthly_usage) (G1)
+- [ ] 모델 잔여 (audit_logs, reports, deletion_grace_queue)
+- [x] 라우터 — workspaces / members / sites / analyses (Custom 4 endpoint, 202 + polling) (B/E/G3/G4)
+- [ ] 라우터 잔여 — reports, internal(cron HMAC), qa[mock]
+- [x] 분석 엔진 표준 스키마 정의 (`scoring/schemas.py`) (G2)
+- [x] 5개 카테고리 모듈 skeleton — 메트릭 키 22종 + weight 합 1.0 (G2)
+- [ ] **5개 카테고리 모듈 메트릭 채움 — v1 → v2 마이그레이션 (G5)**
+- [ ] LLM 통합 호출 (`services/llm_synthesizer.py`) — G3 stub 완료, 실 Claude 호출 교체 필요
+- [x] BackgroundTasks 통합 (G4-partial — POST /analyze 202 + run_analysis)
+- [x] usage_service Pack 차감 + monthly_usage row lock 패턴 (G3)
+- [x] auth/permissions 행위 단위 가드 (`WorkspaceAction.analysis_trigger`, viewer 자동 차단) (G3)
+- [x] 트라이얼 만료 read-only 게이팅 (`require_writable_workspace_role`) (F)
+- [ ] pg_cron 자동 분석 스케줄러 (`017_pg_cron_setup.sql`)
+- [ ] grace_processor (워크스페이스 7일 + 사이트 cooldown 만료)
+- [ ] Resend 트랜잭셔널 이메일 (Magic Link / 분석 완료 / 초대 / 트라이얼 만료 시퀀스 3종)
+- [ ] Redis advisory lock — 멀티 인스턴스 도입 시점 (Phase 1은 partial UNIQUE 안전망으로 충분)
 
 **Frontend**:
-- [ ] Supabase Auth 통합 (Magic Link)
-- [ ] 워크스페이스 CRUD UI
+- [x] Supabase Auth 통합 (Magic Link) (C)
+- [x] 워크스페이스 CRUD UI + 온보딩 (C)
 - [ ] 사이트 CRUD UI (변경 1회/월 표시)
-- [ ] 분석 진행/결과 대시보드
-- [ ] Custom 재분석 모달
+- [ ] 분석 진행/결과 대시보드 (analyses/active polling, raw_metrics 카드)
+- [ ] Custom 재분석 모달 (5축 체크박스 + 잔여 카운터 funding_source 별)
 - [ ] 시계열 그래프 (recharts, 전체/부분 시각 구분)
-- [ ] 멤버 초대 UI
+- [ ] 멤버 초대 UI (Phase 2 invitations 테이블 필요)
+- [ ] 트라이얼 만료 임박/직후 모달 + 잔여 일수 카운트다운
+- [ ] TanStack Query 도입 검토
 
 **DB / Infra**:
-- [ ] 마이그레이션 003-015
-- [ ] RLS 정책 적용
-- [ ] 시드 데이터 (plans)
-- [ ] Frontend ↔ Backend 인증 검증
+- [x] 마이그레이션 003-013 (Auth/Workspace/Subscription/Sites/Analysis/Usage/Active uniq)
+- [ ] 마이그레이션 014-017 잔여
+- [x] RLS 정책 — profiles/plans/workspaces/members/sites/analysis_results/monthly_usage 적용
+- [x] 시드 데이터 (plans 4-tier+trial+enterprise) (D0)
+- [x] Frontend ↔ Backend 인증 검증 (E2E `e2e_phase1.py`, 27 steps)
 
 ### 20-2. Phase 2: 결제 (~4-6주)
 
@@ -1640,9 +1658,9 @@ Closes #123
 - [ ] Admin 패널 기본 + 쿠폰 빌더 (코드형 / 블라인드 / auto_apply 3모드 토글)
 
 **DB**:
-- [ ] 마이그레이션 016 — subscriptions / subscription_addons (addon_type 13종)
-- [ ] 마이그레이션 017 — workspace_invitations
-- [ ] 마이그레이션 018 — coupons / coupon_redemptions (Phase 4 → Phase 2 당김)
+- [ ] 마이그레이션 018 — subscription_addons (addon_type 13종)
+- [ ] 마이그레이션 019 — workspace_invitations
+- [ ] 마이그레이션 020 — coupons / coupon_redemptions (Phase 4 → Phase 2 당김)
 
 ### 20-3. Phase 3: PDF + 경쟁사 + i18n (~5-7주)
 
@@ -1666,7 +1684,7 @@ Closes #123
 - [ ] PDF 다국어 폰트 등록 (Pretendard, Noto)
 
 **DB**:
-- [ ] 마이그레이션 018 (Storage 정책)
+- [ ] 마이그레이션 021 (Storage 정책)
 
 ### 20-4. Phase 4: Wiki + Q&A + Admin 고도화 (~5-7주)
 

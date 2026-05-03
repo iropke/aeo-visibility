@@ -508,45 +508,98 @@ CREATE INDEX idx_site_change_workspace_time ON site_change_history(workspace_id,
 
 #### monthly_usage
 ```sql
+-- Custom 분석 카운터는 차감 출처(funding_source)별로 분리 — analysis_results 와 1:1 정합.
+-- 우선순위 차감(routers/analyses.py): pro_pack → basic_pack → base → payg.
 CREATE TABLE monthly_usage (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     workspace_id UUID NOT NULL REFERENCES workspaces(id) ON DELETE CASCADE,
-    year_month TEXT NOT NULL,  -- 'YYYY-MM'
-    custom_analyses_used INT NOT NULL DEFAULT 0,
+    year_month TEXT NOT NULL,  -- 'YYYY-MM' (CHECK: ^[0-9]{4}-(0[1-9]|1[0-2])$)
+    base_analyses_used        INT NOT NULL DEFAULT 0,  -- plans.custom_analyses_per_month 차감
+    basic_pack_analyses_used  INT NOT NULL DEFAULT 0,  -- custom_pack_basic addon (+5/월)
+    pro_pack_analyses_used    INT NOT NULL DEFAULT 0,  -- custom_pack_pro addon (+20/월)
+    payg_analyses_used        INT NOT NULL DEFAULT 0,  -- payg_custom (단건 PAYG, $2.99/회)
     sites_changed_count INT NOT NULL DEFAULT 0,
-    qa_messages_count INT NOT NULL DEFAULT 0,
+    qa_messages_count   INT NOT NULL DEFAULT 0,
+    auto_run_completed_at TIMESTAMPTZ,                 -- 매월 cron 멱등성 (한 워크스페이스 × 한 달 = 1회)
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     UNIQUE (workspace_id, year_month)
 );
 ```
+> 역사적으로 `custom_analyses_used` 단일 컬럼으로 설계되었으나, addon 13종 / payg / 트라이얼 base
+> 한도를 모두 한 카운터에 합치면 "잔여 분석 수" 표시가 모호해지므로 4-way 분리로 확정 (012 마이그레이션).
+> 프론트엔드는 `사용 / (plans + addons + payg) 합계` 를 funding_source별로 표시.
 
 #### analysis_results
 ```sql
-CREATE TYPE analysis_trigger_type AS ENUM ('auto', 'manual');
+-- WHO 트리거(trigger_type)와 HOW 차감(funding_source)은 직교 차원.
+-- enum 한쪽을 'auto/custom_pack/payg' 식으로 합치면 두 정보가 섞이므로 분리.
+CREATE TYPE analysis_trigger_type   AS ENUM ('auto', 'manual');
+CREATE TYPE analysis_funding_source AS ENUM
+    ('auto', 'base', 'basic_pack', 'pro_pack', 'payg');
+CREATE TYPE analysis_status         AS ENUM
+    ('queued', 'running', 'completed', 'failed');
 
 CREATE TABLE analysis_results (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     workspace_id UUID NOT NULL REFERENCES workspaces(id) ON DELETE CASCADE,
     site_id UUID NOT NULL REFERENCES sites(id) ON DELETE CASCADE,
-    trigger_type analysis_trigger_type NOT NULL,
-    triggered_by UUID REFERENCES profiles(id),  -- NULL for auto
+    trigger_type   analysis_trigger_type   NOT NULL,
+    funding_source analysis_funding_source NOT NULL,  -- monthly_usage 차감 출처
+    triggered_by UUID REFERENCES profiles(id),  -- NULL for auto cron
     triggered_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     completed_at TIMESTAMPTZ,
     duration_ms INT,
     categories TEXT[] NOT NULL,  -- ['technical', 'structured', 'content', 'authority', 'visibility']
     overall_score NUMERIC(5,2),
-    category_scores JSONB,  -- {technical: 80.5, structured: 75.0, ...}
-    raw_metrics JSONB,  -- 표준 스키마 (섹션 7-2)
-    insights JSONB,  -- {language_code: "..."} 워크스페이스 primary_language 기준 저장
-    improvements JSONB,  -- 우선순위별 개선 제안
-    analysis_version TEXT NOT NULL,  -- 'v2.0', 'v2.1', ... 스키마 변경 시 증가
-    status TEXT NOT NULL DEFAULT 'queued' CHECK (status IN ('queued', 'running', 'completed', 'failed')),
+    category_scores JSONB,  -- {technical: 80.5, structured: 75.0, ...} (§7-2)
+    raw_metrics JSONB,      -- 표준 스키마 — { category_name: CategoryMetrics } (§7-2)
+    insights JSONB,         -- {language_code: "..."} 워크스페이스 primary_language 기준 저장
+    improvements JSONB,     -- 우선순위별 개선 제안 (§7-2 Improvement[])
+    analysis_version TEXT NOT NULL,  -- 'v2.0', 'v2.1', ... 스키마/가중치 변경 시 증가
+    status analysis_status NOT NULL DEFAULT 'queued',
     error_message TEXT,
-    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+
+    -- trigger_type ↔ funding_source 일관성: auto cron은 차감 ❌, manual은 'auto' ❌.
+    CONSTRAINT analysis_results_trigger_funding_consistency CHECK (
+        (trigger_type = 'auto'   AND funding_source = 'auto') OR
+        (trigger_type = 'manual' AND funding_source <> 'auto')
+    ),
+    CONSTRAINT analysis_results_categories_not_empty CHECK (cardinality(categories) >= 1),
+    CONSTRAINT analysis_results_overall_score_range  CHECK (
+        overall_score IS NULL OR (overall_score >= 0 AND overall_score <= 100)
+    ),
+    CONSTRAINT analysis_results_duration_nonneg CHECK (
+        duration_ms IS NULL OR duration_ms >= 0
+    )
 );
 
-CREATE INDEX idx_analysis_results_site_time ON analysis_results(site_id, triggered_at DESC);
-CREATE INDEX idx_analysis_results_workspace ON analysis_results(workspace_id);
+CREATE INDEX idx_analysis_results_site_time      ON analysis_results(site_id, triggered_at DESC);
+CREATE INDEX idx_analysis_results_workspace      ON analysis_results(workspace_id);
+CREATE INDEX idx_analysis_results_active_status  ON analysis_results(status, triggered_at)
+    WHERE status IN ('queued', 'running');                 -- 큐/러너 탐색
+CREATE INDEX idx_analysis_results_workspace_month_auto
+    ON analysis_results(workspace_id, triggered_at DESC)
+    WHERE trigger_type = 'auto';                           -- 매월 cron 멱등성 검사
+
+-- 워크스페이스 단위 진행 중(queued|running) 분석 1건 — race window 안전망 (§9-3, §11-3).
+-- queued + running 을 같은 partial scope 로 묶어 동시 허용 ❌.
+CREATE UNIQUE INDEX uniq_analysis_results_workspace_active
+    ON analysis_results (workspace_id)
+    WHERE status IN ('queued', 'running');
 ```
+
+##### overall_score 계산 공식
+
+```
+overall_score = Σ (category_scores[c] × CATEGORY_WEIGHTS[c]) / Σ CATEGORY_WEIGHTS[c]
+                (c ∈ analyzed categories, 0~100 round to 0.01)
+```
+
+- `CATEGORY_WEIGHTS` = {technical:0.20, structured:0.20, content:0.20, authority:0.20, visibility:0.20}.
+- **부분 분석(Custom Re-analyze, §7-5)** 은 분모를 분석된 카테고리들의 weight 합으로 정규화하여 0~100 스케일 유지 — 시계열에서 전체 분석과 직접 비교 가능 (시각 구분은 §11-4 연한 색 마커).
+- 코드: `backend/app/scoring/weights.py::compute_overall_score`.
 
 #### reports (PDF)
 ```sql
@@ -862,6 +915,39 @@ CREATE POLICY wiki_select_members ON wiki_articles FOR SELECT
 | **Authority** | 도메인 신뢰도, whois 정보, 백링크 추정, HTTPS 평가, E-E-A-T 신호 |
 | **Visibility** | LLM 인용 가능성 (Claude API에 query → 답변에 사이트 등장 여부), 검색 결과 노출 추정 |
 
+#### 메트릭 키 레지스트리 (analysis_version `v2.0`, 22 keys)
+
+> 단일 소스: `backend/app/scoring/weights.py::METRIC_WEIGHTS`. 각 카테고리 합 = 1.0.
+> **키는 안정 식별자** — 변경 ❌, 신규 키 추가만 허용 (이미 저장된 raw_metrics 와 호환 유지).
+
+| 카테고리 (weight) | 메트릭 키 | weight |
+|---|---|---|
+| **technical** (0.20) | `ssl_enabled` | 0.20 |
+| | `robots_txt` | 0.15 |
+| | `sitemap_xml` | 0.15 |
+| | `canonical_tag` | 0.10 |
+| | `mobile_viewport` | 0.15 |
+| | `page_speed` | 0.25 |
+| **structured** (0.20) | `json_ld_present` | 0.30 |
+| | `open_graph_complete` | 0.20 |
+| | `meta_description` | 0.20 |
+| | `heading_hierarchy` | 0.20 |
+| | `twitter_card` | 0.10 |
+| **content** (0.20) | `content_length` | 0.30 |
+| | `readability` | 0.25 |
+| | `faq_presence` | 0.20 |
+| | `content_freshness` | 0.25 |
+| **authority** (0.20) | `domain_age` | 0.30 |
+| | `social_links` | 0.25 |
+| | `contact_info` | 0.20 |
+| | `security_headers` | 0.25 |
+| **visibility** (0.20) | `llm_brand_mention` | 0.50 |
+| | `llm_domain_mention` | 0.30 |
+| | `queries_tested` | 0.20 |
+
+i18n 사전 키 컨벤션: `scoring.{category}.{metric_key}.{display|description}` (`backend/app/scoring/_common.py::_key`).
+가중치 합이 1.0 ± 1e-3 인지 모듈 import 시점에 `validate_weights()` 가 즉시 검증 → 오타는 빌드 타임에 차단.
+
 ### 7-2. 표준 결과 스키마
 
 분석 결과는 다음 스키마로 표준화:
@@ -922,15 +1008,17 @@ interface Improvement {
 
 ### 7-3. 카테고리별 재작성 (Q3 옵션 B)
 
-기존 `backend/app/scoring/{technical,structured,content,authority,visibility}.py`는 **참고용으로 유지**하고, v2에서 표준 스키마 기반으로 재작성.
+v1 코드는 `backend/app/scoring/v1/{technical,structured,content,authority,visibility}.py` 서브패키지로 이동됨 (G2 청크). v2는 `backend/app/scoring/` 루트의 표준 스키마 기반으로 재작성.
 
 **재작성 원칙**:
-1. 각 카테고리 모듈은 `analyze(url, options) -> CategoryMetrics` 시그니처를 따름
-2. 메트릭 키는 안정 식별자 (변경 ❌, 새 키 추가만)
+1. 각 카테고리 모듈은 `analyze(url, options: AnalysisOptions) -> CategoryMetrics` 시그니처를 따름
+2. 메트릭 키는 안정 식별자 (변경 ❌, 새 키 추가만) — §7-1 레지스트리가 단일 소스
 3. 가중치는 모듈 외부에서 설정 가능 (`scoring/weights.py`)
-4. LLM 호출이 필요한 부분(insights, improvements)은 **카테고리 내부에서 ❌**, 모든 카테고리 분석 후 한 번에 통합 호출 (비용 효율)
+4. LLM 호출이 필요한 부분(insights, improvements)은 **카테고리 내부에서 ❌**, 모든 카테고리 분석 후 한 번에 통합 호출 (`services/llm_synthesizer.py`, 비용 효율)
+   - **예외**: `visibility` 카테고리의 `llm_brand_mention` / `llm_domain_mention` / `queries_tested` 자체가 LLM 응답 기반 메트릭이므로, 카테고리 내부에서 호출(`AnalysisOptions.enable_llm_visibility=True`). 통합 호출은 메트릭 산출 후 insights/improvements 합성 단계 전담.
 5. 모든 메트릭은 evidence 필드로 raw 데이터 보존 (디버깅 + 재현)
-6. 카테고리는 병렬 실행 가능해야 함 (asyncio)
+6. 카테고리는 병렬 실행 가능해야 함 (`asyncio.gather`)
+7. 외부 API(PSI / WHOIS) 호출은 `AnalysisOptions.enable_external_apis=True` 일 때만. 기본 OFF — Phase 1 skeleton 은 항상 stub.
 
 ### 7-4. LLM 통합 호출
 
@@ -1043,10 +1131,14 @@ pg_cron은 SQL을 실행하므로, 백엔드 API를 직접 호출할 수 없음.
 
 ### 9-3. BackgroundTasks 큐
 
-- FastAPI BackgroundTasks 사용 (1만 명 미만 단계)
-- 워크스페이스당 동시 1개 작업 제한 (Redis lock)
-- 작업 상태는 Redis에 기록 (key: `analysis:status:{result_id}`, TTL 1h)
-- 실패 시 재시도 3회 (지수 백오프), 모두 실패 시 `analysis_results.status='failed'`
+- FastAPI **BackgroundTasks** 사용 (1만 명 미만 단계, 단일 uvicorn 워커 가정).
+- 라우터: `db.commit()` → `BackgroundTasks.add_task(run_analysis, ...)` → 즉시 `202 Accepted` 반환. task 는 자체 `async_session()` 으로 짧은 tx 여러 개(`status: queued → running → completed/failed` UPDATE) 진행.
+- 워크스페이스당 동시 1개 작업 제한:
+  - 1차 — 라우터 `SELECT count` 검사로 fast-fail UX (409).
+  - 2차(race window 안전망) — **DB partial UNIQUE INDEX** `uniq_analysis_results_workspace_active` (queued|running 같은 partial scope). IntegrityError → 409 변환.
+  - Phase 1 단일 인스턴스에서는 Redis advisory lock 미도입. 멀티 인스턴스 백엔드 도입 시점에 Redis lock 추가 (§9-4).
+- 작업 상태는 **DB analysis_results.status** 만으로 추적 (Redis 캐시 ❌). Frontend는 §11-3 polling 으로 조회.
+- 실패 시 재시도 3회 (지수 백오프), 모두 실패 시 `status='failed'` + `error_message`.
 
 ### 9-4. 1만 명 이상 시 마이그레이션
 
@@ -1126,25 +1218,39 @@ pg_cron은 SQL을 실행하므로, 백엔드 API를 직접 호출할 수 없음.
 
 ### 11-2. 검증 규칙 (Backend)
 
-```python
-# POST /api/workspaces/:id/sites/:site_id/analyze
-# Body: { categories: ['technical', 'content'] }
+```
+POST /api/workspaces/:id/sites/:site_id/analyze
+Body: { categories: ['technical', 'content'] }   # 최소 1개, 5축 중
 
-1. 사용자 권한 확인 (member 이상, viewer ❌)
-2. 워크스페이스의 plan에서 custom_analyses_per_month 한도 확인
-3. monthly_usage 테이블에서 잔여 횟수 확인
-4. 사이트의 last_analyzed_at + 1h cooldown 확인
-5. 워크스페이스에 진행 중 분석 없음 (Redis lock)
-6. categories 배열이 비어있지 않음 (최소 1개)
-7. 모두 통과 → 큐잉, monthly_usage.custom_analyses_used += 1
+1. 사용자 권한 확인 — Depends(require_action(WorkspaceAction.analysis_trigger))
+   → viewer 차단(403) + 트라이얼 만료 차단(402, §4-3)
+2. 사이트가 워크스페이스 소속 + soft-delete ❌
+3. 사이트의 last_analyzed_at + 1h cooldown 확인 (위반 시 429)
+4. 워크스페이스 진행 중(queued|running) 분석 row 없음 — fast-fail UX(409)
+5. categories 배열이 비어있지 않음 (최소 1개)
+6. 차감 출처 결정 (우선순위, monthly_usage row를 INSERT … ON CONFLICT DO NOTHING + SELECT FOR UPDATE):
+     pro_pack 잔여 → basic_pack 잔여 → base 잔여 → payg 단건
+   → 전부 0 이면 402 (Insufficient quota, 업그레이드/PAYG 안내)
+7. analysis_results INSERT (status='queued', funding_source 결정값)
+   → IntegrityError(uniq_analysis_results_workspace_active) 시 409 (race window 2차 안전망)
+8. db.commit() → BackgroundTasks.add_task(run_analysis, ...) → 응답 202
+   - 응답 본문: { id, status: 'queued', triggered_at, categories, raw_metrics: null, overall_score: null }
+9. monthly_usage 차감은 같은 tx 내 row lock 보유 상태에서 +1.
 ```
 
 ### 11-3. 진행 상태 polling
 
 ```
-Frontend: GET /api/analyses/:result_id/status (5초 간격)
-Backend: Redis에서 상태 조회 → { status: 'queued' | 'running' | 'completed' | 'failed', progress: 0-100 }
-완료 시: 분석 결과 자동 갱신 (TanStack Query invalidate)
+Frontend (TanStack Query, 1s 간격 권장):
+  ┌─ GET /api/workspaces/:ws/analyses/active
+  │   → ActiveAnalysisItem[]  (partial UNIQUE 로 0~1건 보장)
+  │   → 빈 배열이면 완료 또는 실패 — detail 조회로 분기
+  └─ GET /api/analyses/:result_id
+      → { status, raw_metrics, category_scores, overall_score, ... }
+      status ∈ {queued, running} 동안 폴링 지속, completed|failed 시 invalidate.
+
+Backend: 상태는 analysis_results 테이블만 조회 (Redis 캐시 ❌, §9-3).
+실 분석 도입 후 평균 5~30s 예상 — 폴링 간격은 1s 권장.
 ```
 
 ### 11-4. 시계열 그래프 시각 구분
