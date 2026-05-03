@@ -38,6 +38,7 @@ from app.scoring import (
     CategoryName,
     compute_overall_score,
 )
+from app.services.email_service import send_analysis_complete_email
 from app.services.llm_synthesizer import synthesize
 
 
@@ -136,6 +137,32 @@ async def run_analysis(
                 .values(last_analyzed_at=completed_at)
             )
             await session.commit()
+
+        # 7) 분석 완료 메일 (best-effort) — owner+admin+analyzed_by, 수신자별 lang.
+        # 별도 짧은 tx 로 SELECT (analysis row + site row 재조회 → 최신 상태로 발송).
+        try:
+            async with session_factory() as session:
+                fresh_analysis = await session.scalar(
+                    select(AnalysisResult).where(AnalysisResult.id == analysis_id)
+                )
+                fresh_site = await session.scalar(
+                    select(Site).where(Site.id == site_id)
+                )
+                if fresh_analysis is not None and fresh_site is not None:
+                    summary = await send_analysis_complete_email(
+                        session, analysis=fresh_analysis, site=fresh_site,
+                    )
+                    log.info(
+                        "analysis %s email summary: sent=%s skipped=%s total=%s",
+                        analysis_id,
+                        summary.get("sent"), summary.get("skipped"), summary.get("total"),
+                    )
+        except Exception:  # noqa: BLE001
+            # 메일 실패가 분석 결과 status 를 바꾸지 ❌. log 만.
+            log.exception(
+                "analysis %s email send raised — analysis row remains completed",
+                analysis_id,
+            )
 
     except Exception as exc:  # noqa: BLE001
         log.exception("analysis %s failed", analysis_id)

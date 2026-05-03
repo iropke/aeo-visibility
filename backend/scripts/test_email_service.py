@@ -1,0 +1,693 @@
+"""email_service 단위 테스트 (G7-email-core, services/email_service).
+
+실행:
+    Set-Location backend; $env:PYTHONUTF8="1"; $env:PYTHONPATH="$PWD"
+    .venv\\Scripts\\python.exe scripts\\test_email_service.py
+
+검증:
+- render_template — 3 언어 + 미지원 lang → en 폴백 + autoescape.
+- build_analysis_complete_context — multilingual summary/improvements lang 분기 + en fallback.
+- _resolve_recipients — owner+admin+analyzed_by 중복 제거, email 누락 skip.
+- _send_one — resend_api_key 빈 값 시 silent skip.
+- send_analysis_complete_email — Resend SDK mock + 수신자별 발송 결과 누적.
+- v1 send_report_email DEPRECATED stub — 호출 시 silent no-op.
+
+mock 패턴 (test_llm_synthesizer_v2 와 동일):
+- get_settings → monkey-patch 로 resend_api_key + frontend_url 시뮬레이션.
+- resend.Emails.send → MagicMock 으로 호출 capture.
+- DB session → AsyncMock (execute() 반환 mock).
+"""
+from __future__ import annotations
+
+import asyncio
+import sys
+from datetime import datetime, timezone
+from decimal import Decimal
+from types import SimpleNamespace
+from unittest.mock import AsyncMock, MagicMock, patch
+from uuid import UUID, uuid4
+
+from app.services import email_service as svc
+from app.services.email_service import (
+    DEFAULT_LANG,
+    SUPPORTED_LANGS,
+    TRIGGER_ANALYSIS_COMPLETE,
+    _format_improvement_for_email,
+    _normalize_lang,
+    _resolve_recipients,
+    _send_one,
+    build_analysis_complete_context,
+    render_template,
+    send_analysis_complete_email,
+    send_report_email,
+)
+
+
+# ─── 픽스처 ─────────────────────────────────────────────────────────────
+
+def _fake_analysis(
+    *,
+    insights: dict | None = None,
+    improvements: dict | None = None,
+    overall: float | None = 78.0,
+    category_scores: dict | None = None,
+    workspace_id: UUID | None = None,
+    triggered_by: UUID | None = None,
+) -> SimpleNamespace:
+    """AnalysisResult 흉내 — ORM row 의 attribute 접근만 사용."""
+    return SimpleNamespace(
+        id=uuid4(),
+        workspace_id=workspace_id or uuid4(),
+        site_id=uuid4(),
+        triggered_by=triggered_by,
+        overall_score=Decimal(str(overall)) if overall is not None else None,
+        category_scores=category_scores or {
+            "technical": 80.0, "structured": 75.0, "content": 70.0,
+        },
+        insights=insights,
+        improvements=improvements,
+        completed_at=datetime.now(timezone.utc),
+    )
+
+
+def _fake_site(domain: str = "example.com") -> SimpleNamespace:
+    return SimpleNamespace(
+        id=uuid4(),
+        url=f"https://{domain}",
+        domain=domain,
+    )
+
+
+def _multi(en: str = "EN summary", ko: str = "KO 요약", es: str = "ES resumen") -> dict:
+    return {"en": en, "ko": ko, "es": es}
+
+
+def _full_insights() -> dict:
+    return {
+        "summary": _multi(),
+        "primary_language": "en",
+        "synthesized_by": "claude-sonnet-4-6",
+        "category_count": 3,
+        "improvements_count": 2,
+        "high_priority_capped": False,
+    }
+
+
+def _full_improvements() -> dict:
+    return {
+        "items": [
+            {
+                "priority": "high",
+                "category": "technical",
+                "title_key": "scoring.technical.ssl_enabled.improvement_title",
+                "description": _multi(en="Enable SSL", ko="SSL 활성화", es="Activar SSL"),
+                "estimated_impact": 9,
+                "estimated_effort": "low",
+                "related_metric_keys": ["ssl_enabled"],
+            },
+            {
+                "priority": "medium",
+                "category": "content",
+                "title_key": "scoring.content.readability.improvement_title",
+                "description": _multi(en="Improve readability", ko="가독성 개선", es="Mejorar la legibilidad"),
+                "estimated_impact": 6,
+                "estimated_effort": "medium",
+                "related_metric_keys": ["readability"],
+            },
+        ],
+    }
+
+
+FAILED: list[str] = []
+
+
+def _check(label: str, cond: bool, detail: str = "") -> None:
+    suffix = f" — {detail}" if detail and not cond else ""
+    print(f"  [{'PASS' if cond else 'FAIL'}] {label}{suffix}")
+    if not cond:
+        FAILED.append(label)
+
+
+# ─── render_template ────────────────────────────────────────────────────
+
+def test_render_template():
+    print("\n== render_template ==")
+    analysis = _fake_analysis(
+        insights=_full_insights(),
+        improvements=_full_improvements(),
+    )
+    site = _fake_site("ahxov.com")
+
+    for lang in SUPPORTED_LANGS:
+        ctx = build_analysis_complete_context(
+            analysis=analysis, site=site, lang=lang,
+            frontend_url="https://app.ahxov.com",
+        )
+        html = render_template(TRIGGER_ANALYSIS_COMPLETE, lang, ctx)
+        _check(
+            f"T01 render {lang} contains domain",
+            "ahxov.com" in html,
+        )
+        _check(
+            f"T02 render {lang} contains overall score 78",
+            ">78<" in html,
+        )
+        _check(
+            f"T03 render {lang} contains result_url",
+            "/sites/" in html and "/results/" in html and lang in html,
+        )
+
+    # T04 — 언어별 키워드 (en: "Analysis complete" / ko: "분석" / es: "Análisis")
+    en_html = render_template(
+        TRIGGER_ANALYSIS_COMPLETE, "en",
+        build_analysis_complete_context(
+            analysis=analysis, site=site, lang="en",
+            frontend_url="https://app.ahxov.com",
+        ),
+    )
+    _check("T04a en template has 'Analysis complete'", "Analysis complete" in en_html)
+    ko_html = render_template(
+        TRIGGER_ANALYSIS_COMPLETE, "ko",
+        build_analysis_complete_context(
+            analysis=analysis, site=site, lang="ko",
+            frontend_url="https://app.ahxov.com",
+        ),
+    )
+    _check("T04b ko template has '분석이 완료'", "분석이 완료" in ko_html)
+    es_html = render_template(
+        TRIGGER_ANALYSIS_COMPLETE, "es",
+        build_analysis_complete_context(
+            analysis=analysis, site=site, lang="es",
+            frontend_url="https://app.ahxov.com",
+        ),
+    )
+    _check("T04c es template has 'Análisis completado'", "Análisis completado" in es_html)
+
+    # T05 — 미지원 lang → en 폴백.
+    fallback_html = render_template(
+        TRIGGER_ANALYSIS_COMPLETE, "fr",  # 미지원
+        build_analysis_complete_context(
+            analysis=analysis, site=site, lang="en",
+            frontend_url="https://app.ahxov.com",
+        ),
+    )
+    _check("T05 unsupported lang → en fallback", "Analysis complete" in fallback_html)
+
+
+# ─── build_analysis_complete_context ────────────────────────────────────
+
+def test_build_context_lang_dispatch():
+    print("\n== build_analysis_complete_context ==")
+    analysis = _fake_analysis(
+        insights=_full_insights(),
+        improvements=_full_improvements(),
+    )
+    site = _fake_site("ahxov.com")
+
+    ctx_en = build_analysis_complete_context(
+        analysis=analysis, site=site, lang="en",
+        frontend_url="https://app.ahxov.com",
+    )
+    _check("T06 en summary picked", ctx_en["summary"] == "EN summary")
+    _check(
+        "T07 en improvements description picked",
+        ctx_en["improvements"][0]["description"] == "Enable SSL",
+    )
+    _check("T08 grade derived from overall=78 → B", ctx_en["grade"] == "B")
+    _check("T09 result_url contains site_id+result_id",
+           f"/sites/{site.id}" in ctx_en["result_url"]
+           and f"/results/{analysis.id}" in ctx_en["result_url"])
+
+    ctx_ko = build_analysis_complete_context(
+        analysis=analysis, site=site, lang="ko",
+        frontend_url="https://app.ahxov.com",
+    )
+    _check("T10 ko summary picked", ctx_ko["summary"] == "KO 요약")
+    _check(
+        "T11 ko improvements description picked",
+        ctx_ko["improvements"][0]["description"] == "SSL 활성화",
+    )
+
+    # T12 — improvements 상위 5 컷오프.
+    many_imps = {
+        "items": [
+            {
+                "priority": "low",
+                "category": "technical",
+                "description": _multi(en=f"item {i}"),
+                "estimated_impact": 3,
+                "estimated_effort": "low",
+                "related_metric_keys": ["ssl_enabled"],
+            }
+            for i in range(8)
+        ]
+    }
+    analysis_many = _fake_analysis(
+        insights=_full_insights(), improvements=many_imps,
+    )
+    ctx = build_analysis_complete_context(
+        analysis=analysis_many, site=site, lang="en",
+        frontend_url="https://app.ahxov.com",
+    )
+    _check("T12 improvements truncated to top 5", len(ctx["improvements"]) == 5)
+
+
+def test_build_context_empty_insights():
+    print("\n== build_context with empty insights/improvements ==")
+    site = _fake_site()
+
+    # 빈 insights
+    a1 = _fake_analysis(insights=None, improvements=None)
+    ctx = build_analysis_complete_context(
+        analysis=a1, site=site, lang="en",
+        frontend_url="https://app.ahxov.com",
+    )
+    _check("T13 None insights → empty summary", ctx["summary"] == "")
+    _check("T14 None improvements → empty list", ctx["improvements"] == [])
+
+    # summary 가 lang 없는 dict (예: en 만)
+    a2 = _fake_analysis(
+        insights={"summary": {"en": "only english"}},
+        improvements={"items": []},
+    )
+    ctx2 = build_analysis_complete_context(
+        analysis=a2, site=site, lang="ko",
+        frontend_url="https://app.ahxov.com",
+    )
+    _check("T15 missing lang in summary → en fallback",
+           ctx2["summary"] == "only english")
+
+    # improvements item description 이 string (multilingual ❌)
+    a3 = _fake_analysis(
+        insights=_full_insights(),
+        improvements={
+            "items": [{
+                "priority": "high",
+                "category": "technical",
+                "description": "plain string desc",
+                "estimated_impact": 5,
+                "estimated_effort": "low",
+                "related_metric_keys": ["ssl_enabled"],
+            }],
+        },
+    )
+    ctx3 = build_analysis_complete_context(
+        analysis=a3, site=site, lang="ko",
+        frontend_url="https://app.ahxov.com",
+    )
+    _check("T16 string description preserved as-is",
+           ctx3["improvements"][0]["description"] == "plain string desc")
+
+
+def test_grade_thresholds():
+    print("\n== _derive_grade thresholds ==")
+    site = _fake_site()
+    cases = [(95, "A"), (90, "A"), (89, "B"), (75, "B"), (74, "C"), (60, "C"),
+             (59, "D"), (40, "D"), (39, "F"), (0, "F")]
+    for score, expected in cases:
+        a = _fake_analysis(overall=float(score))
+        ctx = build_analysis_complete_context(
+            analysis=a, site=site, lang="en",
+            frontend_url="https://app.ahxov.com",
+        )
+        _check(f"T17 score={score} → grade={expected}", ctx["grade"] == expected)
+
+
+# ─── _resolve_recipients ────────────────────────────────────────────────
+
+def _make_session_for_recipients(
+    *,
+    member_user_ids: list[UUID],
+    profile_langs: dict[UUID, str],
+    auth_emails: dict[UUID, str | None],
+) -> MagicMock:
+    """db.execute mock — 호출 순서: members → profiles → auth.users."""
+    db = MagicMock()
+    call_results = [
+        # members rows: list of (user_id,) tuples
+        MagicMock(all=MagicMock(return_value=[(uid,) for uid in member_user_ids])),
+        # profiles rows: list of (user_id, lang) tuples
+        MagicMock(all=MagicMock(return_value=[
+            (uid, lang) for uid, lang in profile_langs.items()
+        ])),
+        # auth.users rows: list of (user_id, email) tuples
+        MagicMock(all=MagicMock(return_value=[
+            (uid, email) for uid, email in auth_emails.items()
+        ])),
+    ]
+    db.execute = AsyncMock(side_effect=call_results)
+    return db
+
+
+def test_resolve_recipients_owner_admin():
+    print("\n== _resolve_recipients ==")
+    owner_id, admin_id, viewer_id = uuid4(), uuid4(), uuid4()
+    member_ids = [owner_id, admin_id]  # viewer 자동 미포함 (NOTIFY_ROLES filter)
+    profile_langs = {owner_id: "en", admin_id: "ko"}
+    auth_emails = {owner_id: "owner@a.com", admin_id: "admin@a.com"}
+
+    db = _make_session_for_recipients(
+        member_user_ids=member_ids,
+        profile_langs=profile_langs,
+        auth_emails=auth_emails,
+    )
+    rcps = asyncio.run(_resolve_recipients(
+        db, workspace_id=uuid4(), triggered_by=None,
+    ))
+    _check("T18 owner + admin returned (no viewer)", len(rcps) == 2)
+    emails = {r["email"] for r in rcps}
+    _check("T19 emails are owner+admin",
+           emails == {"owner@a.com", "admin@a.com"})
+    langs_by_email = {r["email"]: r["lang"] for r in rcps}
+    _check("T20 langs match profiles",
+           langs_by_email["owner@a.com"] == "en"
+           and langs_by_email["admin@a.com"] == "ko")
+
+
+def test_resolve_recipients_dedup_with_triggered_by():
+    print("\n== _resolve_recipients dedup ==")
+    owner_id = uuid4()
+    member_ids = [owner_id]
+    profile_langs = {owner_id: "es"}
+    auth_emails = {owner_id: "owner@a.com"}
+
+    # triggered_by == owner → 중복 제거 → 1건
+    db = _make_session_for_recipients(
+        member_user_ids=member_ids,
+        profile_langs=profile_langs,
+        auth_emails=auth_emails,
+    )
+    rcps = asyncio.run(_resolve_recipients(
+        db, workspace_id=uuid4(), triggered_by=owner_id,
+    ))
+    _check("T21 owner == triggered_by deduped to 1", len(rcps) == 1)
+
+
+def test_resolve_recipients_external_triggered_by():
+    print("\n== _resolve_recipients external triggered_by ==")
+    owner_id, member_id = uuid4(), uuid4()
+    member_ids = [owner_id]  # member_id 는 NOTIFY_ROLES 외
+    profile_langs = {owner_id: "en", member_id: "ko"}
+    auth_emails = {owner_id: "owner@a.com", member_id: "member@a.com"}
+
+    db = _make_session_for_recipients(
+        member_user_ids=member_ids,
+        profile_langs=profile_langs,
+        auth_emails=auth_emails,
+    )
+    rcps = asyncio.run(_resolve_recipients(
+        db, workspace_id=uuid4(), triggered_by=member_id,
+    ))
+    _check("T22 owner + analyzed_by (member) both included", len(rcps) == 2)
+
+
+def test_resolve_recipients_email_missing():
+    print("\n== _resolve_recipients email missing skip ==")
+    owner_id, admin_id = uuid4(), uuid4()
+    member_ids = [owner_id, admin_id]
+    profile_langs = {owner_id: "en", admin_id: "ko"}
+    # admin email 누락 (None)
+    auth_emails = {owner_id: "owner@a.com", admin_id: None}
+
+    db = _make_session_for_recipients(
+        member_user_ids=member_ids,
+        profile_langs=profile_langs,
+        auth_emails=auth_emails,
+    )
+    rcps = asyncio.run(_resolve_recipients(
+        db, workspace_id=uuid4(), triggered_by=None,
+    ))
+    _check("T23 missing email skipped", len(rcps) == 1)
+    _check("T24 only owner remains",
+           rcps[0]["email"] == "owner@a.com" if rcps else False)
+
+
+# ─── _send_one + send_analysis_complete_email ──────────────────────────
+
+def test_send_one_no_api_key():
+    print("\n== _send_one no api_key ==")
+    fake = SimpleNamespace(resend_api_key="", frontend_url="https://app.ahxov.com")
+    original = svc.get_settings
+    svc.get_settings = lambda: fake
+    try:
+        result = asyncio.run(_send_one(
+            to="x@a.com", subject="s", html="<p>x</p>",
+        ))
+        _check("T25 empty api_key → silent skip (False)", result is False)
+    finally:
+        svc.get_settings = original
+
+
+def test_send_one_with_api_key_uses_resend():
+    print("\n== _send_one with api_key ==")
+    fake = SimpleNamespace(resend_api_key="re_test_xxx", frontend_url="https://app.ahxov.com")
+    original = svc.get_settings
+    svc.get_settings = lambda: fake
+
+    sent_payloads: list[dict] = []
+    def _capture(payload):
+        sent_payloads.append(payload)
+        return {"id": "msg_001"}
+
+    original_send = svc.resend.Emails.send
+    svc.resend.Emails.send = _capture
+    try:
+        result = asyncio.run(_send_one(
+            to="x@a.com", subject="hi", html="<p>x</p>",
+        ))
+        _check("T26 with api_key → True", result is True)
+        _check("T27 resend payload captured",
+               len(sent_payloads) == 1
+               and sent_payloads[0]["to"] == ["x@a.com"]
+               and sent_payloads[0]["subject"] == "hi")
+        _check("T28 from address is no-reply@ahxov.com",
+               "no-reply@ahxov.com" in sent_payloads[0]["from"])
+    finally:
+        svc.get_settings = original
+        svc.resend.Emails.send = original_send
+
+
+def test_send_one_resend_error_swallowed():
+    print("\n== _send_one Resend error swallowed ==")
+    fake = SimpleNamespace(resend_api_key="re_test_xxx", frontend_url="https://app.ahxov.com")
+    original = svc.get_settings
+    svc.get_settings = lambda: fake
+
+    def _raise(payload):
+        raise RuntimeError("rate limit")
+
+    original_send = svc.resend.Emails.send
+    svc.resend.Emails.send = _raise
+    try:
+        result = asyncio.run(_send_one(
+            to="x@a.com", subject="hi", html="<p>x</p>",
+        ))
+        _check("T29 Resend error swallowed → False", result is False)
+    finally:
+        svc.get_settings = original
+        svc.resend.Emails.send = original_send
+
+
+def test_send_analysis_complete_full():
+    print("\n== send_analysis_complete_email full flow ==")
+    owner_id, admin_id = uuid4(), uuid4()
+    workspace_id = uuid4()
+
+    fake = SimpleNamespace(resend_api_key="re_test_xxx", frontend_url="https://app.ahxov.com")
+    original_settings = svc.get_settings
+    svc.get_settings = lambda: fake
+
+    sent: list[dict] = []
+    original_send = svc.resend.Emails.send
+    svc.resend.Emails.send = lambda payload: sent.append(payload) or {"id": "x"}
+
+    try:
+        analysis = _fake_analysis(
+            workspace_id=workspace_id,
+            triggered_by=owner_id,
+            insights=_full_insights(),
+            improvements=_full_improvements(),
+        )
+        site = _fake_site("ahxov.com")
+
+        db = _make_session_for_recipients(
+            member_user_ids=[owner_id, admin_id],
+            profile_langs={owner_id: "ko", admin_id: "es"},
+            auth_emails={owner_id: "owner@a.com", admin_id: "admin@a.com"},
+        )
+
+        summary = asyncio.run(send_analysis_complete_email(
+            db, analysis=analysis, site=site,
+        ))
+        _check("T30 sent count == 2", summary["sent"] == 2)
+        _check("T31 skipped == 0", summary["skipped"] == 0)
+        _check("T32 total == 2", summary["total"] == 2)
+        _check("T33 resend called twice", len(sent) == 2)
+
+        # 언어별 subject 검증.
+        subjects = sorted(p["subject"] for p in sent)
+        # ko + es 주제어
+        ko_in = any("분석이 완료" in s for s in subjects)
+        es_in = any("Análisis completado" in s for s in subjects)
+        _check("T34 ko subject present", ko_in)
+        _check("T35 es subject present", es_in)
+
+        # 언어별 본문 검증.
+        ko_bodies = [p for p in sent if "분석이 완료" in p["html"]]
+        es_bodies = [p for p in sent if "Análisis completado" in p["html"]]
+        _check("T36 ko body rendered with ko template", len(ko_bodies) == 1)
+        _check("T37 es body rendered with es template", len(es_bodies) == 1)
+
+        # ko 수신자 본문에 SSL 활성화 (improvement[ko]) 포함.
+        _check("T38 ko body has ko improvement description",
+               "SSL 활성화" in ko_bodies[0]["html"])
+    finally:
+        svc.get_settings = original_settings
+        svc.resend.Emails.send = original_send
+
+
+def test_send_analysis_complete_no_recipients():
+    print("\n== send_analysis_complete_email no recipients ==")
+    fake = SimpleNamespace(resend_api_key="re_test_xxx", frontend_url="https://app.ahxov.com")
+    original = svc.get_settings
+    svc.get_settings = lambda: fake
+    try:
+        db = _make_session_for_recipients(
+            member_user_ids=[],
+            profile_langs={},
+            auth_emails={},
+        )
+        analysis = _fake_analysis(insights=_full_insights(), improvements=_full_improvements())
+        site = _fake_site()
+        summary = asyncio.run(send_analysis_complete_email(
+            db, analysis=analysis, site=site,
+        ))
+        _check("T39 empty recipients → total=0", summary["total"] == 0)
+        _check("T40 sent==0 skipped==0", summary["sent"] == 0 and summary["skipped"] == 0)
+    finally:
+        svc.get_settings = original
+
+
+def test_send_analysis_partial_failure():
+    print("\n== send_analysis_complete_email partial Resend failure ==")
+    owner_id, admin_id = uuid4(), uuid4()
+    workspace_id = uuid4()
+    fake = SimpleNamespace(resend_api_key="re_test_xxx", frontend_url="https://app.ahxov.com")
+    original_settings = svc.get_settings
+    svc.get_settings = lambda: fake
+
+    call_n = {"n": 0}
+    def _flaky(payload):
+        call_n["n"] += 1
+        if call_n["n"] == 1:
+            raise RuntimeError("first call fails")
+        return {"id": "x"}
+
+    original_send = svc.resend.Emails.send
+    svc.resend.Emails.send = _flaky
+
+    try:
+        analysis = _fake_analysis(
+            workspace_id=workspace_id,
+            insights=_full_insights(),
+            improvements=_full_improvements(),
+        )
+        site = _fake_site()
+        db = _make_session_for_recipients(
+            member_user_ids=[owner_id, admin_id],
+            profile_langs={owner_id: "en", admin_id: "en"},
+            auth_emails={owner_id: "o@a.com", admin_id: "a@a.com"},
+        )
+        summary = asyncio.run(send_analysis_complete_email(
+            db, analysis=analysis, site=site,
+        ))
+        _check("T41 partial failure: sent=1", summary["sent"] == 1)
+        _check("T42 partial failure: skipped=1", summary["skipped"] == 1)
+        _check("T43 partial failure: total=2", summary["total"] == 2)
+    finally:
+        svc.get_settings = original_settings
+        svc.resend.Emails.send = original_send
+
+
+# ─── 보조: _normalize_lang / _format_improvement_for_email ─────────────
+
+def test_normalize_lang():
+    print("\n== _normalize_lang ==")
+    _check("T44 en → en", _normalize_lang("en") == "en")
+    _check("T45 ko → ko", _normalize_lang("ko") == "ko")
+    _check("T46 es → es", _normalize_lang("es") == "es")
+    _check("T47 unsupported → en", _normalize_lang("fr") == DEFAULT_LANG)
+    _check("T48 None → en", _normalize_lang(None) == DEFAULT_LANG)
+
+
+def test_format_improvement_for_email():
+    print("\n== _format_improvement_for_email ==")
+    item = {
+        "priority": "high",
+        "category": "technical",
+        "description": _multi(),
+        "estimated_impact": 8,
+        "estimated_effort": "low",
+        "related_metric_keys": ["ssl_enabled"],
+    }
+    out = _format_improvement_for_email(item, "ko")
+    _check("T49 ko description picked", out["description"] == "KO 요약")
+    _check("T50 priority preserved", out["priority"] == "high")
+    _check("T51 category preserved", out["category"] == "technical")
+    _check("T52 effort preserved", out["estimated_effort"] == "low")
+
+    # description dict 에 lang 누락
+    item2 = dict(item, description={"en": "english only"})
+    out2 = _format_improvement_for_email(item2, "ko")
+    _check("T53 missing lang → en fallback",
+           out2["description"] == "english only")
+
+    # description 이 string
+    item3 = dict(item, description="plain")
+    out3 = _format_improvement_for_email(item3, "ko")
+    _check("T54 string description as-is", out3["description"] == "plain")
+
+
+# ─── DEPRECATED v1 send_report_email ───────────────────────────────────
+
+def test_v1_send_report_email_noop():
+    print("\n== v1 send_report_email DEPRECATED stub ==")
+    # 어떤 인자로 호출해도 silent no-op (예외 ❌).
+    asyncio.run(send_report_email(None, "x@a.com"))
+    asyncio.run(send_report_email(None, None, foo="bar"))
+    _check("T55 v1 send_report_email silent no-op (no exception)", True)
+
+
+# ─── runner ─────────────────────────────────────────────────────────────
+
+def main() -> int:
+    test_render_template()
+    test_build_context_lang_dispatch()
+    test_build_context_empty_insights()
+    test_grade_thresholds()
+    test_resolve_recipients_owner_admin()
+    test_resolve_recipients_dedup_with_triggered_by()
+    test_resolve_recipients_external_triggered_by()
+    test_resolve_recipients_email_missing()
+    test_send_one_no_api_key()
+    test_send_one_with_api_key_uses_resend()
+    test_send_one_resend_error_swallowed()
+    test_send_analysis_complete_full()
+    test_send_analysis_complete_no_recipients()
+    test_send_analysis_partial_failure()
+    test_normalize_lang()
+    test_format_improvement_for_email()
+    test_v1_send_report_email_noop()
+
+    total = 55  # T01-T55 (T01-T03 × 3 langs counted as separate)
+    if FAILED:
+        print(f"\n[FAIL] {len(FAILED)}/{total} cases failed:")
+        for label in FAILED:
+            print(f"  - {label}")
+        return 1
+    print(f"\n[PASS] all email_service test cases ({total} unique labels)")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
