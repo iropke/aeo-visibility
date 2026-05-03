@@ -8,9 +8,14 @@ Phase 1 G7-email-core (2026-05-03):
     - ``resend_api_key`` 빈 값 → silent skip (개발 환경 안전).
     - Resend API 호출 실패 → swallow + log (분석 결과는 이미 DB 저장됨, best-effort).
 
-Phase 2 (G8 / 017_pg_cron / 결제 청크):
+Phase 1 G8-email-trial-sequence (2026-05-03):
+    - 트라이얼 만료 시퀀스 (``trial_expiry_day{7,30,90}``) — workspace owner only.
+    - 본문은 SPEC §4-3 시퀀스 표 정합 — Day 7=30%, Day 30=50%, Day 90=50%+demo.
+    - 쿠폰 코드 inject 는 Phase 2 쿠폰 청크에서 (현재는 할인 % + Pricing CTA 만).
+    - cron 스케줄링은 별도 청크 (017_pg_cron_setup) — 본 모듈은 helper 만 제공.
+
+Phase 2 (Magic Link / 017_pg_cron / 결제 청크):
     - Magic Link (Supabase Auth Hook 또는 직접 발송).
-    - 트라이얼 만료 시퀀스 Day 7 / 30 / 90 (G8 + 017_pg_cron).
     - 결제 영수증 / 결제 실패 / 워크스페이스 초대.
 
 설계 메모:
@@ -64,8 +69,22 @@ NOTIFY_ROLES: tuple[WorkspaceRole, ...] = (
 # 메일 본문 improvements 표시 상한.
 IMPROVEMENTS_PREVIEW_MAX: int = 5
 
-# Trigger key — 템플릿 디렉토리명. Phase 1 G7 = analysis_complete 단일.
+# Trigger key — 템플릿 디렉토리명.
 TRIGGER_ANALYSIS_COMPLETE: str = "analysis_complete"
+
+# G8 트라이얼 만료 시퀀스 — Day 7 / 30 / 90.
+# SPEC §4-3 표 정합. 쿠폰 코드는 Phase 2 쿠폰 청크에서 inject.
+TRIAL_EXPIRY_DAYS: tuple[int, ...] = (7, 30, 90)
+TRIAL_EXPIRY_DAY_SET: frozenset[int] = frozenset(TRIAL_EXPIRY_DAYS)
+
+
+def _trial_expiry_trigger(day: int) -> str:
+    """day → 템플릿 디렉토리명. ``trial_expiry_day{7|30|90}``."""
+    if day not in TRIAL_EXPIRY_DAY_SET:
+        raise ValueError(
+            f"day must be one of {sorted(TRIAL_EXPIRY_DAYS)}, got {day}"
+        )
+    return f"trial_expiry_day{day}"
 
 
 # ─── Jinja2 환경 — lazy init ──────────────────────────────────────────
@@ -357,6 +376,202 @@ async def send_analysis_complete_email(
         summary["recipients"].append(
             {**rcp, "ok": ok, "reason": "sent" if ok else "send_failed"}
         )
+    return summary
+
+
+# ─── 트라이얼 만료 시퀀스 메일 (Phase 1 G8) ──────────────────────────
+#
+# SPEC §4-3 표:
+#   Day 7  — 즉시 전환 인센티브: 첫 달 30% 할인 (3일 한정)
+#   Day 30 — 재참여 유도: 첫 달 50% 할인
+#   Day 90 — 최종 제안: 첫 3개월 50% 할인 + 1:1 데모
+#
+# Phase 1 본문은 할인 % + 기간 명시 + Pricing CTA URL. 실제 쿠폰 코드/링크는
+# Phase 2 쿠폰 청크에서 같은 템플릿에 placeholder 추가 (auto_apply 토큰 등).
+#
+# 수신자: workspace owner only (트라이얼 전환 결제 결정권자, G7 결정 분리).
+# cron 스케줄링은 017_pg_cron_setup 청크가 trial_ends_at + day 일치 워크스페이스
+# 를 select 한 뒤 본 helper 호출.
+
+_TRIAL_EXPIRY_SUBJECT: dict[int, dict[str, str]] = {
+    7: {
+        "en": "AEO Visibility — Your trial ended. Get 30% off your first month",
+        "ko": "AEO Visibility — 트라이얼이 종료되었어요. 첫 달 30% 할인 받기",
+        "es": "AEO Visibility — Su prueba terminó. 30% de descuento en su primer mes",
+    },
+    30: {
+        "en": "AEO Visibility — Still curious? 50% off your first month",
+        "ko": "AEO Visibility — 다시 시작해보세요. 첫 달 50% 할인",
+        "es": "AEO Visibility — ¿Sigue interesado? 50% de descuento en su primer mes",
+    },
+    90: {
+        "en": "AEO Visibility — Last chance: 50% off for 3 months + free demo",
+        "ko": "AEO Visibility — 마지막 기회: 첫 3개월 50% 할인 + 1:1 데모",
+        "es": "AEO Visibility — Última oportunidad: 50% por 3 meses + demo gratis",
+    },
+}
+
+
+async def _resolve_workspace_owner(
+    db: AsyncSession,
+    *,
+    workspace_id: UUID,
+) -> dict[str, Any] | None:
+    """워크스페이스 owner profile + email lookup.
+
+    반환: ``{user_id, email, lang, display_name, workspace_name}`` 또는 None.
+    None 인 경우(테이블 무결성 깨짐, owner 멤버 row 없음, email 누락):
+    호출자가 skip 하고 log 만 남김.
+    """
+    # 1) workspace + owner_id + name 조회.
+    from app.models.workspace import Workspace  # 순환 import 방지 (모듈 끝)
+    ws = await db.scalar(
+        select(Workspace).where(Workspace.id == workspace_id)
+    )
+    if ws is None:
+        log.warning("email_service: workspace not found id=%s", workspace_id)
+        return None
+
+    owner_id = ws.owner_id
+
+    # 2) profile lookup (preferred_language + display_name).
+    profile = await db.scalar(
+        select(Profile).where(Profile.id == owner_id)
+    )
+    if profile is None:
+        log.warning(
+            "email_service: profile missing for owner=%s ws=%s",
+            owner_id, workspace_id,
+        )
+        return None
+
+    # 3) auth.users.email — schema=auth 라 raw SQL.
+    sql = text("SELECT email FROM auth.users WHERE id = :id")
+    result = await db.execute(sql, {"id": owner_id})
+    row = result.first()
+    email = row[0] if row else None
+    if not email:
+        log.warning(
+            "email_service: auth.users.email missing for owner=%s ws=%s",
+            owner_id, workspace_id,
+        )
+        return None
+
+    return {
+        "user_id": owner_id,
+        "email": email,
+        "lang": _normalize_lang(profile.preferred_language),
+        "display_name": profile.display_name or "",
+        "workspace_name": ws.name,
+    }
+
+
+def build_trial_expiry_context(
+    *,
+    day: int,
+    workspace_name: str,
+    display_name: str,
+    lang: str,
+    frontend_url: str,
+) -> dict[str, Any]:
+    """트라이얼 만료 메일 템플릿 컨텍스트 빌더.
+
+    discount_percent / cta_label / pricing_url / display_name 등 메타.
+    Day 별 할인 정책 (SPEC §4-3) 매핑.
+    """
+    if day not in TRIAL_EXPIRY_DAY_SET:
+        raise ValueError(
+            f"day must be one of {sorted(TRIAL_EXPIRY_DAYS)}, got {day}"
+        )
+
+    # SPEC §4-3 표 정합. duration_label 은 lang 별로 다름 → 템플릿이 표시.
+    if day == 7:
+        discount_percent, duration_months = 30, 1
+        urgency = "limited"  # "3일 한정"
+    elif day == 30:
+        discount_percent, duration_months = 50, 1
+        urgency = "standard"
+    else:  # 90
+        discount_percent, duration_months = 50, 3
+        urgency = "final"  # 최종 제안 + 데모 옵션
+
+    return {
+        "day": day,
+        "workspace_name": workspace_name,
+        "display_name": display_name,
+        "discount_percent": discount_percent,
+        "duration_months": duration_months,
+        "urgency": urgency,
+        "include_demo_cta": (day == 90),  # Day 90 만 1:1 데모 CTA
+        "pricing_url": f"{frontend_url.rstrip('/')}/{lang}/pricing",
+        "demo_url": f"{frontend_url.rstrip('/')}/{lang}/contact?topic=demo",
+        "lang": lang,
+    }
+
+
+async def send_trial_expiry_email(
+    db: AsyncSession,
+    *,
+    workspace_id: UUID,
+    day: int,
+) -> dict[str, Any]:
+    """트라이얼 만료 시퀀스 메일 1통 — 단일 워크스페이스 owner 대상.
+
+    반환: ``{sent, skipped, total, recipient}`` (단일 owner 라 list 아닌 단건).
+    cron 호출자는 trial_ends_at 기준 day 일치 워크스페이스를 batch 로 처리하지만,
+    본 helper 는 워크스페이스 1개 단위로만 발송.
+
+    Phase 2 쿠폰 청크에서 본 함수 호출 직전에 ``_inject_coupon_token(...)`` 같은
+    helper 로 컨텍스트에 코드 주입 가능 (현재는 할인 % + URL 만).
+    """
+    if day not in TRIAL_EXPIRY_DAY_SET:
+        raise ValueError(
+            f"day must be one of {sorted(TRIAL_EXPIRY_DAYS)}, got {day}"
+        )
+
+    settings = get_settings()
+    summary: dict[str, Any] = {
+        "sent": 0, "skipped": 0, "total": 0, "recipient": None,
+    }
+
+    owner = await _resolve_workspace_owner(db, workspace_id=workspace_id)
+    if owner is None:
+        log.info(
+            "email_service: trial_expiry skip — owner unresolved ws=%s day=%s",
+            workspace_id, day,
+        )
+        return summary
+
+    summary["total"] = 1
+    lang = owner["lang"]
+
+    try:
+        ctx = build_trial_expiry_context(
+            day=day,
+            workspace_name=owner["workspace_name"],
+            display_name=owner["display_name"],
+            lang=lang,
+            frontend_url=settings.frontend_url,
+        )
+        html = render_template(_trial_expiry_trigger(day), lang, ctx)
+    except Exception as exc:  # noqa: BLE001
+        log.warning(
+            "email_service: trial_expiry render failed ws=%s day=%s lang=%s err=%s",
+            workspace_id, day, lang, exc,
+        )
+        summary["skipped"] = 1
+        summary["recipient"] = {**owner, "ok": False, "reason": "render_error"}
+        return summary
+
+    subject = _TRIAL_EXPIRY_SUBJECT[day][lang]
+    ok = await _send_one(to=owner["email"], subject=subject, html=html)
+    if ok:
+        summary["sent"] = 1
+    else:
+        summary["skipped"] = 1
+    summary["recipient"] = {
+        **owner, "ok": ok, "reason": "sent" if ok else "send_failed",
+    }
     return summary
 
 

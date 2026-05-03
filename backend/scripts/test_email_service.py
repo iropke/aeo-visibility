@@ -31,15 +31,20 @@ from app.services import email_service as svc
 from app.services.email_service import (
     DEFAULT_LANG,
     SUPPORTED_LANGS,
+    TRIAL_EXPIRY_DAYS,
     TRIGGER_ANALYSIS_COMPLETE,
     _format_improvement_for_email,
     _normalize_lang,
     _resolve_recipients,
+    _resolve_workspace_owner,
     _send_one,
+    _trial_expiry_trigger,
     build_analysis_complete_context,
+    build_trial_expiry_context,
     render_template,
     send_analysis_complete_email,
     send_report_email,
+    send_trial_expiry_email,
 )
 
 
@@ -648,6 +653,303 @@ def test_format_improvement_for_email():
     _check("T54 string description as-is", out3["description"] == "plain")
 
 
+# ─── G8 trial_expiry: helper / context / trigger ────────────────────────
+
+def test_trial_expiry_trigger_dirname():
+    print("\n== _trial_expiry_trigger ==")
+    _check("T56 day=7 → trial_expiry_day7",
+           _trial_expiry_trigger(7) == "trial_expiry_day7")
+    _check("T57 day=30 → trial_expiry_day30",
+           _trial_expiry_trigger(30) == "trial_expiry_day30")
+    _check("T58 day=90 → trial_expiry_day90",
+           _trial_expiry_trigger(90) == "trial_expiry_day90")
+    raised = False
+    try:
+        _trial_expiry_trigger(14)
+    except ValueError:
+        raised = True
+    _check("T59 invalid day raises ValueError", raised)
+
+
+def test_trial_expiry_context_per_day():
+    print("\n== build_trial_expiry_context per day ==")
+    common = dict(
+        workspace_name="Acme",
+        display_name="Jane",
+        lang="en",
+        frontend_url="https://app.ahxov.com",
+    )
+
+    ctx7 = build_trial_expiry_context(day=7, **common)
+    _check("T60 day=7: discount=30 / duration=1 / urgency=limited",
+           ctx7["discount_percent"] == 30
+           and ctx7["duration_months"] == 1
+           and ctx7["urgency"] == "limited"
+           and ctx7["include_demo_cta"] is False)
+
+    ctx30 = build_trial_expiry_context(day=30, **common)
+    _check("T61 day=30: discount=50 / duration=1 / urgency=standard",
+           ctx30["discount_percent"] == 50
+           and ctx30["duration_months"] == 1
+           and ctx30["urgency"] == "standard"
+           and ctx30["include_demo_cta"] is False)
+
+    ctx90 = build_trial_expiry_context(day=90, **common)
+    _check("T62 day=90: discount=50 / duration=3 / urgency=final / demo=True",
+           ctx90["discount_percent"] == 50
+           and ctx90["duration_months"] == 3
+           and ctx90["urgency"] == "final"
+           and ctx90["include_demo_cta"] is True)
+
+    _check("T63 pricing_url contains lang",
+           ctx7["pricing_url"] == "https://app.ahxov.com/en/pricing")
+    _check("T64 demo_url contains topic=demo",
+           "topic=demo" in ctx90["demo_url"])
+
+    raised = False
+    try:
+        build_trial_expiry_context(day=15, **common)
+    except ValueError:
+        raised = True
+    _check("T65 invalid day raises ValueError", raised)
+
+
+def test_trial_expiry_template_render_per_day():
+    print("\n== render trial_expiry templates ==")
+    common = dict(
+        workspace_name="Acme",
+        display_name="Jane",
+        frontend_url="https://app.ahxov.com",
+    )
+
+    # Day 7 — "30%" discount + lang 별 hero text
+    for lang, hero in [("en", "Your trial ended"),
+                       ("ko", "트라이얼이 종료"),
+                       ("es", "Su prueba terminó")]:
+        ctx = build_trial_expiry_context(day=7, lang=lang, **common)
+        html = render_template(_trial_expiry_trigger(7), lang, ctx)
+        _check(f"T66 day7 {lang} hero text", hero in html)
+        _check(f"T67 day7 {lang} 30% discount", "30%" in html)
+        _check(f"T68 day7 {lang} no demo CTA", "demo" not in html.lower() or "{{" not in html)
+
+    # Day 30 — "50%" discount, no demo CTA
+    for lang, hero in [("en", "Still curious"),
+                       ("ko", "다시 시작"),
+                       ("es", "¿Sigue interesado?")]:
+        ctx = build_trial_expiry_context(day=30, lang=lang, **common)
+        html = render_template(_trial_expiry_trigger(30), lang, ctx)
+        _check(f"T69 day30 {lang} hero text", hero in html)
+        _check(f"T70 day30 {lang} 50% discount", "50%" in html)
+
+    # Day 90 — "50%" discount + demo CTA
+    for lang, hero, demo_label in [
+        ("en", "Last chance", "Book a free demo"),
+        ("ko", "마지막 기회", "데모 예약"),
+        ("es", "Última oportunidad", "Reservar demo"),
+    ]:
+        ctx = build_trial_expiry_context(day=90, lang=lang, **common)
+        html = render_template(_trial_expiry_trigger(90), lang, ctx)
+        _check(f"T71 day90 {lang} hero text", hero in html)
+        _check(f"T72 day90 {lang} demo CTA", demo_label in html)
+        _check(f"T73 day90 {lang} 3 months", "3" in html)
+
+    # display_name 없는 경우 — greeting 블록 자동 skip (Jinja2 {% if %})
+    ctx_no_name = build_trial_expiry_context(
+        day=7, workspace_name="Acme", display_name="",
+        lang="en", frontend_url="https://app.ahxov.com",
+    )
+    html_no_name = render_template(_trial_expiry_trigger(7), "en", ctx_no_name)
+    _check("T74 empty display_name → no 'Hi ,' greeting",
+           "Hi ," not in html_no_name)
+
+
+# ─── G8 _resolve_workspace_owner ────────────────────────────────────────
+
+def _make_session_for_owner(
+    *,
+    workspace: SimpleNamespace | None = None,
+    profile: SimpleNamespace | None = None,
+    auth_email: str | None = "owner@a.com",
+) -> MagicMock:
+    """db.scalar 2번 (workspace, profile) + db.execute 1번 (auth.users) 시뮬."""
+    db = MagicMock()
+    db.scalar = AsyncMock(side_effect=[workspace, profile])
+    if auth_email is None:
+        # row 자체 없는 경우 first() → None
+        execute_result = MagicMock(first=MagicMock(return_value=None))
+    else:
+        execute_result = MagicMock(first=MagicMock(return_value=(auth_email,)))
+    db.execute = AsyncMock(return_value=execute_result)
+    return db
+
+
+def test_resolve_owner_happy():
+    print("\n== _resolve_workspace_owner happy ==")
+    owner_id = uuid4()
+    ws_id = uuid4()
+    workspace = SimpleNamespace(id=ws_id, owner_id=owner_id, name="Acme")
+    profile = SimpleNamespace(id=owner_id, preferred_language="ko",
+                               display_name="Jane")
+    db = _make_session_for_owner(
+        workspace=workspace, profile=profile, auth_email="owner@a.com",
+    )
+    out = asyncio.run(_resolve_workspace_owner(db, workspace_id=ws_id))
+    _check("T75 owner resolved", out is not None)
+    _check("T76 email correct", out["email"] == "owner@a.com")
+    _check("T77 lang from profile", out["lang"] == "ko")
+    _check("T78 display_name from profile", out["display_name"] == "Jane")
+    _check("T79 workspace_name from workspace", out["workspace_name"] == "Acme")
+
+
+def test_resolve_owner_workspace_missing():
+    print("\n== _resolve_workspace_owner workspace missing ==")
+    db = _make_session_for_owner(workspace=None, profile=None, auth_email=None)
+    out = asyncio.run(_resolve_workspace_owner(db, workspace_id=uuid4()))
+    _check("T80 workspace missing → None", out is None)
+
+
+def test_resolve_owner_profile_missing():
+    print("\n== _resolve_workspace_owner profile missing ==")
+    owner_id = uuid4()
+    ws_id = uuid4()
+    workspace = SimpleNamespace(id=ws_id, owner_id=owner_id, name="Acme")
+    db = _make_session_for_owner(
+        workspace=workspace, profile=None, auth_email="owner@a.com",
+    )
+    out = asyncio.run(_resolve_workspace_owner(db, workspace_id=ws_id))
+    _check("T81 profile missing → None", out is None)
+
+
+def test_resolve_owner_email_missing():
+    print("\n== _resolve_workspace_owner email missing ==")
+    owner_id = uuid4()
+    ws_id = uuid4()
+    workspace = SimpleNamespace(id=ws_id, owner_id=owner_id, name="Acme")
+    profile = SimpleNamespace(id=owner_id, preferred_language="en",
+                               display_name="")
+    db = _make_session_for_owner(
+        workspace=workspace, profile=profile, auth_email=None,
+    )
+    out = asyncio.run(_resolve_workspace_owner(db, workspace_id=ws_id))
+    _check("T82 auth.users.email missing → None", out is None)
+
+
+# ─── G8 send_trial_expiry_email ────────────────────────────────────────
+
+def test_send_trial_expiry_full():
+    print("\n== send_trial_expiry_email full flow ==")
+    fake = SimpleNamespace(resend_api_key="re_test_xxx",
+                            frontend_url="https://app.ahxov.com")
+    original_settings = svc.get_settings
+    svc.get_settings = lambda: fake
+
+    sent: list[dict] = []
+    original_send = svc.resend.Emails.send
+    svc.resend.Emails.send = lambda payload: sent.append(payload) or {"id": "x"}
+
+    try:
+        for day, lang, expect_subject_substr, expect_body_substr in [
+            (7, "en", "30% off", "Your trial ended"),
+            (30, "ko", "50% 할인", "다시 시작"),
+            (90, "es", "50% por 3 meses", "Última oportunidad"),
+        ]:
+            sent.clear()
+            owner_id, ws_id = uuid4(), uuid4()
+            workspace = SimpleNamespace(id=ws_id, owner_id=owner_id, name="Acme")
+            profile = SimpleNamespace(id=owner_id, preferred_language=lang,
+                                       display_name="Jane")
+            db = _make_session_for_owner(
+                workspace=workspace, profile=profile, auth_email="o@a.com",
+            )
+            summary = asyncio.run(send_trial_expiry_email(
+                db, workspace_id=ws_id, day=day,
+            ))
+            _check(f"T83 day={day} {lang}: sent=1",
+                   summary["sent"] == 1)
+            _check(f"T84 day={day} {lang}: total=1",
+                   summary["total"] == 1)
+            _check(f"T85 day={day} {lang}: 1 resend call",
+                   len(sent) == 1)
+            _check(f"T86 day={day} {lang}: subject contains '{expect_subject_substr}'",
+                   expect_subject_substr in sent[0]["subject"])
+            _check(f"T87 day={day} {lang}: body contains '{expect_body_substr}'",
+                   expect_body_substr in sent[0]["html"])
+            _check(f"T88 day={day} {lang}: recipient ok=True",
+                   summary["recipient"]["ok"] is True)
+    finally:
+        svc.get_settings = original_settings
+        svc.resend.Emails.send = original_send
+
+
+def test_send_trial_expiry_owner_unresolved():
+    print("\n== send_trial_expiry_email owner unresolved skip ==")
+    fake = SimpleNamespace(resend_api_key="re_test_xxx",
+                            frontend_url="https://app.ahxov.com")
+    original = svc.get_settings
+    svc.get_settings = lambda: fake
+    try:
+        # workspace 자체 누락 → owner unresolved → 발송 ❌, summary all 0.
+        db = _make_session_for_owner(
+            workspace=None, profile=None, auth_email=None,
+        )
+        summary = asyncio.run(send_trial_expiry_email(
+            db, workspace_id=uuid4(), day=7,
+        ))
+        _check("T89 owner unresolved: sent=0", summary["sent"] == 0)
+        _check("T90 owner unresolved: skipped=0", summary["skipped"] == 0)
+        _check("T91 owner unresolved: total=0", summary["total"] == 0)
+        _check("T92 owner unresolved: recipient=None", summary["recipient"] is None)
+    finally:
+        svc.get_settings = original
+
+
+def test_send_trial_expiry_resend_failure():
+    print("\n== send_trial_expiry_email Resend failure ==")
+    fake = SimpleNamespace(resend_api_key="re_test_xxx",
+                            frontend_url="https://app.ahxov.com")
+    original_settings = svc.get_settings
+    svc.get_settings = lambda: fake
+    original_send = svc.resend.Emails.send
+    svc.resend.Emails.send = lambda payload: (_ for _ in ()).throw(RuntimeError("rate limit"))
+    try:
+        owner_id, ws_id = uuid4(), uuid4()
+        workspace = SimpleNamespace(id=ws_id, owner_id=owner_id, name="Acme")
+        profile = SimpleNamespace(id=owner_id, preferred_language="en",
+                                   display_name="Jane")
+        db = _make_session_for_owner(
+            workspace=workspace, profile=profile, auth_email="o@a.com",
+        )
+        summary = asyncio.run(send_trial_expiry_email(
+            db, workspace_id=ws_id, day=7,
+        ))
+        _check("T93 Resend failure: sent=0", summary["sent"] == 0)
+        _check("T94 Resend failure: skipped=1", summary["skipped"] == 1)
+        _check("T95 Resend failure: total=1", summary["total"] == 1)
+        _check("T96 Resend failure: recipient ok=False",
+               summary["recipient"]["ok"] is False)
+    finally:
+        svc.get_settings = original_settings
+        svc.resend.Emails.send = original_send
+
+
+def test_send_trial_expiry_invalid_day():
+    print("\n== send_trial_expiry_email invalid day ==")
+    raised = False
+    try:
+        asyncio.run(send_trial_expiry_email(
+            MagicMock(), workspace_id=uuid4(), day=14,
+        ))
+    except ValueError:
+        raised = True
+    _check("T97 invalid day raises ValueError", raised)
+
+
+def test_trial_expiry_supported_days_constant():
+    print("\n== TRIAL_EXPIRY_DAYS constant ==")
+    _check("T98 TRIAL_EXPIRY_DAYS = (7, 30, 90)",
+           tuple(sorted(TRIAL_EXPIRY_DAYS)) == (7, 30, 90))
+
+
 # ─── DEPRECATED v1 send_report_email ───────────────────────────────────
 
 def test_v1_send_report_email_noop():
@@ -661,6 +963,7 @@ def test_v1_send_report_email_noop():
 # ─── runner ─────────────────────────────────────────────────────────────
 
 def main() -> int:
+    # G7 — analysis_complete
     test_render_template()
     test_build_context_lang_dispatch()
     test_build_context_empty_insights()
@@ -677,15 +980,28 @@ def main() -> int:
     test_send_analysis_partial_failure()
     test_normalize_lang()
     test_format_improvement_for_email()
+    # G8 — trial_expiry_day{7,30,90}
+    test_trial_expiry_trigger_dirname()
+    test_trial_expiry_context_per_day()
+    test_trial_expiry_template_render_per_day()
+    test_resolve_owner_happy()
+    test_resolve_owner_workspace_missing()
+    test_resolve_owner_profile_missing()
+    test_resolve_owner_email_missing()
+    test_send_trial_expiry_full()
+    test_send_trial_expiry_owner_unresolved()
+    test_send_trial_expiry_resend_failure()
+    test_send_trial_expiry_invalid_day()
+    test_trial_expiry_supported_days_constant()
+    # v1 stub
     test_v1_send_report_email_noop()
 
-    total = 55  # T01-T55 (T01-T03 × 3 langs counted as separate)
     if FAILED:
-        print(f"\n[FAIL] {len(FAILED)}/{total} cases failed:")
+        print(f"\n[FAIL] {len(FAILED)} cases failed:")
         for label in FAILED:
             print(f"  - {label}")
         return 1
-    print(f"\n[PASS] all email_service test cases ({total} unique labels)")
+    print("\n[PASS] all email_service test cases (G7 + G8)")
     return 0
 
 
