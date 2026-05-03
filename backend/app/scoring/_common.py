@@ -101,13 +101,14 @@ def build_category_metrics(metrics: list[MetricResult]) -> CategoryMetrics:
 
 @dataclass(frozen=True)
 class MainPage:
-    """메인 페이지 fetch 결과 — 카테고리 모듈이 status / soup / final_url / error 사용."""
+    """메인 페이지 fetch 결과 — 카테고리 모듈이 status / soup / headers / final_url / error 사용."""
     status_code: int
     elapsed_ms: float
     content_size: int
     final_url: str
     soup: BeautifulSoup | None
     error: str | None
+    headers: dict[str, str]  # lower-case key → value (httpx CaseInsensitiveDict 정규화)
 
 
 async def fetch_main_page(client: httpx.AsyncClient, url: str) -> MainPage:
@@ -127,7 +128,7 @@ async def fetch_main_page(client: httpx.AsyncClient, url: str) -> MainPage:
     except (httpx.HTTPError, OSError) as exc:
         return MainPage(
             status_code=0, elapsed_ms=0.0, content_size=0,
-            final_url=url, soup=None, error=str(exc)[:200],
+            final_url=url, soup=None, error=str(exc)[:200], headers={},
         )
 
     elapsed_ms = (time.perf_counter() - start) * 1000
@@ -138,6 +139,10 @@ async def fetch_main_page(client: httpx.AsyncClient, url: str) -> MainPage:
         except Exception as exc:  # noqa: BLE001
             log.warning("HTML parse failed for %s: %s", url, exc)
 
+    # httpx 의 CaseInsensitiveDict 를 일반 dict 로 정규화 — 카테고리 코드는
+    # lower-case key 로 일관 접근 (예: headers["last-modified"]).
+    headers = {k.lower(): v for k, v in resp.headers.items()}
+
     return MainPage(
         status_code=resp.status_code,
         elapsed_ms=elapsed_ms,
@@ -145,4 +150,5 @@ async def fetch_main_page(client: httpx.AsyncClient, url: str) -> MainPage:
         final_url=str(resp.url),
         soup=soup,
         error=None if resp.status_code < 400 else f"HTTP {resp.status_code}",
+        headers=headers,
     )

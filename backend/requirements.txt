@@ -19,6 +19,10 @@ lxml==5.3.0
 # Scoring utilities
 python-whois==0.9.5
 textstat==0.7.4
+# textstat 0.7.4 가 pkg_resources 를 임포트하는데 setuptools 81+ 에서 분리됨.
+# Phase 1 안정성 우선 — pkg_resources 가 동작하도록 setuptools<81 로 핀.
+# 후속: textstat 0.7.5+ 업그레이드 시점에 setuptools 핀 해제 검토.
+setuptools<81
 
 # AI APIs
 anthropic==0.43.0
