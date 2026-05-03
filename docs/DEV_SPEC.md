@@ -356,8 +356,9 @@ aeo-visibility/
 | `frontend/src/lib/supabase/` | Supabase SSR/Client 분리 |
 | `frontend/src/types/database.ts` | Supabase 자동 생성 타입 |
 | `backend/app/services/` | 비즈니스 로직 분리 |
+| `backend/app/services/llm_synthesizer.py` | SPEC §7-4 — Sonnet 4.6 tool_use 통합 합성 (G6) |
 | `backend/app/scoring/orchestrator.py` | 5 카테고리 병렬 실행 |
-| `backend/app/scoring/schema.py` | 표준 결과 스키마 |
+| `backend/app/scoring/schemas.py` | 표준 결과 스키마 (G2 — `MetricResult`/`CategoryMetrics`/`Improvement`/`AnalysisOptions`) |
 | `backend/app/auth/` | JWT 검증, 권한 헬퍼 |
 | `backend/app/tasks/` | BackgroundTasks 핸들러 |
 | `supabase/migrations/` | Supabase 관리 schema (RLS/cron/vector) |
@@ -593,6 +594,7 @@ REDIS_URL=rediss://...                   # Upstash
 # AI
 ANTHROPIC_API_KEY=sk-ant-...
 VOYAGE_API_KEY=pa-...
+SYNTHESIZER_MODEL=claude-sonnet-4-6       # SPEC §7-4 LLM 통합 합성 모델 (기본값)
 
 # Payment
 STRIPE_SECRET_KEY=sk_test_...
@@ -652,6 +654,7 @@ class Settings(BaseSettings):
     cron_hmac_secret: str
     app_env: str = "development"
     log_level: str = "INFO"
+    synthesizer_model: str = "claude-sonnet-4-6"   # SPEC §7-4 (G6)
 
 settings = Settings()
 ```
@@ -1587,7 +1590,7 @@ Closes #123
 
 ### 20-1. Phase 1: 코어 (~6-8주)
 
-> 진행 상태: 2026-05-03 청크 G4-partial 완료 (커밋 `2e16faf`).
+> 진행 상태: 2026-05-03 청크 G6 완료 (커밋 `9ebf744`). G5 5종 + G6 LLM 통합 합성까지 분석 엔진 본 가치 가동.
 
 **Backend**:
 - [x] Supabase Auth JWT 검증 미들웨어 (청크 B)
@@ -1598,7 +1601,7 @@ Closes #123
 - [x] 분석 엔진 표준 스키마 정의 (`scoring/schemas.py`) (G2)
 - [x] 5개 카테고리 모듈 skeleton — 메트릭 키 22종 + weight 합 1.0 (G2)
 - [x] **5개 카테고리 모듈 메트릭 채움 — v1 → v2 마이그레이션 (G5)** — technical(6) / structured(5) / content(4) / authority-redesign(4 신규 키, AEO 직접 신호) / visibility(3 + multi-engine 슬롯)
-- [ ] LLM 통합 호출 (`services/llm_synthesizer.py`) — G3 stub 완료, 실 Claude 호출 교체 필요
+- [x] **LLM 통합 호출 (`services/llm_synthesizer.py`) — Claude Sonnet 4.6 tool_use + multilingual + stub fallback + high cap=3 (G6)** — SPEC §7-4 본문 단일 소스
 - [x] BackgroundTasks 통합 (G4-partial — POST /analyze 202 + run_analysis)
 - [x] usage_service Pack 차감 + monthly_usage row lock 패턴 (G3)
 - [x] auth/permissions 행위 단위 가드 (`WorkspaceAction.analysis_trigger`, viewer 자동 차단) (G3)

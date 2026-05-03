@@ -554,8 +554,17 @@ CREATE TABLE analysis_results (
     overall_score NUMERIC(5,2),
     category_scores JSONB,  -- {technical: 80.5, structured: 75.0, ...} (§7-2)
     raw_metrics JSONB,      -- 표준 스키마 — { category_name: CategoryMetrics } (§7-2)
-    insights JSONB,         -- {language_code: "..."} 워크스페이스 primary_language 기준 저장
-    improvements JSONB,     -- 우선순위별 개선 제안 (§7-2 Improvement[])
+    -- §7-4 LLM 통합 호출 (G6) 산출:
+    --   { summary: {en, ko, es},                     -- 3 언어 동시 생성 (tool_use)
+    --     primary_language: 'en'|'ko'|'es',
+    --     synthesized_by: 'claude-sonnet-4-6'|'stub-fallback',
+    --     category_count: int,
+    --     improvements_count?: int,
+    --     high_priority_capped?: bool,
+    --     fallback_reason?: string                   -- stub-fallback 일 때만
+    --   }
+    insights JSONB,
+    improvements JSONB,     -- { items: Improvement[] } (§7-2 Improvement)
     analysis_version TEXT NOT NULL,  -- 'v2.0', 'v2.1', ... 스키마/가중치 변경 시 증가
     status analysis_status NOT NULL DEFAULT 'queued',
     error_message TEXT,
@@ -913,7 +922,7 @@ CREATE POLICY wiki_select_members ON wiki_articles FOR SELECT
 | **Structured** | JSON-LD, schema.org, OpenGraph, Twitter Card, hreflang, canonical |
 | **Content** | 콘텐츠 길이, 가독성, 키워드 분포, 헤딩 구조, 이미지 alt, 인용 가능성 |
 | **Authority** | AEO 직접 신호 — Schema.org Organization + sameAs (Knowledge Graph), Article author/Person entity (E-E-A-T), citation metadata (datePublished/dateModified/author/publisher), 도메인 나이 (WHOIS) |
-| **Visibility** | LLM 인용 가능성 (Claude API에 query → 답변에 사이트 등장 여부), 검색 결과 노출 추정 |
+| **Visibility** | LLM 인용 가능성 — 다중 AI 엔진 (Phase 1 Claude, 향후 ChatGPT/Google AI Overviews 등 §7-3 #4) 에 query → 답변에 사이트 brand/domain 등장 여부 측정. 사용자 카테고리/상품명 query 입력 (Phase 2/3) + 경쟁사 비교 (Phase 3). |
 
 #### 메트릭 키 레지스트리 (analysis_version `v2.0`, 22 keys)
 
@@ -950,6 +959,8 @@ i18n 사전 키 컨벤션: `scoring.{category}.{metric_key}.{display|description
 
 > **Authority 재정의 (2026-05-03, G5-authority-redesign 청크)**: 기존 v1 SEO 휴리스틱 4종 (`domain_age`/`social_links`/`contact_info`/`security_headers`) 이 "AI Visibility" 제품 명분이 약하다는 사용자 피드백으로 AEO 직접 신호 4종으로 교체. `organization_schema` (JSON-LD Organization + sameAs) / `author_entity` (Person/Article.author/meta) / `citation_metadata` (datePublished/dateModified/author/publisher 4종 중 ≥3) / `domain_age` (WHOIS, `enable_external_apis=True` 일 때만 측정 — 기본 stub). 외부 API 의존 후보 (`wikipedia_mention`/`external_backlinks`) 는 Phase 2 add-on 으로 보류. Phase 1 베타 = `raw_metrics` 사용자 데이터 ❌ 라 호환성 부담 없이 신규 키로 깔끔 교체.
 
+> **Visibility multi-engine 비전 (2026-05-03, G5-visibility 청크 + reboot-service-concept §1-4)**: 기본 포함 3 엔진 (`google_ai_overviews` / `claude` / `chatgpt`) — 전 티어 무료. 유료 add-on 5 엔진 (`perplexity` / `gemini` / `copilot` / `grok` / `ai_mode`) — 각 $19.99/엔진/월. Enterprise 는 모든 엔진 자동 포함 (10+, 신규 출시 자동 추가). **Phase 1 구현** 은 Claude 단일 호출 (`AnalysisOptions.visibility_engines=["claude"]`) 만 실측, 나머지 엔진 키는 슬롯만 자리 — Phase 2 결제 + 엔진 호출 라우팅으로 확장. 사용자 입력 카테고리/상품명 query (`visibility_user_queries`, 예: "5축 가공기 제조회사 추천") 는 Phase 2/3, 경쟁사 brand/domain 매치 (`visibility_compare_brands`) 는 Phase 3.
+
 ### 7-2. 표준 결과 스키마
 
 분석 결과는 다음 스키마로 표준화:
@@ -974,11 +985,19 @@ interface AnalysisResult {
   raw_metrics: {
     [category: string]: CategoryMetrics;
   };
-  insights: {
-    [language: 'en' | 'ko' | 'es']: string;  // workspace primary_language 기준 저장
-  };
-  improvements: Improvement[];
+  insights: SynthesisInsights;        // §7-4 LLM 통합 호출 산출 (G6)
+  improvements: { items: Improvement[] };
   analysis_version: string;
+}
+
+interface SynthesisInsights {
+  summary: { en: string; ko: string; es: string };  // tool_use 가 3 언어 동시 강제
+  primary_language: 'en' | 'ko' | 'es';             // 워크스페이스 설정
+  synthesized_by: string;                            // 'claude-sonnet-4-6' | 'stub-fallback'
+  category_count: number;
+  improvements_count?: number;                       // synthesized_by !== 'stub-fallback' 일 때
+  high_priority_capped?: boolean;                    // high cap=3 적용 여부
+  fallback_reason?: string;                          // synthesized_by === 'stub-fallback' 일 때
 }
 
 interface CategoryMetrics {
@@ -998,13 +1017,13 @@ interface MetricResult {
 }
 
 interface Improvement {
-  priority: 'high' | 'medium' | 'low';
-  category: string;
-  title_key: string;  // i18n 사전 키 (정적 케이스)
-  description: { [lang: string]: string };  // LLM 동적 생성 시 직접 저장
-  estimated_impact: number;  // 1-10
-  estimated_effort: 'low' | 'medium' | 'high';
-  related_metric_keys: string[];
+  priority: 'high' | 'medium' | 'low';   // LLM 결정 (high cap=3, §7-4)
+  category: 'technical' | 'structured' | 'content' | 'authority' | 'visibility';
+  title_key: string;            // 결정적 도출: `scoring.{category}.{metric_key}.improvement_title`
+  description: { en: string; ko: string; es: string };  // 3 언어 모두 required
+  estimated_impact: number;     // 1-10 integer (LLM 결정)
+  estimated_effort: 'low' | 'medium' | 'high';          // LLM 결정
+  related_metric_keys: string[];                         // 정확히 length=1 (UI 1:1 매핑)
 }
 ```
 
@@ -1016,26 +1035,51 @@ v1 코드는 `backend/app/scoring/v1/{technical,structured,content,authority,vis
 1. 각 카테고리 모듈은 `analyze(url, options: AnalysisOptions) -> CategoryMetrics` 시그니처를 따름
 2. 메트릭 키는 안정 식별자 (변경 ❌, 새 키 추가만) — §7-1 레지스트리가 단일 소스
 3. 가중치는 모듈 외부에서 설정 가능 (`scoring/weights.py`)
-4. LLM 호출이 필요한 부분(insights, improvements)은 **카테고리 내부에서 ❌**, 모든 카테고리 분석 후 한 번에 통합 호출 (`services/llm_synthesizer.py`, 비용 효율)
+4. LLM 호출이 필요한 부분(insights, improvements)은 **카테고리 내부에서 ❌**, 모든 카테고리 분석 후 한 번에 통합 호출 (`services/llm_synthesizer.py`, 비용 효율 — §7-4)
    - **예외**: `visibility` 카테고리의 `llm_brand_mention` / `llm_domain_mention` / `queries_tested` 자체가 LLM 응답 기반 메트릭이므로, 카테고리 내부에서 호출(`AnalysisOptions.enable_llm_visibility=True`). 통합 호출은 메트릭 산출 후 insights/improvements 합성 단계 전담.
+   - **`AnalysisOptions` visibility 확장 슬롯** (Phase 1 = Claude 단일 동작, 슬롯만 자리):
+     - `visibility_engines: list[str] = ["claude"]` — 측정 대상 AI 엔진 키. 기본 3종 (`google_ai_overviews`/`claude`/`chatgpt`) + add-on 5종 (`perplexity`/`gemini`/`copilot`/`grok`/`ai_mode`). reboot-service-concept §1-4 단일 소스.
+     - `visibility_user_queries: list[str] = []` — 사용자 입력 카테고리/상품명 query (Phase 2/3 UX). 빈 리스트면 도메인 분석 후 LLM 5 query 자동 생성.
+     - `visibility_compare_brands: list[dict[str, str]] = []` — 경쟁사 비교 (Phase 3). 빈 리스트면 자사 brand/domain 만 매치.
 5. 모든 메트릭은 evidence 필드로 raw 데이터 보존 (디버깅 + 재현)
 6. 카테고리는 병렬 실행 가능해야 함 (`asyncio.gather`)
 7. 외부 API(PSI / WHOIS) 호출은 `AnalysisOptions.enable_external_apis=True` 일 때만. 기본 OFF — Phase 1 skeleton 은 항상 stub.
 
-### 7-4. LLM 통합 호출
+### 7-4. LLM 통합 호출 (G6 — `services/llm_synthesizer.py`)
 
 ```
-모든 카테고리 분석 완료
-  → CategoryMetrics × 5개를 시스템 프롬프트에 포함
-  → Claude Sonnet 4.6에 단일 호출
-  → 응답: insights (서술형) + improvements (구조화 배열)
-  → workspace.primary_language 기준으로 출력
-  → analysis_results.insights, .improvements에 저장
+모든 카테고리 분석 완료 (5축 또는 부분)
+  → CategoryMetrics 들 + workspace.primary_language → tool_use prompt 빌드
+  → Anthropic Messages API 단일 호출
+       model: settings.synthesizer_model (기본 'claude-sonnet-4-6')
+       tools: [{ name: 'produce_synthesis', input_schema: ... }]
+       tool_choice: { type: 'tool', name: 'produce_synthesis' }   # 강제
+  → 응답 tool_use block 추출 → Pydantic 2차 검증
+  → analysis_results.insights / .improvements 갱신
 ```
 
-**번역 처리**:
-- 기본 저장: 워크스페이스 primary_language
-- 다른 언어 사용자가 조회 시: on-demand Claude Haiku 번역 + Redis 캐시 (24h)
+**핵심 결정 (사용자 합의 5건, 2026-05-03)**:
+
+1. **모델 / cap**: `settings.synthesizer_model` 단일 string. 슈퍼어드민 spend cap ❌ — 워크스페이스 monthly_usage 카운터가 이미 ceiling. per-tier 모델 분기는 Phase 2 보류 (베타 사용량 데이터 후 결정, refactor 비용 = 1줄).
+2. **Structured output**: Anthropic `tool_use` + `tool_choice` 강제. JSON instruction / XML tags 보다 안정적. `input_schema` 의 `enum` (priority/category/effort + metric_keys 풀 + categories 풀) + `required` (multilingual `en/ko/es` 모두) + `minItems`/`maxItems` (관계 길이 / improvements 개수 cap) + `additionalProperties: false` 로 1차 제약. SDK 응답을 Pydantic `Improvement` 로 2차 검증 — invalid 항목은 skip + log, 전체 실패 ❌.
+3. **언어 전략 (multilingual 1회 호출)**: `summary` 와 `description` 객체에 `{en, ko, es}` 모두 required → tool_use 가 1번 호출에 3 언어 동시 출력. 비용 1x 유지. 워크스페이스 변경 / 멤버 다국어 / PDF 다국어 templating 모두 same JSONB 컬럼에서 분기 — on-demand 번역 호출 ❌.
+4. **Improvements 개수 / priority**: `max_improvements=10` + LLM priority 직접 결정 + **high cap=3** (UI 노이즈 방지). cap 초과 시 `estimated_impact` 작은 high → medium 강등 (Pydantic frozen=True 라 `model_copy(update=...)` 사용). `insights.high_priority_capped: bool` 로 추적. `related_metric_keys` 는 정확히 length=1 강제 (UI 1:1 매핑 + i18n 키 단순화).
+5. **Fallback 정책**: api_key 없음 / LLM 예외 / tool_use block 누락 / multilingual summary 결손 / Pydantic 검증 실패 → 결정적 stub (`_synthesize_stub`) 호출 + `synthesized_by="stub-fallback"` + `fallback_reason` 기록. 분석 자체 실패 ❌ — `raw_metrics` 살아있는데 분석 실패 화면 띄우는 비용 > stub 노출 비용.
+
+**비결정 필드 vs 결정적 도출 (LLM 결정 vs 코드 결정)**:
+
+| 필드 | 결정 주체 |
+|---|---|
+| `priority` / `description` (en/ko/es) / `estimated_impact` / `estimated_effort` | **LLM** (tool_use 응답) |
+| `category` / `related_metric_keys` (단일 키) | **LLM** (input_schema enum 강제, 분석된 카테고리/메트릭 키만) |
+| `title_key` | **결정적**: `f"scoring.{category}.{metric_key}.improvement_title"` — i18n 사전 키 컨벤션 |
+
+**E2E 검증식 권장 패턴**: `synthesized_by` 검증을 `model_id startswith "claude-"` OR `== "stub-fallback"` 로 작성 → 모델 ID 변경 / CI 환경 (실 키 없음) 모두 안정. `e2e_phase1.py` Step 9e5 적용.
+
+**Phase 2 확장 포인트**:
+- `synthesizer_model` string → per-tier dict (예: trial→haiku, paid→sonnet) — 1줄 + 호출부 1줄 refactor.
+- 동일 raw_metrics 해시 기반 insights 캐시 (LLM 호출 skip).
+- 슈퍼어드민 spend cap (Anthropic API daily $) — baseline 측정 후 도입.
 
 ### 7-5. Custom 재분석 처리
 
