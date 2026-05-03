@@ -17,7 +17,10 @@ from app.auth.jwt import (
     decode_supabase_jwt,
 )
 from app.auth.permissions import (
+    REQUIRED_ROLE_FOR_ACTION,
+    WorkspaceAction,
     WorkspaceReadOnlyError,
+    assert_workspace_action,
     assert_workspace_role,
     assert_workspace_writable,
     get_user_role,
@@ -136,3 +139,41 @@ async def get_optional_workspace_role(
 ) -> WorkspaceRole | None:
     """역할이 있으면 반환, 멤버 아니면 None (강제 안 함)."""
     return await get_user_role(db, user.id, workspace_id)
+
+
+def require_action(action: WorkspaceAction, *, writable: bool = True) -> Callable:
+    """행위 단위 권한 의존성 팩토리.
+
+    ``WorkspaceAction`` enum + 사전 매핑(``REQUIRED_ROLE_FOR_ACTION``) 기반 가드.
+    ``writable=True`` 면 트라이얼 만료/해지 시 402 차단 추가.
+
+    예:
+        Depends(require_action(WorkspaceAction.analysis_trigger))  # member+ & writable
+        Depends(require_action(WorkspaceAction.analysis_view, writable=False))  # viewer+
+    """
+    # 매핑 누락은 빌드 타임에 KeyError로 검출.
+    _ = REQUIRED_ROLE_FOR_ACTION[action]
+
+    async def _dependency(
+        workspace_id: Annotated[UUID, Path()],
+        user: CurrentUser,
+        db: DbSession,
+    ) -> tuple[AuthenticatedUser, WorkspaceRole]:
+        try:
+            role = await assert_workspace_action(db, user.id, workspace_id, action)
+        except PermissionError as exc:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail=str(exc),
+            ) from exc
+        if writable:
+            try:
+                await assert_workspace_writable(db, workspace_id)
+            except WorkspaceReadOnlyError as exc:
+                raise HTTPException(
+                    status_code=status.HTTP_402_PAYMENT_REQUIRED,
+                    detail=str(exc),
+                ) from exc
+        return user, role
+
+    return _dependency

@@ -4,9 +4,15 @@
 권한 검증은 Python 레벨에서 명시적으로 수행한다.
 
 쓰기 가능 상태(트라이얼 만료/해지 게이팅)는 ``assert_workspace_writable`` 사용.
+
+행위 단위 가드 (G3):
+    - ``WorkspaceAction`` enum + ``REQUIRED_ROLE_FOR_ACTION`` 매핑.
+    - 라우터 의존성 ``require_action(action)`` 으로 사용 (writable 게이팅 포함).
+    - 같은 역할에 매핑되더라도 행위별로 의미를 명시 → 후속 정책 변경 시 표 한 줄만 수정.
 """
 from __future__ import annotations
 
+import enum
 from datetime import datetime, timezone
 from uuid import UUID
 
@@ -30,6 +36,24 @@ _ROLE_RANK: dict[WorkspaceRole, int] = {
     WorkspaceRole.member: 2,
     WorkspaceRole.admin: 3,
     WorkspaceRole.owner: 4,
+}
+
+
+class WorkspaceAction(str, enum.Enum):
+    """워크스페이스 내 권한 검사 단위 행위 (SPEC §10).
+
+    값은 로깅/감사 용도. 라우터에서 직접 enum 멤버로 권한 검사.
+    """
+    # 분석 엔진 (G3+)
+    analysis_view = "analysis.view"          # 분석 결과 조회 (viewer 이상).
+    analysis_trigger = "analysis.trigger"    # Custom 재분석 트리거 (member 이상).
+    # 사이트 / 멤버 / 결제 등은 라우터 단위로 require_writable_workspace_role 사용 중.
+
+
+# 행위 → 최소 역할 매핑. SPEC §10 정합.
+REQUIRED_ROLE_FOR_ACTION: dict[WorkspaceAction, WorkspaceRole] = {
+    WorkspaceAction.analysis_view:    WorkspaceRole.viewer,
+    WorkspaceAction.analysis_trigger: WorkspaceRole.member,
 }
 
 
@@ -73,6 +97,20 @@ async def assert_workspace_role(
             f"Required role '{required.value}' or higher; user has '{role.value if role else 'none'}'"
         )
     return role  # type: ignore[return-value]
+
+
+async def assert_workspace_action(
+    db: AsyncSession,
+    user_id: UUID,
+    workspace_id: UUID,
+    action: WorkspaceAction,
+) -> WorkspaceRole:
+    """행위 단위 권한 검사 — ``REQUIRED_ROLE_FOR_ACTION`` 매핑 사용.
+
+    역할 매핑이 없으면 ``KeyError`` (테이블에 등록 누락 → 빌드 타임 의도).
+    """
+    required = REQUIRED_ROLE_FOR_ACTION[action]
+    return await assert_workspace_role(db, user_id, workspace_id, required)
 
 
 async def assert_workspace_writable(

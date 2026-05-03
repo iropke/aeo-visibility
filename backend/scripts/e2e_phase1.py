@@ -257,6 +257,102 @@ async def main() -> None:
                 fail(f"unexpected site list: {sites_list}")
             ok("list sites returns 1 active site")
 
+            banner("Step 9e1: GET /usage/current — free trial quota snapshot")
+            r = await client.get(
+                f"{BACKEND_URL}/api/workspaces/{ws_a['id']}/usage/current",
+                headers={"Authorization": f"Bearer {token_a}"},
+            )
+            if r.status_code != 200:
+                fail(f"get usage: {r.status_code} {r.text}")
+            usage = r.json()
+            if usage["base"]["quota"] != 0 or usage["base"]["used"] != 0:
+                fail(f"expected free trial base quota=0/used=0, got {usage['base']}")
+            if usage["payg_used"] != 0:
+                fail(f"expected payg_used=0, got {usage['payg_used']}")
+            ok(f"usage snapshot: year_month={usage['year_month']}, base={usage['base']}")
+
+            banner("Step 9e2: POST /analyze without payg → 402 quota exhausted")
+            r = await client.post(
+                f"{BACKEND_URL}/api/workspaces/{ws_a['id']}/sites/{site_a['id']}/analyze",
+                headers={"Authorization": f"Bearer {token_a}"},
+                json={"categories": None, "allow_payg": False},
+            )
+            if r.status_code != 402:
+                fail(f"expected 402 quota exhausted, got {r.status_code} {r.text}")
+            ok("free trial blocked: 402 InsufficientQuota")
+
+            banner("Step 9e3: POST /analyze with allow_payg=True → 201 completed via payg")
+            r = await client.post(
+                f"{BACKEND_URL}/api/workspaces/{ws_a['id']}/sites/{site_a['id']}/analyze",
+                headers={"Authorization": f"Bearer {token_a}"},
+                json={"categories": ["technical", "content"], "allow_payg": True},
+            )
+            if r.status_code != 201:
+                fail(f"expected 201, got {r.status_code} {r.text}")
+            result = r.json()
+            if result["status"] != "completed":
+                fail(f"expected status=completed (sync await), got {result['status']}")
+            if result["funding_source"] != "payg":
+                fail(f"expected funding_source=payg, got {result['funding_source']}")
+            if result["trigger_type"] != "manual":
+                fail(f"expected trigger_type=manual, got {result['trigger_type']}")
+            if sorted(result["categories"]) != ["content", "technical"]:
+                fail(f"expected categories=[content,technical], got {result['categories']}")
+            if result["overall_score"] is None:
+                fail("expected overall_score to be set after completion")
+            if not result.get("raw_metrics") or "technical" not in result["raw_metrics"]:
+                fail(f"expected raw_metrics with technical key, got keys={list((result.get('raw_metrics') or {}).keys())}")
+            if not result.get("improvements") or "items" not in result["improvements"]:
+                fail(f"expected improvements.items list, got {result.get('improvements')}")
+            analysis_id = result["id"]
+            ok(f"analysis completed: id={analysis_id}, overall={result['overall_score']}, version={result['analysis_version']}")
+
+            banner("Step 9e4: GET /analyses returns the new result")
+            r = await client.get(
+                f"{BACKEND_URL}/api/workspaces/{ws_a['id']}/sites/{site_a['id']}/analyses",
+                headers={"Authorization": f"Bearer {token_a}"},
+            )
+            if r.status_code != 200:
+                fail(f"list analyses: {r.status_code} {r.text}")
+            items = r.json()
+            if not any(it["id"] == analysis_id for it in items):
+                fail(f"new analysis not in list: {items}")
+            ok(f"list returns {len(items)} analysis(es)")
+
+            banner("Step 9e5: GET /analyses/{id} detail")
+            r = await client.get(
+                f"{BACKEND_URL}/api/workspaces/{ws_a['id']}/sites/{site_a['id']}/analyses/{analysis_id}",
+                headers={"Authorization": f"Bearer {token_a}"},
+            )
+            if r.status_code != 200:
+                fail(f"get analysis detail: {r.status_code} {r.text}")
+            detail = r.json()
+            if detail["id"] != analysis_id:
+                fail(f"detail id mismatch: {detail['id']}")
+            if not detail.get("insights") or detail["insights"].get("synthesized_by") != "stub-v0":
+                fail(f"expected stub insights, got {detail.get('insights')}")
+            ok(f"detail OK: insights.summary keys={list((detail['insights'].get('summary') or {}).keys())}")
+
+            banner("Step 9e6: 1h cooldown — immediate re-trigger returns 429")
+            r = await client.post(
+                f"{BACKEND_URL}/api/workspaces/{ws_a['id']}/sites/{site_a['id']}/analyze",
+                headers={"Authorization": f"Bearer {token_a}"},
+                json={"allow_payg": True},
+            )
+            if r.status_code != 429:
+                fail(f"expected 429 cooldown, got {r.status_code} {r.text}")
+            ok("re-trigger blocked by 1h cooldown (429)")
+
+            banner("Step 9e7: usage payg_used incremented to 1")
+            r = await client.get(
+                f"{BACKEND_URL}/api/workspaces/{ws_a['id']}/usage/current",
+                headers={"Authorization": f"Bearer {token_a}"},
+            )
+            usage2 = r.json()
+            if usage2["payg_used"] != 1:
+                fail(f"expected payg_used=1 after analysis, got {usage2['payg_used']}")
+            ok(f"usage updated: payg_used={usage2['payg_used']}, base={usage2['base']}")
+
             banner("Step 9f: Soft delete site (deleted_at + delete_cooldown_until set)")
             r = await client.delete(
                 f"{BACKEND_URL}/api/workspaces/{ws_a['id']}/sites/{site_a['id']}",
