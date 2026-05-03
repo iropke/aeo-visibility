@@ -386,9 +386,17 @@ async def main() -> None:
             detail = r.json()
             if detail["id"] != analysis_id:
                 fail(f"detail id mismatch: {detail['id']}")
-            if not detail.get("insights") or detail["insights"].get("synthesized_by") != "stub-v0":
-                fail(f"expected stub insights, got {detail.get('insights')}")
-            ok(f"detail OK: insights.summary keys={list((detail['insights'].get('summary') or {}).keys())}")
+            # G6: synthesized_by 는 stub-fallback (LLM 실패/key 없음) 또는 live model id.
+            # claude-* 형태 (예: claude-sonnet-4-6) 또는 stub-fallback 모두 허용.
+            insights = detail.get("insights") or {}
+            synth_by = insights.get("synthesized_by") or ""
+            valid_synth = synth_by == "stub-fallback" or synth_by.startswith("claude-")
+            if not insights or not valid_synth:
+                fail(f"expected synthesized_by='stub-fallback' or 'claude-*', got insights={insights}")
+            summary_keys = sorted((insights.get("summary") or {}).keys())
+            if summary_keys != ["en", "es", "ko"]:
+                fail(f"expected summary with en/ko/es keys, got {summary_keys}")
+            ok(f"detail OK: synthesized_by={synth_by} summary_keys={summary_keys}")
 
             banner("Step 9e6: 1h cooldown — immediate re-trigger returns 429")
             r = await client.post(
