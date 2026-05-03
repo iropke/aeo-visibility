@@ -281,31 +281,88 @@ async def main() -> None:
                 fail(f"expected 402 quota exhausted, got {r.status_code} {r.text}")
             ok("free trial blocked: 402 InsufficientQuota")
 
-            banner("Step 9e3: POST /analyze with allow_payg=True → 201 completed via payg")
+            banner("Step 9e3: POST /analyze with allow_payg=True → 202 queued + polling")
             r = await client.post(
                 f"{BACKEND_URL}/api/workspaces/{ws_a['id']}/sites/{site_a['id']}/analyze",
                 headers={"Authorization": f"Bearer {token_a}"},
                 json={"categories": ["technical", "content"], "allow_payg": True},
             )
-            if r.status_code != 201:
-                fail(f"expected 201, got {r.status_code} {r.text}")
-            result = r.json()
-            if result["status"] != "completed":
-                fail(f"expected status=completed (sync await), got {result['status']}")
-            if result["funding_source"] != "payg":
-                fail(f"expected funding_source=payg, got {result['funding_source']}")
-            if result["trigger_type"] != "manual":
-                fail(f"expected trigger_type=manual, got {result['trigger_type']}")
-            if sorted(result["categories"]) != ["content", "technical"]:
-                fail(f"expected categories=[content,technical], got {result['categories']}")
+            if r.status_code != 202:
+                fail(f"expected 202 Accepted, got {r.status_code} {r.text}")
+            queued = r.json()
+            if queued["status"] != "queued":
+                fail(f"expected status=queued (BackgroundTasks), got {queued['status']}")
+            if queued["funding_source"] != "payg":
+                fail(f"expected funding_source=payg, got {queued['funding_source']}")
+            if queued["trigger_type"] != "manual":
+                fail(f"expected trigger_type=manual, got {queued['trigger_type']}")
+            if sorted(queued["categories"]) != ["content", "technical"]:
+                fail(f"expected categories=[content,technical], got {queued['categories']}")
+            if queued["overall_score"] is not None:
+                fail(f"queued row should have overall_score=None, got {queued['overall_score']}")
+            analysis_id = queued["id"]
+            ok(f"analysis accepted: id={analysis_id}, status=queued (background)")
+
+            banner("Step 9e3b: GET /analyses/active shows the queued analysis")
+            r = await client.get(
+                f"{BACKEND_URL}/api/workspaces/{ws_a['id']}/analyses/active",
+                headers={"Authorization": f"Bearer {token_a}"},
+            )
+            if r.status_code != 200:
+                fail(f"list active: {r.status_code} {r.text}")
+            active = r.json()
+            # Race: BackgroundTasks may have already finished. Either exactly the queued/running
+            # row exists, or the list is empty (already completed).
+            if active and (len(active) != 1 or active[0]["id"] != analysis_id):
+                fail(f"unexpected active list: {active}")
+            ok(f"active list size={len(active)} (race-tolerant)")
+
+            banner("Step 9e3c: Concurrent retrigger blocked by partial UNIQUE index → 409")
+            # While the first analysis is still queued/running, attempt another. Either:
+            #   (a) BackgroundTasks already finished → cooldown 429 instead.
+            #   (b) Still active → SELECT count check returns 409, OR partial UNIQUE returns 409.
+            r = await client.post(
+                f"{BACKEND_URL}/api/workspaces/{ws_a['id']}/sites/{site_a['id']}/analyze",
+                headers={"Authorization": f"Bearer {token_a}"},
+                json={"allow_payg": True},
+            )
+            if r.status_code not in (409, 429):
+                fail(f"expected 409 (active) or 429 (cooldown), got {r.status_code} {r.text}")
+            ok(f"concurrent retrigger blocked: {r.status_code}")
+
+            banner("Step 9e3d: Poll /analyses/{id} until status=completed (max 10s)")
+            for attempt in range(50):  # 50 × 0.2s = 10s
+                r = await client.get(
+                    f"{BACKEND_URL}/api/workspaces/{ws_a['id']}/sites/{site_a['id']}/analyses/{analysis_id}",
+                    headers={"Authorization": f"Bearer {token_a}"},
+                )
+                if r.status_code != 200:
+                    fail(f"poll {attempt}: {r.status_code} {r.text}")
+                detail = r.json()
+                if detail["status"] in ("completed", "failed"):
+                    break
+                await asyncio.sleep(0.2)
+            else:
+                fail(f"analysis did not complete within 10s; last status={detail['status']}")
+            if detail["status"] != "completed":
+                fail(f"expected completed, got {detail['status']} error={detail.get('error_message')}")
+            result = detail
             if result["overall_score"] is None:
                 fail("expected overall_score to be set after completion")
             if not result.get("raw_metrics") or "technical" not in result["raw_metrics"]:
                 fail(f"expected raw_metrics with technical key, got keys={list((result.get('raw_metrics') or {}).keys())}")
             if not result.get("improvements") or "items" not in result["improvements"]:
                 fail(f"expected improvements.items list, got {result.get('improvements')}")
-            analysis_id = result["id"]
-            ok(f"analysis completed: id={analysis_id}, overall={result['overall_score']}, version={result['analysis_version']}")
+            ok(f"analysis completed via background: overall={result['overall_score']}, duration_ms={result['duration_ms']}")
+
+            banner("Step 9e3e: GET /analyses/active is empty after completion")
+            r = await client.get(
+                f"{BACKEND_URL}/api/workspaces/{ws_a['id']}/analyses/active",
+                headers={"Authorization": f"Bearer {token_a}"},
+            )
+            if r.json() != []:
+                fail(f"expected empty active list, got {r.json()}")
+            ok("active list empty — polling complete")
 
             banner("Step 9e4: GET /analyses returns the new result")
             r = await client.get(

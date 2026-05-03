@@ -3,14 +3,19 @@
 엔드포인트:
     POST /api/workspaces/{workspace_id}/sites/{site_id}/analyze
         Custom 재분석 트리거. body.categories=None → 5축 전체 (Full),
-        부분 지정 → 해당 카테고리만.
+        부분 지정 → 해당 카테고리만. ``202 Accepted`` + status='queued' 즉시 반환,
+        실제 분석은 BackgroundTasks 에서 비동기 실행. 클라이언트는 GET 디테일을
+        polling 하여 status='completed'/'failed' 확인.
         Pack 차감 우선순위: pro_pack → basic_pack → base → payg.
 
     GET  /api/workspaces/{workspace_id}/sites/{site_id}/analyses
         해당 사이트의 분석 결과 목록 (최신순). limit/offset 페이징.
 
     GET  /api/workspaces/{workspace_id}/sites/{site_id}/analyses/{result_id}
-        분석 결과 디테일 (raw_metrics + insights + improvements 포함).
+        분석 결과 디테일 (raw_metrics + insights + improvements 포함). polling 대상.
+
+    GET  /api/workspaces/{workspace_id}/analyses/active
+        워크스페이스 단위 진행 중(queued|running) 분석 목록. 폴링 시 빈 리스트 = 모두 완료.
 
     GET  /api/workspaces/{workspace_id}/usage/current
         현재 월 quota 잔여 (프론트엔드 표시용). viewer+.
@@ -19,12 +24,15 @@
     - viewer 트리거 차단 (행위 단위 가드: WorkspaceAction.analysis_trigger).
     - 트라이얼 만료/해지 게이팅 (require_action(writable=True) → 402).
     - 1시간 cooldown — sites.last_analyzed_at 기준.
-    - 워크스페이스 진행 중 분석 1건 제한 — analysis_results.status IN (queued, running).
+    - 워크스페이스 진행 중 분석 1건 제한:
+        * 1차: SELECT count 검사 (UX 좋은 빠른 fail).
+        * 2차: partial UNIQUE index ``uniq_analysis_results_workspace_active``
+               (013 마이그레이션) → race window 안전망. IntegrityError → 409.
     - quota 결정 + 차감 + INSERT 를 같은 트랜잭션 + monthly_usage row lock.
 
-분석 실행은 ``app.tasks.analysis_task.run_analysis`` 가 담당. Phase 1 G3는
-라우터에서 ``await`` 동기 호출 (응답 시점에 status='completed'). G4에서
-BackgroundTasks 분리 + 즉시 202 반환으로 전환 예정.
+분석 실행은 ``app.tasks.analysis_task.run_analysis`` 가 BackgroundTasks 에서
+호출. 라우터 트랜잭션이 commit되어 status='queued' row가 가시화된 뒤에 실행됨
+(FastAPI BackgroundTasks 는 응답 직후 실행).
 """
 from __future__ import annotations
 
@@ -32,8 +40,9 @@ from datetime import datetime, timedelta, timezone
 from typing import Annotated
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, status
 from sqlalchemy import desc, func, select
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.auth.jwt import AuthenticatedUser
@@ -49,6 +58,7 @@ from app.models.database import async_session
 from app.models.site import Site
 from app.models.workspace import WorkspaceRole
 from app.schemas.analysis import (
+    ActiveAnalysisItem,
     AnalysisResultDetail,
     AnalysisResultListItem,
     AnalyzeRequest,
@@ -154,7 +164,7 @@ async def _check_no_active_analysis(
 @router.post(
     "/{workspace_id}/sites/{site_id}/analyze",
     response_model=AnalysisResultDetail,
-    status_code=status.HTTP_201_CREATED,
+    status_code=status.HTTP_202_ACCEPTED,
 )
 async def trigger_analysis(
     workspace_id: UUID,
@@ -162,8 +172,13 @@ async def trigger_analysis(
     payload: AnalyzeRequest,
     ctx: TriggerCtx,
     db: DbSession,
+    background_tasks: BackgroundTasks,
 ) -> AnalysisResultDetail:
-    """Custom Re-analyze 트리거. 차감 우선순위 + cooldown + 진행 중 1건 제한."""
+    """Custom Re-analyze 트리거.
+
+    응답: 202 Accepted + status='queued' analysis row. 실 분석은 BackgroundTasks
+    에서 비동기 실행 — 클라이언트는 GET 디테일/active 로 polling.
+    """
     user, _role = ctx
 
     site = await _get_active_site(db, workspace_id, site_id)
@@ -206,12 +221,23 @@ async def trigger_analysis(
         status=AnalysisStatus.queued,
     )
     db.add(analysis)
-    await db.commit()
+    try:
+        await db.commit()
+    except IntegrityError as exc:
+        await db.rollback()
+        # uniq_analysis_results_workspace_active (013) — race 안전망.
+        # 동시 두 트리거가 SELECT count 검사를 동시 통과 → 한 쪽이 INSERT 시
+        # partial UNIQUE index 충돌 → 409로 변환.
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="Another analysis is already in progress for this workspace",
+        ) from exc
     await db.refresh(analysis)
 
-    # Phase 1 G3: 동기 await — 카테고리 모듈은 stub이라 빠르게 완료.
-    # G4에서 BackgroundTasks.add_task(run_analysis, ...) 로 전환 예정.
-    await run_analysis(
+    # 응답 직후 BackgroundTasks 가 별도 세션에서 실행. 라우터 tx 가 commit 된 뒤이므로
+    # task가 row를 정상 SELECT/UPDATE 가능.
+    background_tasks.add_task(
+        run_analysis,
         async_session,
         analysis_id=analysis.id,
         site_id=site_id,
@@ -219,9 +245,6 @@ async def trigger_analysis(
         site_url=site.url,
         categories=categories,
     )
-
-    # 최신 status / 점수 / metrics 가 task UPDATE 후 별도 세션에 반영됨 → 재조회.
-    await db.refresh(analysis)
     return AnalysisResultDetail.model_validate(analysis)
 
 
@@ -302,6 +325,33 @@ async def get_analysis(
             detail="Analysis result not found",
         )
     return AnalysisResultDetail.model_validate(row)
+
+
+@router.get(
+    "/{workspace_id}/analyses/active",
+    response_model=list[ActiveAnalysisItem],
+)
+async def list_active_analyses(
+    workspace_id: UUID,
+    ctx: ViewCtx,
+    db: DbSession,
+) -> list[ActiveAnalysisItem]:
+    """워크스페이스 단위 진행 중(queued|running) 분석 목록.
+
+    빈 리스트 = 모두 완료 (폴링 종료 신호). partial UNIQUE index 보장으로 0~1개.
+    """
+    _ = ctx
+    rows = (
+        await db.execute(
+            select(AnalysisResult)
+            .where(
+                AnalysisResult.workspace_id == workspace_id,
+                AnalysisResult.status.in_(_ACTIVE_STATUSES),
+            )
+            .order_by(desc(AnalysisResult.triggered_at))
+        )
+    ).scalars().all()
+    return [ActiveAnalysisItem.model_validate(r) for r in rows]
 
 
 @router.get(

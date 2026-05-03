@@ -74,6 +74,17 @@ class AnalysisResultDetail(AnalysisResultListItem):
     error_message: str | None
 
 
+class ActiveAnalysisItem(BaseModel):
+    """진행 중(queued|running) 분석 — 폴링 시 워크스페이스 단위 빈 리스트 = 모두 완료."""
+    model_config = ConfigDict(from_attributes=True)
+
+    id: UUID
+    site_id: UUID
+    status: AnalysisStatus
+    triggered_at: datetime
+    categories: list[str]
+
+
 class QuotaResponse(BaseModel):
     """현재 월 quota 잔여 — 프론트엔드 잔여 횟수 표시.
 
