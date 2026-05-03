@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Suspense } from "react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { isLocale } from "@/lib/i18n/config";
@@ -21,7 +22,9 @@ export default async function SignupPage({
         <h1 className="text-2xl font-bold mb-2">{t("title")}</h1>
         <p className="text-sm text-gray-600">{t("subtitle")}</p>
       </div>
-      <MagicLinkForm lang={lang} mode="signup" />
+      <Suspense fallback={null}>
+        <MagicLinkForm lang={lang} mode="signup" />
+      </Suspense>
       <p className="text-sm text-gray-600 text-center">
         {t("have_account")}{" "}
         <Link href={`/${lang}/login`} className="text-primary hover:underline">

@@ -10,7 +10,7 @@
  *   - /_next/*, /api/*, 정적 파일
  */
 import { NextRequest, NextResponse } from "next/server";
-import { createServerClient } from "@supabase/ssr";
+import { createServerClient, type SetAllCookies } from "@supabase/ssr";
 
 import { defaultLocale, isLocale } from "@/lib/i18n/config";
 
@@ -85,13 +85,13 @@ export async function middleware(request: NextRequest) {
         getAll() {
           return request.cookies.getAll();
         },
-        setAll(cookiesToSet) {
+        setAll: ((cookiesToSet) => {
           cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value));
           response = NextResponse.next({ request });
           cookiesToSet.forEach(({ name, value, options }) =>
             response.cookies.set(name, value, options),
           );
-        },
+        }) satisfies SetAllCookies,
       },
     },
   );

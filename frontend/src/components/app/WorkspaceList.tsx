@@ -58,18 +58,28 @@ export function WorkspaceList({ lang }: { lang: string }) {
   }
 
   return (
-    <ul className="divide-y divide-gray-200 rounded-md border border-gray-200">
-      {workspaces.map((ws) => (
-        <li key={ws.id} className="flex items-center justify-between px-4 py-3">
-          <div>
-            <p className="font-medium">{ws.name}</p>
-            <p className="text-xs text-gray-500">/{ws.slug}</p>
-          </div>
-          <span className="text-xs uppercase tracking-wider text-gray-500">
-            {ws.role ? t(ROLE_KEY[ws.role]) : "—"}
-          </span>
-        </li>
-      ))}
-    </ul>
+    <>
+      <ul className="divide-y divide-gray-200 rounded-md border border-gray-200">
+        {workspaces.map((ws) => (
+          <li key={ws.id} className="flex items-center justify-between px-4 py-3">
+            <div>
+              <p className="font-medium">{ws.name}</p>
+              <p className="text-xs text-gray-500">/{ws.slug}</p>
+            </div>
+            <span className="text-xs uppercase tracking-wider text-gray-500">
+              {ws.role ? t(ROLE_KEY[ws.role]) : "—"}
+            </span>
+          </li>
+        ))}
+      </ul>
+      <div className="mt-4">
+        <Link
+          href={`/${lang}/sites`}
+          className="inline-block rounded-md bg-primary text-white font-medium px-4 py-2 hover:bg-primary-hover text-sm"
+        >
+          {t("manage_sites")}
+        </Link>
+      </div>
+    </>
   );
 }

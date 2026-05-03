@@ -1,5 +1,6 @@
 import { getDictionary } from "@/lib/i18n/getDictionary";
-import type { Locale } from "@/lib/i18n/config";
+import type { Locale as V2Locale } from "@/lib/i18n/config";
+import type { Locale as V1Locale } from "@/types/analysis";
 import UrlForm from "@/components/analysis/UrlForm";
 
 export default async function LandingPage({
@@ -8,7 +9,9 @@ export default async function LandingPage({
   params: Promise<{ lang: string }>;
 }) {
   const { lang } = await params;
-  const dict = await getDictionary(lang as Locale);
+  const dict = await getDictionary(lang as V2Locale);
+  // v1 UrlForm 은 ("en" | "ko") 만 받음 — "es" 는 dict 폴백과 동일하게 en 처리.
+  const v1Lang: V1Locale = lang === "ko" ? "ko" : "en";
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[60vh] pt-12 sm:pt-20">
@@ -27,7 +30,7 @@ export default async function LandingPage({
 
       {/* URL Form */}
       <div className="w-full max-w-xl mx-auto animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
-        <UrlForm lang={lang as Locale} dict={dict} />
+        <UrlForm lang={v1Lang} dict={dict} />
       </div>
     </div>
   );

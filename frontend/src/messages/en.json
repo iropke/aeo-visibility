@@ -7,6 +7,8 @@
     "save": "Save",
     "cancel": "Cancel",
     "delete": "Delete",
+    "deleting": "Deleting…",
+    "edit": "Edit",
     "back": "Back"
   },
   "auth": {
@@ -68,10 +70,89 @@
       "no_workspace": "You don't have a workspace yet.",
       "create_workspace": "Create your first workspace",
       "your_workspaces": "Your workspaces",
+      "manage_sites": "Manage sites",
       "role_owner": "Owner",
       "role_admin": "Admin",
       "role_member": "Member",
       "role_viewer": "Viewer"
+    },
+    "sites": {
+      "title": "Sites",
+      "subtitle": "Sites and competitors tracked in {workspace}.",
+      "add_site": "Add site",
+      "own_sites": "Your sites",
+      "competitor_sites": "Competitors",
+      "own_empty": "Add your first site to start measuring AEO visibility.",
+      "competitors_empty": "No competitor sites yet.",
+      "no_workspace_yet": "Set up a workspace to start tracking sites.",
+      "create_workspace": "Create a workspace",
+      "last_analyzed": "Last analyzed",
+      "last_url_change": "Last URL change",
+      "run_analysis": "Run analysis",
+      "analyses_history": "Analyses",
+      "analyses_empty": "No analyses yet. Run your first analysis to see results.",
+      "view_result": "View result",
+      "back_to_sites": "Back to sites",
+      "site_not_found": "We couldn't find this site in any of your workspaces.",
+      "delete_confirm": "Delete site {domain}? It will enter a 30-day cooldown before the domain can be re-added.",
+      "delete_forbidden": "Only workspace admins or owners can delete sites.",
+      "categories": {
+        "technical": "Technical",
+        "structured": "Structured",
+        "content": "Content",
+        "authority": "Authority",
+        "visibility": "Visibility"
+      },
+      "status": {
+        "queued": "Queued",
+        "running": "Running",
+        "completed": "Completed",
+        "failed": "Failed"
+      },
+      "form": {
+        "title_create": "Add a site",
+        "title_edit": "Edit site",
+        "url_label": "URL",
+        "url_placeholder": "https://example.com",
+        "nickname_label": "Nickname (optional)",
+        "nickname_placeholder": "Production site",
+        "type_label": "Type",
+        "type_own": "Your site",
+        "type_own_desc": "A site you own and want to improve.",
+        "type_competitor": "Competitor",
+        "type_competitor_desc": "A site you want to benchmark against.",
+        "create": "Add site",
+        "saving": "Saving…",
+        "url_required": "Please enter a URL.",
+        "err_invalid_url": "URL is invalid or missing a domain.",
+        "err_trial_expired": "Your trial has ended. Upgrade to continue editing.",
+        "err_plan_limit": "Your plan limit has been reached. Upgrade or remove a site.",
+        "err_conflict": "This domain is already registered or in a 30-day cooldown.",
+        "err_url_change_limit": "URL changes are limited to once per 30 days per workspace."
+      },
+      "analyze": {
+        "title": "Run analysis",
+        "description": "Choose which categories to analyze. Full scans cover all five.",
+        "categories_label": "Categories",
+        "select_at_least_one": "Select at least one category.",
+        "quota_loading": "Loading quota…",
+        "quota_title": "Remaining this month ({ym})",
+        "quota_remaining": "{remaining} of {quota}",
+        "quota_unlimited": "Unlimited",
+        "quota_none": "Your plan has no analyses remaining this month.",
+        "pack": {
+          "pro_pack": "Pro Pack",
+          "basic_pack": "Basic Pack",
+          "base": "Base"
+        },
+        "trigger_full": "Run full analysis",
+        "trigger_partial": "Run on {n} categories",
+        "triggering": "Starting…",
+        "err_quota_or_trial": "Out of analyses or trial expired. Upgrade to continue.",
+        "err_forbidden": "You don't have permission to trigger an analysis.",
+        "err_concurrent": "Another analysis is already running for this workspace.",
+        "err_cooldown": "This site was analyzed less than an hour ago. Try again later."
+      }
     }
   }
 }

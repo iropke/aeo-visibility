@@ -28,6 +28,9 @@ export function AppHeader({ lang }: { lang: string }) {
           <Link href={`/${lang}/dashboard`} className="hover:text-primary">
             {t("dashboard")}
           </Link>
+          <Link href={`/${lang}/sites`} className="hover:text-primary">
+            {t("sites")}
+          </Link>
           <Link href={`/${lang}/settings/workspace`} className="hover:text-primary">
             {t("settings")}
           </Link>

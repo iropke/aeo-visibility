@@ -2,7 +2,10 @@
  * SSR / Route Handler / Server Action 용 Supabase 클라이언트.
  * Next.js 14 cookies()로 세션 유지.
  */
-import { createServerClient as createSSRClient } from "@supabase/ssr";
+import {
+  createServerClient as createSSRClient,
+  type SetAllCookies,
+} from "@supabase/ssr";
 import { cookies } from "next/headers";
 
 import { env } from "@/env";
@@ -24,7 +27,7 @@ export async function createServerClient() {
         getAll() {
           return cookieStore.getAll();
         },
-        setAll(cookiesToSet) {
+        setAll: ((cookiesToSet) => {
           try {
             cookiesToSet.forEach(({ name, value, options }) => {
               cookieStore.set(name, value, options);
@@ -33,7 +36,7 @@ export async function createServerClient() {
             // Server Component에서 cookies().set 호출 불가한 경우 — 무시.
             // 세션 갱신은 middleware가 처리하므로 일반적으로 문제 없음.
           }
-        },
+        }) satisfies SetAllCookies,
       },
     },
   );

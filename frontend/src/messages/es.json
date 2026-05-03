@@ -7,6 +7,8 @@
     "save": "Guardar",
     "cancel": "Cancelar",
     "delete": "Eliminar",
+    "deleting": "Eliminando…",
+    "edit": "Editar",
     "back": "Atrás"
   },
   "auth": {
@@ -68,10 +70,89 @@
       "no_workspace": "Aún no tienes workspace.",
       "create_workspace": "Crea tu primer workspace",
       "your_workspaces": "Tus workspaces",
+      "manage_sites": "Gestionar sitios",
       "role_owner": "Owner",
       "role_admin": "Admin",
       "role_member": "Member",
       "role_viewer": "Viewer"
+    },
+    "sites": {
+      "title": "Sitios",
+      "subtitle": "Sitios propios y competidores en {workspace}.",
+      "add_site": "Añadir sitio",
+      "own_sites": "Tus sitios",
+      "competitor_sites": "Competidores",
+      "own_empty": "Añade tu primer sitio para empezar a medir la visibilidad AEO.",
+      "competitors_empty": "Aún no hay sitios competidores.",
+      "no_workspace_yet": "Configura un workspace para empezar a rastrear sitios.",
+      "create_workspace": "Crear workspace",
+      "last_analyzed": "Último análisis",
+      "last_url_change": "Último cambio de URL",
+      "run_analysis": "Ejecutar análisis",
+      "analyses_history": "Análisis",
+      "analyses_empty": "Aún no hay análisis. Ejecuta el primero para ver resultados.",
+      "view_result": "Ver resultado",
+      "back_to_sites": "Volver a sitios",
+      "site_not_found": "No encontramos este sitio en ninguno de tus workspaces.",
+      "delete_confirm": "¿Eliminar el sitio {domain}? Entrará en un período de espera de 30 días antes de poder volver a registrarse.",
+      "delete_forbidden": "Solo los administradores o propietarios del workspace pueden eliminar sitios.",
+      "categories": {
+        "technical": "Técnico",
+        "structured": "Estructurado",
+        "content": "Contenido",
+        "authority": "Autoridad",
+        "visibility": "Visibilidad"
+      },
+      "status": {
+        "queued": "En cola",
+        "running": "En curso",
+        "completed": "Completado",
+        "failed": "Fallido"
+      },
+      "form": {
+        "title_create": "Añadir sitio",
+        "title_edit": "Editar sitio",
+        "url_label": "URL",
+        "url_placeholder": "https://ejemplo.com",
+        "nickname_label": "Apodo (opcional)",
+        "nickname_placeholder": "Sitio en producción",
+        "type_label": "Tipo",
+        "type_own": "Tu sitio",
+        "type_own_desc": "Un sitio que tú gestionas y quieres mejorar.",
+        "type_competitor": "Competidor",
+        "type_competitor_desc": "Un sitio con el que quieres compararte.",
+        "create": "Añadir sitio",
+        "saving": "Guardando…",
+        "url_required": "Por favor, introduce una URL.",
+        "err_invalid_url": "La URL no es válida o falta el dominio.",
+        "err_trial_expired": "Tu prueba ha terminado. Actualiza para continuar editando.",
+        "err_plan_limit": "Has alcanzado el límite de tu plan. Actualiza o elimina un sitio.",
+        "err_conflict": "Este dominio ya está registrado o en período de espera de 30 días.",
+        "err_url_change_limit": "Solo se permite un cambio de URL cada 30 días por workspace."
+      },
+      "analyze": {
+        "title": "Ejecutar análisis",
+        "description": "Elige las categorías a analizar. El análisis completo cubre las cinco.",
+        "categories_label": "Categorías",
+        "select_at_least_one": "Selecciona al menos una categoría.",
+        "quota_loading": "Cargando cuota…",
+        "quota_title": "Restante este mes ({ym})",
+        "quota_remaining": "{remaining} de {quota}",
+        "quota_unlimited": "Ilimitado",
+        "quota_none": "Tu plan no tiene análisis restantes este mes.",
+        "pack": {
+          "pro_pack": "Pro Pack",
+          "basic_pack": "Basic Pack",
+          "base": "Base"
+        },
+        "trigger_full": "Análisis completo",
+        "trigger_partial": "Analizar {n} categorías",
+        "triggering": "Iniciando…",
+        "err_quota_or_trial": "Sin análisis disponibles o prueba expirada. Actualiza para continuar.",
+        "err_forbidden": "No tienes permiso para ejecutar un análisis.",
+        "err_concurrent": "Ya hay un análisis en curso para este workspace.",
+        "err_cooldown": "Este sitio se analizó hace menos de una hora. Inténtalo más tarde."
+      }
     }
   }
 }
