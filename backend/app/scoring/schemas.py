@@ -146,8 +146,8 @@ class AnalysisOptions(BaseModel):
         description="HTTP 요청 단일 타임아웃"
     )
     user_agent: str = Field(
-        default="aeo-visibility/2.0 (+https://aeo.example.com)",
-        description="크롤러 User-Agent"
+        default="aeo-visibility/2.0 (+https://ahxov.com)",
+        description="크롤러 User-Agent — 프로덕션 도메인 ahxov.com (2026-05-03 확정)"
     )
     enable_external_apis: bool = Field(
         default=False,
