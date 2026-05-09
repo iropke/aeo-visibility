@@ -210,6 +210,22 @@
         "error_message": "Fejl",
         "auto_refresh_paused": "Automatisk opdatering paused (fane inaktiv)."
       }
+    },
+    "charts": {
+      "timeseries_title": "Scorehistorik",
+      "timeseries_empty": "Ingen færdige analyser at vise i diagram endnu.",
+      "timeseries_single_point": "Seneste score: {score}/100 ({when}). Kør en anden analyse for at se udviklingen.",
+      "timeseries_partial_legend": "✕ markører angiver delvise analyser (nogle kategorier blev sprunget over).",
+      "radar_empty": "Ingen kategoriscores tilgængelige for denne analyse.",
+      "radar_value": "Score",
+      "legend": {
+        "overall": "Samlet",
+        "technical": "Teknisk",
+        "structured": "Struktureret",
+        "content": "Indhold",
+        "authority": "Autoritet",
+        "visibility": "Synlighed"
+      }
     }
   }
 }

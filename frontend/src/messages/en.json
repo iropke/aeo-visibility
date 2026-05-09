@@ -210,6 +210,22 @@
         "error_message": "Error",
         "auto_refresh_paused": "Auto-refresh paused (tab inactive)."
       }
+    },
+    "charts": {
+      "timeseries_title": "Score history",
+      "timeseries_empty": "No completed analyses to chart yet.",
+      "timeseries_single_point": "Latest score: {score}/100 ({when}). Run another analysis to see the trend.",
+      "timeseries_partial_legend": "✕ markers indicate partial analyses (some categories were skipped).",
+      "radar_empty": "No category scores available for this analysis.",
+      "radar_value": "Score",
+      "legend": {
+        "overall": "Overall",
+        "technical": "Technical",
+        "structured": "Structured",
+        "content": "Content",
+        "authority": "Authority",
+        "visibility": "Visibility"
+      }
     }
   }
 }

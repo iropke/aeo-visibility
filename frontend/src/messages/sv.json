@@ -210,6 +210,22 @@
         "error_message": "Fel",
         "auto_refresh_paused": "Automatisk uppdatering pausad (fliken inaktiv)."
       }
+    },
+    "charts": {
+      "timeseries_title": "Poänghistorik",
+      "timeseries_empty": "Inga slutförda analyser att visa ännu.",
+      "timeseries_single_point": "Senaste poäng: {score}/100 ({when}). Kör en annan analys för att se trenden.",
+      "timeseries_partial_legend": "✕ markeringar indikerar partiella analyser (vissa kategorier hoppades över).",
+      "radar_empty": "Inga kategoripoäng tillgängliga för denna analys.",
+      "radar_value": "Poäng",
+      "legend": {
+        "overall": "Övergripande",
+        "technical": "Teknisk",
+        "structured": "Strukturerad",
+        "content": "Innehål",
+        "authority": "Auktoritet",
+        "visibility": "Synlighet"
+      }
     }
   }
 }

@@ -210,6 +210,22 @@
         "error_message": "错误",
         "auto_refresh_paused": "自动刷新已暂停（标签页未激活）。"
       }
+    },
+    "charts": {
+      "timeseries_title": "评分历史",
+      "timeseries_empty": "目前没有已完成的分析可显示。",
+      "timeseries_single_point": "最新评分：{score}/100（{when}）。运行另一次分析以查看趋势。",
+      "timeseries_partial_legend": "✕ 标记表示部分分析（某些类别已跳过）。",
+      "radar_empty": "此分析没有可用的类别评分。",
+      "radar_value": "评分",
+      "legend": {
+        "overall": "整体",
+        "technical": "技术",
+        "structured": "结构化",
+        "content": "内容",
+        "authority": "权威性",
+        "visibility": "可见性"
+      }
     }
   }
 }

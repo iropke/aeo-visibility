@@ -210,6 +210,22 @@
         "error_message": "خطأ",
         "auto_refresh_paused": "إيقاف التحديث التلقائي (علامة التبويب غير نشطة)."
       }
+    },
+    "charts": {
+      "timeseries_title": "سجل النقاط",
+      "timeseries_empty": "لا توجد تحليلات مكتملة لعرضها في الرسم البياني حتى الآن.",
+      "timeseries_single_point": "آخر نقاط: {score}/100 ({when}). قم بتشغيل تحليل آخر لمشاهدة الاتجاه.",
+      "timeseries_partial_legend": "تشير علامات ✕ إلى تحليلات جزئية (تم تخطي بعض الفئات).",
+      "radar_empty": "لا توجد درجات الفئات المتاحة لهذا التحليل.",
+      "radar_value": "النقاط",
+      "legend": {
+        "overall": "الإجمالي",
+        "technical": "التقني",
+        "structured": "المنظم",
+        "content": "المحتوى",
+        "authority": "الموثوقية",
+        "visibility": "الظهور"
+      }
     }
   }
 }

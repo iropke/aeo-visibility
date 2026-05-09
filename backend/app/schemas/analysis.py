@@ -46,7 +46,10 @@ class AnalyzeRequest(BaseModel):
 
 
 class AnalysisResultListItem(BaseModel):
-    """목록용 요약 — JSONB 무거운 필드 제외."""
+    """목록용 요약 — JSONB 무거운 필드(raw_metrics/insights/improvements) 제외.
+
+    ``category_scores`` 는 5축 시계열 차트용으로 list 에 포함 (작은 dict).
+    """
     model_config = ConfigDict(from_attributes=True)
 
     id: UUID
@@ -60,6 +63,7 @@ class AnalysisResultListItem(BaseModel):
     duration_ms: int | None
     categories: list[str]
     overall_score: Decimal | None
+    category_scores: dict[str, Any] | None
     analysis_version: str
 
 
@@ -67,7 +71,6 @@ class AnalysisResultDetail(AnalysisResultListItem):
     """단건 디테일 — raw_metrics / insights / improvements 포함."""
 
     triggered_by: UUID | None
-    category_scores: dict[str, Any] | None
     raw_metrics: dict[str, Any] | None
     insights: dict[str, Any] | None
     improvements: dict[str, Any] | None

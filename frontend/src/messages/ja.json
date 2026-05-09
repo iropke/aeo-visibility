@@ -210,6 +210,22 @@
         "error_message": "エラー",
         "auto_refresh_paused": "自動更新が一時停止されています（タブが非アクティブです）。"
       }
+    },
+    "charts": {
+      "timeseries_title": "スコア履歴",
+      "timeseries_empty": "まだチャート化された完了した分析はありません。",
+      "timeseries_single_point": "最新スコア: {score}/100 ({when})。トレンドを確認するには別の分析を実行してください。",
+      "timeseries_partial_legend": "✕ マーカーは部分的な分析を示しています（一部のカテゴリはスキップされました）。",
+      "radar_empty": "この分析ではカテゴリスコアが利用できません。",
+      "radar_value": "スコア",
+      "legend": {
+        "overall": "総合",
+        "technical": "技術的",
+        "structured": "構造化",
+        "content": "コンテンツ",
+        "authority": "権威性",
+        "visibility": "可視性"
+      }
     }
   }
 }

@@ -210,6 +210,22 @@
         "error_message": "त्रुटि",
         "auto_refresh_paused": "ऑटो-रीफ्रेश रोका गया (टैब निष्क्रिय)।"
       }
+    },
+    "charts": {
+      "timeseries_title": "स्कोर इतिहास",
+      "timeseries_empty": "अभी तक चार्ट करने के लिए कोई पूर्ण विश्लेषण नहीं है।",
+      "timeseries_single_point": "नवीनतम स्कोर: {score}/100 ({when})। प्रवृत्ति देखने के लिए दूसरा विश्लेषण चलाएँ।",
+      "timeseries_partial_legend": "✕ मार्कर आंशिक विश्लेषण को दर्शाते हैं (कुछ श्रेणियों को छोड़ा गया)।",
+      "radar_empty": "इस विश्लेषण के लिए कोई श्रेणी स्कोर उपलब्ध नहीं है।",
+      "radar_value": "स्कोर",
+      "legend": {
+        "overall": "समग्र",
+        "technical": "तकनीकी",
+        "structured": "संरचित",
+        "content": "सामग्री",
+        "authority": "प्राधिकार",
+        "visibility": "दृश्यमानता"
+      }
     }
   }
 }

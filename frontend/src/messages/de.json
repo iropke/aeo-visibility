@@ -210,6 +210,22 @@
         "error_message": "Fehler",
         "auto_refresh_paused": "Automatische Aktualisierung unterbrochen (Tab inaktiv)."
       }
+    },
+    "charts": {
+      "timeseries_title": "Punkteverlauf",
+      "timeseries_empty": "Es gibt noch keine abgeschlossenen Analysen zum Darstellen.",
+      "timeseries_single_point": "Neueste Bewertung: {score}/100 ({when}). Führen Sie eine weitere Analyse durch, um den Trend zu sehen.",
+      "timeseries_partial_legend": "✕ Markierungen kennzeichnen teilweise Analysen (einige Kategorien wurden übersprungen).",
+      "radar_empty": "Für diese Analyse sind keine Kategoriebewertungen verfügbar.",
+      "radar_value": "Bewertung",
+      "legend": {
+        "overall": "Gesamt",
+        "technical": "Technisch",
+        "structured": "Strukturiert",
+        "content": "Inhalt",
+        "authority": "Autorität",
+        "visibility": "Sichtbarkeit"
+      }
     }
   }
 }

@@ -210,6 +210,22 @@
         "error_message": "Błąd",
         "auto_refresh_paused": "Auto-odświeżanie wstrzymane (karta nieaktywna)."
       }
+    },
+    "charts": {
+      "timeseries_title": "Historia wyników",
+      "timeseries_empty": "Brak ukończonych analiz do wykreślenia.",
+      "timeseries_single_point": "Ostatni wynik: {score}/100 ({when}). Uruchom kolejną analizę, aby zobaczyć trend.",
+      "timeseries_partial_legend": "Znaczniki ✕ wskazują analizy częściowe (niektóre kategorie zostały pominięte).",
+      "radar_empty": "Brak wyników kategorii dostępnych dla tej analizy.",
+      "radar_value": "Wynik",
+      "legend": {
+        "overall": "Ogólny",
+        "technical": "Techniczny",
+        "structured": "Strukturalny",
+        "content": "Treść",
+        "authority": "Autorytet",
+        "visibility": "Widoczność"
+      }
     }
   }
 }

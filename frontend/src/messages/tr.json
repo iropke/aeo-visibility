@@ -210,6 +210,22 @@
         "error_message": "Hata",
         "auto_refresh_paused": "Otomatik yenileme duraklatıldı (sekme etkin değil)."
       }
+    },
+    "charts": {
+      "timeseries_title": "Skor geçmişi",
+      "timeseries_empty": "Henüz grafiğe eklenecek tamamlanmış analiz yok.",
+      "timeseries_single_point": "Son skor: {score}/100 ({when}). Trendi görmek için başka bir analiz çalıştırın.",
+      "timeseries_partial_legend": "✕ işaretleri kısmi analizleri gösterir (bazı kategoriler atlanmıştır).",
+      "radar_empty": "Bu analiz için kategori skorları mevcut değil.",
+      "radar_value": "Skor",
+      "legend": {
+        "overall": "Genel",
+        "technical": "Teknik",
+        "structured": "Yapılandırılmış",
+        "content": "İçerik",
+        "authority": "Otorite",
+        "visibility": "Görünürlük"
+      }
     }
   }
 }

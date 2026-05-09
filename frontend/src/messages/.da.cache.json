@@ -167,5 +167,17 @@
   "app.sites.results.improvement_impact": "Impact {value}/10",
   "app.sites.results.improvement_related_metrics": "Related metrics",
   "app.sites.results.error_message": "Error",
-  "app.sites.results.auto_refresh_paused": "Auto-refresh paused (tab inactive)."
+  "app.sites.results.auto_refresh_paused": "Auto-refresh paused (tab inactive).",
+  "app.charts.timeseries_title": "Score history",
+  "app.charts.timeseries_empty": "No completed analyses to chart yet.",
+  "app.charts.timeseries_single_point": "Latest score: {score}/100 ({when}). Run another analysis to see the trend.",
+  "app.charts.timeseries_partial_legend": "✕ markers indicate partial analyses (some categories were skipped).",
+  "app.charts.radar_empty": "No category scores available for this analysis.",
+  "app.charts.radar_value": "Score",
+  "app.charts.legend.overall": "Overall",
+  "app.charts.legend.technical": "Technical",
+  "app.charts.legend.structured": "Structured",
+  "app.charts.legend.content": "Content",
+  "app.charts.legend.authority": "Authority",
+  "app.charts.legend.visibility": "Visibility"
 }

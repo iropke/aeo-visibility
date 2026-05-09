@@ -210,6 +210,22 @@
         "error_message": "오류",
         "auto_refresh_paused": "자동 새로고침 일시 중지됨(탭 비활성)."
       }
+    },
+    "charts": {
+      "timeseries_title": "점수 이력",
+      "timeseries_empty": "아직 차트로 표시할 완료된 분석이 없습니다.",
+      "timeseries_single_point": "최신 점수: {score}/100 ({when}). 추세를 확인하려면 다른 분석을 실행하세요.",
+      "timeseries_partial_legend": "✕ 마커는 부분 분석을 나타냅니다(일부 카테고리를 건너뛰었습니다).",
+      "radar_empty": "이 분석에 사용 가능한 카테고리 점수가 없습니다.",
+      "radar_value": "점수",
+      "legend": {
+        "overall": "전체",
+        "technical": "기술",
+        "structured": "구조화",
+        "content": "콘텐츠",
+        "authority": "권위",
+        "visibility": "가시성"
+      }
     }
   }
 }

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
+import { RadarChart } from "@/components/charts/RadarChart";
 import {
   analysesApi,
   isActiveStatus,
@@ -302,20 +303,33 @@ export function AnalysisResultView({ lang, siteId, resultId }: Props) {
 
       {display.status === "completed" && (
         <>
-          <section className="rounded-2xl border border-gs-quarterly-1 bg-white p-6 text-center">
-            <p className="text-xs uppercase tracking-wider text-gs-secondary-2 mb-2">
-              {t("overall_score")}
-            </p>
-            {overall !== null ? (
-              <div className="flex items-baseline justify-center gap-1">
-                <span className="text-5xl font-bold tabular-nums text-gs-primary">
-                  {Math.round(overall)}
-                </span>
-                <span className="text-base text-gs-secondary-1">/100</span>
-              </div>
-            ) : (
-              <p className="text-sm text-gs-secondary-1">{t("no_score")}</p>
-            )}
+          <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="rounded-2xl border border-gs-quarterly-1 bg-white p-6 flex flex-col items-center justify-center">
+              <p className="text-xs uppercase tracking-wider text-gs-secondary-2 mb-2">
+                {t("overall_score")}
+              </p>
+              {overall !== null ? (
+                <div className="flex items-baseline gap-1">
+                  <span className="text-5xl font-bold tabular-nums text-gs-primary">
+                    {Math.round(overall)}
+                  </span>
+                  <span className="text-base text-gs-secondary-1">/100</span>
+                </div>
+              ) : (
+                <p className="text-sm text-gs-secondary-1">{t("no_score")}</p>
+              )}
+            </div>
+            <div className="rounded-2xl border border-gs-quarterly-1 bg-white p-4">
+              <RadarChart
+                categoryScores={
+                  display.category_scores as
+                    | Record<string, number | string | null>
+                    | null
+                    | undefined
+                }
+                analyzedCategories={display.categories}
+              />
+            </div>
           </section>
 
           <section>

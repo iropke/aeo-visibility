@@ -210,6 +210,22 @@
         "error_message": "Errore",
         "auto_refresh_paused": "Aggiornamento automatico in pausa (scheda inattiva)."
       }
+    },
+    "charts": {
+      "timeseries_title": "Cronologia del punteggio",
+      "timeseries_empty": "Nessuna analisi completata da visualizzare ancora.",
+      "timeseries_single_point": "Ultimo punteggio: {score}/100 ({when}). Eseguire un'altra analisi per visualizzare la tendenza.",
+      "timeseries_partial_legend": "I marcatori ✕ indicano analisi parziali (alcune categorie sono state saltate).",
+      "radar_empty": "Nessun punteggio di categoria disponibile per questa analisi.",
+      "radar_value": "Punteggio",
+      "legend": {
+        "overall": "Complessivo",
+        "technical": "Tecnico",
+        "structured": "Strutturato",
+        "content": "Contenuto",
+        "authority": "Autorevolezza",
+        "visibility": "Visibilità"
+      }
     }
   }
 }

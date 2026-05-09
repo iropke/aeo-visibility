@@ -210,6 +210,22 @@
         "error_message": "Kesalahan",
         "auto_refresh_paused": "Penyegaran otomatis dijeda (tab tidak aktif)."
       }
+    },
+    "charts": {
+      "timeseries_title": "Riwayat skor",
+      "timeseries_empty": "Belum ada analisis yang selesai untuk ditampilkan dalam grafik.",
+      "timeseries_single_point": "Skor terbaru: {score}/100 ({when}). Jalankan analisis lain untuk melihat tren.",
+      "timeseries_partial_legend": "Penanda ✕ menunjukkan analisis sebagian (beberapa kategori dilewati).",
+      "radar_empty": "Tidak ada skor kategori yang tersedia untuk analisis ini.",
+      "radar_value": "Skor",
+      "legend": {
+        "overall": "Keseluruhan",
+        "technical": "Teknis",
+        "structured": "Terstruktur",
+        "content": "Konten",
+        "authority": "Otoritas",
+        "visibility": "Visibilitas"
+      }
     }
   }
 }

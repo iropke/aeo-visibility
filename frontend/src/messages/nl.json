@@ -210,6 +210,22 @@
         "error_message": "Fout",
         "auto_refresh_paused": "Automatisch vernieuwen onderbroken (tabblad inactief)."
       }
+    },
+    "charts": {
+      "timeseries_title": "Score geschiedenis",
+      "timeseries_empty": "Nog geen voltooide analyses om in kaart te brengen.",
+      "timeseries_single_point": "Laatste score: {score}/100 ({when}). Voer een andere analyse uit om de trend te zien.",
+      "timeseries_partial_legend": "✕ markeringen geven aan dat analyses gedeeltelijk zijn uitgevoerd (enkele categorieën zijn overgeslagen).",
+      "radar_empty": "Geen categoriscores beschikbaar voor deze analyse.",
+      "radar_value": "Score",
+      "legend": {
+        "overall": "Totaal",
+        "technical": "Technisch",
+        "structured": "Gestructureerd",
+        "content": "Inhoud",
+        "authority": "Autoriteit",
+        "visibility": "Zichtbaarheid"
+      }
     }
   }
 }
