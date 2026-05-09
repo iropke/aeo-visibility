@@ -152,6 +152,63 @@
         "err_forbidden": "आपके पास विश्लेषण ट्रिगर करने की अनुमति नहीं है।",
         "err_concurrent": "इस वर्कस्पेस के लिए पहले से ही एक विश्लेषण चल रहा है।",
         "err_cooldown": "इस साइट का एक घंटे से पहले विश्लेषण किया गया था। बाद में पुनः प्रयास करें।"
+      },
+      "results": {
+        "back_to_site": "साइट पर वापस जाएं",
+        "result_not_found": "हम इस विश्लेषण परिणाम को नहीं ढूंढ सके।",
+        "running_title": "विश्लेषण चल रहा है",
+        "running_subtitle": "हम आपकी साइट को स्कोर कर रहे हैं। यह पृष्ठ स्वचालित रूप से अपडेट होगा।",
+        "failed_title": "विश्लेषण विफल",
+        "queued_subtitle": "शुरू करने के लिए प्रतीक्षा की जा रही है…",
+        "completed_at": "पूर्ण हुआ",
+        "triggered_at": "शुरू किया गया",
+        "duration": "अवधि",
+        "duration_seconds": "{seconds}s",
+        "version": "संस्करण",
+        "trigger_type_manual": "मैनुअल",
+        "trigger_type_scheduled": "अनुसूचित",
+        "trigger_type_monthly_auto": "मासिक स्वचालित",
+        "funding_source": {
+          "pro_pack": "Pro Pack",
+          "basic_pack": "Basic Pack",
+          "base": "Base",
+          "payg": "Pay-as-you-go",
+          "addon": "Add-on",
+          "trial": "Trial"
+        },
+        "overall_score": "कुल स्कोर",
+        "no_score": "कोई स्कोर नहीं",
+        "category_score": "स्कोर",
+        "categories_section": "श्रेणियां",
+        "metrics_section": "मेट्रिक्स",
+        "show_metrics": "मेट्रिक्स दिखाएं",
+        "hide_metrics": "मेट्रिक्स छुपाएं",
+        "metric_passed": "पास",
+        "metric_failed": "सुधार की आवश्यकता है",
+        "metric_weight": "वजन {pct}%",
+        "metric_threshold": "सीमा {value}",
+        "metric_value": "मान",
+        "evidence": "साक्ष्य",
+        "insights_section": "अंतर्दृष्टि",
+        "insights_unavailable": "इस विश्लेषण के लिए अंतर्दृष्टि उपलब्ध नहीं है।",
+        "insights_synthesized_by": "{model} द्वारा संश्लेषित",
+        "insights_high_priority_capped": "सूची को केंद्रित रखने के लिए कुछ उच्च-प्राथमिकता वाली वस्तुओं को मध्यम में भेजा गया।",
+        "improvements_section": "सुधार",
+        "improvements_empty": "इस विश्लेषण के लिए कोई विशिष्ट सुधार उत्पन्न नहीं हुए।",
+        "improvement_priority": {
+          "high": "उच्च",
+          "medium": "मध्यम",
+          "low": "कम"
+        },
+        "improvement_effort": {
+          "low": "कम प्रयास",
+          "medium": "मध्यम प्रयास",
+          "high": "उच्च प्रयास"
+        },
+        "improvement_impact": "प्रभाव {value}/10",
+        "improvement_related_metrics": "संबंधित मेट्रिक्स",
+        "error_message": "त्रुटि",
+        "auto_refresh_paused": "ऑटो-रीफ्रेश रोका गया (टैब निष्क्रिय)।"
       }
     }
   }

@@ -152,6 +152,63 @@
         "err_forbidden": "No tiene permiso para activar un análisis.",
         "err_concurrent": "Otro análisis ya se está ejecutando para este espacio de trabajo.",
         "err_cooldown": "Este sitio fue analizado hace menos de una hora. Inténtelo más tarde."
+      },
+      "results": {
+        "back_to_site": "Volver al sitio",
+        "result_not_found": "No pudimos encontrar este resultado de análisis.",
+        "running_title": "Análisis en progreso",
+        "running_subtitle": "Estamos calificando su sitio. Esta página se actualizará automáticamente.",
+        "failed_title": "El análisis falló",
+        "queued_subtitle": "Esperando para comenzar…",
+        "completed_at": "Completado",
+        "triggered_at": "Iniciado",
+        "duration": "Duración",
+        "duration_seconds": "{seconds}s",
+        "version": "Versión",
+        "trigger_type_manual": "Manual",
+        "trigger_type_scheduled": "Programado",
+        "trigger_type_monthly_auto": "Auto mensual",
+        "funding_source": {
+          "pro_pack": "Pro Pack",
+          "basic_pack": "Basic Pack",
+          "base": "Base",
+          "payg": "Pago por uso",
+          "addon": "Complemento",
+          "trial": "Prueba"
+        },
+        "overall_score": "Puntuación general",
+        "no_score": "Sin puntuación",
+        "category_score": "Puntuación",
+        "categories_section": "Categorías",
+        "metrics_section": "Métricas",
+        "show_metrics": "Mostrar métricas",
+        "hide_metrics": "Ocultar métricas",
+        "metric_passed": "Aprobado",
+        "metric_failed": "Necesita mejoras",
+        "metric_weight": "Peso {pct}%",
+        "metric_threshold": "Umbral {value}",
+        "metric_value": "Valor",
+        "evidence": "Evidencia",
+        "insights_section": "Perspectivas",
+        "insights_unavailable": "Las perspectivas no están disponibles para este análisis.",
+        "insights_synthesized_by": "Sintetizado por {model}",
+        "insights_high_priority_capped": "Se degradaron algunos elementos de alta prioridad a prioridad media para mantener la lista enfocada.",
+        "improvements_section": "Mejoras",
+        "improvements_empty": "No se generaron mejoras específicas para este análisis.",
+        "improvement_priority": {
+          "high": "Alta",
+          "medium": "Media",
+          "low": "Baja"
+        },
+        "improvement_effort": {
+          "low": "Bajo esfuerzo",
+          "medium": "Esfuerzo medio",
+          "high": "Alto esfuerzo"
+        },
+        "improvement_impact": "Impacto {value}/10",
+        "improvement_related_metrics": "Métricas relacionadas",
+        "error_message": "Error",
+        "auto_refresh_paused": "Actualización automática pausada (pestaña inactiva)."
       }
     }
   }

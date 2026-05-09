@@ -152,6 +152,63 @@
         "err_forbidden": "U hebt geen toestemming om een analyse te starten.",
         "err_concurrent": "Voor deze werkruimte wordt al een analyse uitgevoerd.",
         "err_cooldown": "Deze site werd minder dan een uur geleden geanalyseerd. Probeer later opnieuw."
+      },
+      "results": {
+        "back_to_site": "Terug naar site",
+        "result_not_found": "We konden dit analyseresultaat niet vinden.",
+        "running_title": "Analyse wordt uitgevoerd",
+        "running_subtitle": "We beoordelen uw site. Deze pagina wordt automatisch bijgewerkt.",
+        "failed_title": "Analyse mislukt",
+        "queued_subtitle": "Wachten om te starten…",
+        "completed_at": "Voltooid",
+        "triggered_at": "Gestart",
+        "duration": "Duur",
+        "duration_seconds": "{seconds}s",
+        "version": "Versie",
+        "trigger_type_manual": "Handmatig",
+        "trigger_type_scheduled": "Gepland",
+        "trigger_type_monthly_auto": "Automatisch maandelijks",
+        "funding_source": {
+          "pro_pack": "Pro Pack",
+          "basic_pack": "Basic Pack",
+          "base": "Base",
+          "payg": "Betaal per gebruik",
+          "addon": "Add-on",
+          "trial": "Trial"
+        },
+        "overall_score": "Totaalscore",
+        "no_score": "Geen score",
+        "category_score": "Score",
+        "categories_section": "Categorieën",
+        "metrics_section": "Metrics",
+        "show_metrics": "Metrics weergeven",
+        "hide_metrics": "Metrics verbergen",
+        "metric_passed": "Geslaagd",
+        "metric_failed": "Aandacht nodig",
+        "metric_weight": "Gewicht {pct}%",
+        "metric_threshold": "Drempel {value}",
+        "metric_value": "Waarde",
+        "evidence": "Bewijs",
+        "insights_section": "Inzichten",
+        "insights_unavailable": "Inzichten zijn niet beschikbaar voor deze analyse.",
+        "insights_synthesized_by": "Gegenereerd door {model}",
+        "insights_high_priority_capped": "Enkele items met hoge prioriteit zijn naar gemiddelde prioriteit verplaatst om de lijst overzichtelijk te houden.",
+        "improvements_section": "Verbeteringen",
+        "improvements_empty": "Er zijn geen specifieke verbeteringen gegenereerd voor deze analyse.",
+        "improvement_priority": {
+          "high": "Hoog",
+          "medium": "Gemiddeld",
+          "low": "Laag"
+        },
+        "improvement_effort": {
+          "low": "Laag inspanning",
+          "medium": "Gemiddelde inspanning",
+          "high": "Hoog inspanning"
+        },
+        "improvement_impact": "Impact {value}/10",
+        "improvement_related_metrics": "Gerelateerde metrics",
+        "error_message": "Fout",
+        "auto_refresh_paused": "Automatisch vernieuwen onderbroken (tabblad inactief)."
       }
     }
   }

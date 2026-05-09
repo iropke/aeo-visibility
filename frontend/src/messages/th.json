@@ -152,6 +152,63 @@
         "err_forbidden": "คุณไม่มีสิทธิ์ในการเรียกใช้การวิเคราะห์",
         "err_concurrent": "กำลังทำการวิเคราะห์อื่นอยู่สำหรับพื้นที่ทำงานนี้แล้ว",
         "err_cooldown": "เว็บไซต์นี้ได้รับการวิเคราะห์น้อยกว่าหนึ่งชั่วโมงที่แล้ว ลองใหม่ในภายหลัง"
+      },
+      "results": {
+        "back_to_site": "กลับไปยังเว็บไซต์",
+        "result_not_found": "เราไม่พบผลการวิเคราะห์นี้",
+        "running_title": "การวิเคราะห์กำลังดำเนินการ",
+        "running_subtitle": "เรากำลังให้คะแนนเว็บไซต์ของคุณ หน้านี้จะอัปเดตโดยอัตโนมัติ",
+        "failed_title": "การวิเคราะห์ล้มเหลว",
+        "queued_subtitle": "รอการเริ่มต้น…",
+        "completed_at": "เสร็จสิ้น",
+        "triggered_at": "เริ่มต้น",
+        "duration": "ระยะเวลา",
+        "duration_seconds": "{seconds}s",
+        "version": "เวอร์ชัน",
+        "trigger_type_manual": "ด้วยตนเอง",
+        "trigger_type_scheduled": "ตามกำหนดเวลา",
+        "trigger_type_monthly_auto": "อัตโนมัติรายเดือน",
+        "funding_source": {
+          "pro_pack": "Pro Pack",
+          "basic_pack": "Basic Pack",
+          "base": "Base",
+          "payg": "Pay-as-you-go",
+          "addon": "Add-on",
+          "trial": "Trial"
+        },
+        "overall_score": "คะแนนรวม",
+        "no_score": "ไม่มีคะแนน",
+        "category_score": "คะแนน",
+        "categories_section": "หมวดหมู่",
+        "metrics_section": "เมตริกส์",
+        "show_metrics": "แสดงเมตริกส์",
+        "hide_metrics": "ซ่อนเมตริกส์",
+        "metric_passed": "ผ่าน",
+        "metric_failed": "ต้องปรับปรุง",
+        "metric_weight": "น้ำหนัก {pct}%",
+        "metric_threshold": "เกณฑ์ {value}",
+        "metric_value": "ค่า",
+        "evidence": "หลักฐาน",
+        "insights_section": "ข้อมูลเชิงลึก",
+        "insights_unavailable": "ข้อมูลเชิงลึกไม่พร้อมใช้งานสำหรับการวิเคราะห์นี้",
+        "insights_synthesized_by": "สังเคราะห์โดย {model}",
+        "insights_high_priority_capped": "รายการความสำคัญสูงบางรายการถูกลดระดับลงเป็นระดับกลางเพื่อให้รายการมีความเข้มข้น",
+        "improvements_section": "การปรับปรุง",
+        "improvements_empty": "ไม่มีการปรับปรุงเฉพาะสำหรับการวิเคราะห์นี้",
+        "improvement_priority": {
+          "high": "สูง",
+          "medium": "กลาง",
+          "low": "ต่ำ"
+        },
+        "improvement_effort": {
+          "low": "ความพยายามน้อย",
+          "medium": "ความพยายามปานกลาง",
+          "high": "ความพยายามมาก"
+        },
+        "improvement_impact": "ผลกระทบ {value}/10",
+        "improvement_related_metrics": "เมตริกส์ที่เกี่ยวข้อง",
+        "error_message": "ข้อผิดพลาด",
+        "auto_refresh_paused": "การรีเฟรชอัตโนมัติหยุดชั่วคราว (แท็บไม่ทำงาน)"
       }
     }
   }

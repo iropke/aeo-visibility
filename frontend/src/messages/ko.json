@@ -152,6 +152,63 @@
         "err_forbidden": "분석을 실행할 권한이 없습니다.",
         "err_concurrent": "이 워크스페이스에서 이미 다른 분석이 실행 중입니다.",
         "err_cooldown": "이 사이트는 1시간 이내에 분석되었습니다. 나중에 다시 시도하세요."
+      },
+      "results": {
+        "back_to_site": "사이트로 돌아가기",
+        "result_not_found": "분석 결과를 찾을 수 없습니다.",
+        "running_title": "분석 진행 중",
+        "running_subtitle": "사이트를 점수 매기고 있습니다. 이 페이지는 자동으로 업데이트됩니다.",
+        "failed_title": "분석 실패",
+        "queued_subtitle": "시작 대기 중…",
+        "completed_at": "완료됨",
+        "triggered_at": "시작됨",
+        "duration": "소요 시간",
+        "duration_seconds": "{seconds}초",
+        "version": "버전",
+        "trigger_type_manual": "수동",
+        "trigger_type_scheduled": "예약됨",
+        "trigger_type_monthly_auto": "월간 자동",
+        "funding_source": {
+          "pro_pack": "Pro Pack",
+          "basic_pack": "Basic Pack",
+          "base": "Base",
+          "payg": "Pay-as-you-go",
+          "addon": "Add-on",
+          "trial": "Trial"
+        },
+        "overall_score": "전체 점수",
+        "no_score": "점수 없음",
+        "category_score": "점수",
+        "categories_section": "카테고리",
+        "metrics_section": "지표",
+        "show_metrics": "지표 표시",
+        "hide_metrics": "지표 숨기기",
+        "metric_passed": "통과",
+        "metric_failed": "개선 필요",
+        "metric_weight": "가중치 {pct}%",
+        "metric_threshold": "임계값 {value}",
+        "metric_value": "값",
+        "evidence": "증거",
+        "insights_section": "인사이트",
+        "insights_unavailable": "이 분석에 대한 인사이트를 사용할 수 없습니다.",
+        "insights_synthesized_by": "{model}에서 생성됨",
+        "insights_high_priority_capped": "목록을 집중화하기 위해 일부 높은 우선순위 항목이 중간으로 강등되었습니다.",
+        "improvements_section": "개선 사항",
+        "improvements_empty": "이 분석을 위해 생성된 특정 개선 사항이 없습니다.",
+        "improvement_priority": {
+          "high": "높음",
+          "medium": "중간",
+          "low": "낮음"
+        },
+        "improvement_effort": {
+          "low": "낮은 난이도",
+          "medium": "중간 난이도",
+          "high": "높은 난이도"
+        },
+        "improvement_impact": "영향도 {value}/10",
+        "improvement_related_metrics": "관련 지표",
+        "error_message": "오류",
+        "auto_refresh_paused": "자동 새로고침 일시 중지됨(탭 비활성)."
       }
     }
   }

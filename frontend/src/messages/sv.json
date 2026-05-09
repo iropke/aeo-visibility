@@ -152,6 +152,63 @@
         "err_forbidden": "Du har inte behörighet att starta en analys.",
         "err_concurrent": "En annan analys körs redan för denna arbetsyta.",
         "err_cooldown": "Denna webbplats analyserades för mindre än en timme sedan. Försök senare."
+      },
+      "results": {
+        "back_to_site": "Tillbaka till webbplats",
+        "result_not_found": "Vi kunde inte hitta detta analysresultat.",
+        "running_title": "Analys pågår",
+        "running_subtitle": "Vi beräknar din webbplats poäng. Den här sidan uppdateras automatiskt.",
+        "failed_title": "Analys misslyckades",
+        "queued_subtitle": "Väntar på start…",
+        "completed_at": "Slutfört",
+        "triggered_at": "Startat",
+        "duration": "Varaktighet",
+        "duration_seconds": "{seconds}s",
+        "version": "Version",
+        "trigger_type_manual": "Manuell",
+        "trigger_type_scheduled": "Schemalagd",
+        "trigger_type_monthly_auto": "Månatlig automatisk",
+        "funding_source": {
+          "pro_pack": "Pro Pack",
+          "basic_pack": "Basic Pack",
+          "base": "Bas",
+          "payg": "Betala per användning",
+          "addon": "Tillägg",
+          "trial": "Testversion"
+        },
+        "overall_score": "Sammanfattande poäng",
+        "no_score": "Inget poäng",
+        "category_score": "Poäng",
+        "categories_section": "Kategorier",
+        "metrics_section": "Mätvärden",
+        "show_metrics": "Visa mätvärden",
+        "hide_metrics": "Dölj mätvärden",
+        "metric_passed": "Godkänd",
+        "metric_failed": "Behöver förbättras",
+        "metric_weight": "Vikt {pct}%",
+        "metric_threshold": "Tröskelvärde {value}",
+        "metric_value": "Värde",
+        "evidence": "Bevis",
+        "insights_section": "Insikter",
+        "insights_unavailable": "Insikter är inte tillgängliga för denna analys.",
+        "insights_synthesized_by": "Sammanfattad av {model}",
+        "insights_high_priority_capped": "Vissa högt prioriterade objekt degraderades till medium för att hålla listan fokuserad.",
+        "improvements_section": "Förbättringar",
+        "improvements_empty": "Inga specifika förbättringar genererades för denna analys.",
+        "improvement_priority": {
+          "high": "Högt",
+          "medium": "Medel",
+          "low": "Lågt"
+        },
+        "improvement_effort": {
+          "low": "Låg insats",
+          "medium": "Medel insats",
+          "high": "Högt arbete"
+        },
+        "improvement_impact": "Inverkan {value}/10",
+        "improvement_related_metrics": "Relaterade mätvärden",
+        "error_message": "Fel",
+        "auto_refresh_paused": "Automatisk uppdatering pausad (fliken inaktiv)."
       }
     }
   }

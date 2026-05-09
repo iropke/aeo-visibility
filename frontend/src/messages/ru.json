@@ -152,6 +152,63 @@
         "err_forbidden": "У вас нет разрешения на запуск анализа.",
         "err_concurrent": "Другой анализ уже выполняется для этого рабочего пространства.",
         "err_cooldown": "Этот сайт был проанализирован менее часа назад. Попробуйте позже."
+      },
+      "results": {
+        "back_to_site": "Вернуться на сайт",
+        "result_not_found": "Не удалось найти результат анализа.",
+        "running_title": "Анализ выполняется",
+        "running_subtitle": "Мы оцениваем ваш сайт. Эта страница будет обновляться автоматически.",
+        "failed_title": "Анализ не удался",
+        "queued_subtitle": "Ожидание начала…",
+        "completed_at": "Завершено",
+        "triggered_at": "Начато",
+        "duration": "Продолжительность",
+        "duration_seconds": "{seconds}с",
+        "version": "Версия",
+        "trigger_type_manual": "Вручную",
+        "trigger_type_scheduled": "По расписанию",
+        "trigger_type_monthly_auto": "Ежемесячно автоматически",
+        "funding_source": {
+          "pro_pack": "Pro Pack",
+          "basic_pack": "Basic Pack",
+          "base": "Base",
+          "payg": "Pay-as-you-go",
+          "addon": "Add-on",
+          "trial": "Trial"
+        },
+        "overall_score": "Общая оценка",
+        "no_score": "Нет оценки",
+        "category_score": "Оценка",
+        "categories_section": "Категории",
+        "metrics_section": "Метрики",
+        "show_metrics": "Показать метрики",
+        "hide_metrics": "Скрыть метрики",
+        "metric_passed": "Пройдена",
+        "metric_failed": "Требует доработки",
+        "metric_weight": "Вес {pct}%",
+        "metric_threshold": "Пороговое значение {value}",
+        "metric_value": "Значение",
+        "evidence": "Доказательства",
+        "insights_section": "Рекомендации",
+        "insights_unavailable": "Рекомендации недоступны для этого анализа.",
+        "insights_synthesized_by": "Подготовлено моделью {model}",
+        "insights_high_priority_capped": "Некоторые высокоприоритетные элементы были понижены до среднего приоритета для более сфокусированного списка.",
+        "improvements_section": "Улучшения",
+        "improvements_empty": "Для этого анализа не были созданы конкретные улучшения.",
+        "improvement_priority": {
+          "high": "Высокий",
+          "medium": "Средний",
+          "low": "Низкий"
+        },
+        "improvement_effort": {
+          "low": "Низкие затраты",
+          "medium": "Средние затраты",
+          "high": "Высокие затраты"
+        },
+        "improvement_impact": "Влияние {value}/10",
+        "improvement_related_metrics": "Связанные метрики",
+        "error_message": "Ошибка",
+        "auto_refresh_paused": "Автообновление приостановлено (вкладка неактивна)."
       }
     }
   }

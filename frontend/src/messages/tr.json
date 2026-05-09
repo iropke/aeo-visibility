@@ -152,6 +152,63 @@
         "err_forbidden": "Analiz tetikleme izniniz yok.",
         "err_concurrent": "Bu çalışma alanı için zaten başka bir analiz çalışıyor.",
         "err_cooldown": "Bu site bir saatten daha kısa süre önce analiz edildi. Daha sonra tekrar deneyin."
+      },
+      "results": {
+        "back_to_site": "Siteye geri dön",
+        "result_not_found": "Bu analiz sonucunu bulamadık.",
+        "running_title": "Analiz devam ediyor",
+        "running_subtitle": "Sitenizi puanlandırıyoruz. Bu sayfa otomatik olarak güncellenecek.",
+        "failed_title": "Analiz başarısız oldu",
+        "queued_subtitle": "Başlamayı bekliyor…",
+        "completed_at": "Tamamlandı",
+        "triggered_at": "Başlatıldı",
+        "duration": "Süre",
+        "duration_seconds": "{seconds}s",
+        "version": "Sürüm",
+        "trigger_type_manual": "Manuel",
+        "trigger_type_scheduled": "Planlanmış",
+        "trigger_type_monthly_auto": "Aylık otomatik",
+        "funding_source": {
+          "pro_pack": "Pro Paketi",
+          "basic_pack": "Temel Paketi",
+          "base": "Temel",
+          "payg": "Kullandıkça öde",
+          "addon": "Eklenti",
+          "trial": "Deneme"
+        },
+        "overall_score": "Genel puan",
+        "no_score": "Puan yok",
+        "category_score": "Puan",
+        "categories_section": "Kategoriler",
+        "metrics_section": "Metrikler",
+        "show_metrics": "Metrikleri göster",
+        "hide_metrics": "Metrikleri gizle",
+        "metric_passed": "Başarılı",
+        "metric_failed": "Geliştirilmesi gerekiyor",
+        "metric_weight": "Ağırlık {pct}%",
+        "metric_threshold": "Eşik {value}",
+        "metric_value": "Değer",
+        "evidence": "Kanıt",
+        "insights_section": "İçgörüler",
+        "insights_unavailable": "Bu analiz için içgörüler kullanılamıyor.",
+        "insights_synthesized_by": "{model} tarafından sentezlendi",
+        "insights_high_priority_capped": "Listeyi odaklanmış tutmak için bazı yüksek öncelikli öğeler orta seviyeye indirildi.",
+        "improvements_section": "İyileştirmeler",
+        "improvements_empty": "Bu analiz için hiçbir özel iyileştirme oluşturulmadı.",
+        "improvement_priority": {
+          "high": "Yüksek",
+          "medium": "Orta",
+          "low": "Düşük"
+        },
+        "improvement_effort": {
+          "low": "Düşük çaba",
+          "medium": "Orta çaba",
+          "high": "Yüksek çaba"
+        },
+        "improvement_impact": "Etki {value}/10",
+        "improvement_related_metrics": "İlgili metrikler",
+        "error_message": "Hata",
+        "auto_refresh_paused": "Otomatik yenileme duraklatıldı (sekme etkin değil)."
       }
     }
   }

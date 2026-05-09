@@ -152,6 +152,63 @@
         "err_forbidden": "You don't have permission to trigger an analysis.",
         "err_concurrent": "Another analysis is already running for this workspace.",
         "err_cooldown": "This site was analyzed less than an hour ago. Try again later."
+      },
+      "results": {
+        "back_to_site": "Back to site",
+        "result_not_found": "We couldn't find this analysis result.",
+        "running_title": "Analysis in progress",
+        "running_subtitle": "We're scoring your site. This page will update automatically.",
+        "failed_title": "Analysis failed",
+        "queued_subtitle": "Waiting to start…",
+        "completed_at": "Completed",
+        "triggered_at": "Started",
+        "duration": "Duration",
+        "duration_seconds": "{seconds}s",
+        "version": "Version",
+        "trigger_type_manual": "Manual",
+        "trigger_type_scheduled": "Scheduled",
+        "trigger_type_monthly_auto": "Monthly auto",
+        "funding_source": {
+          "pro_pack": "Pro Pack",
+          "basic_pack": "Basic Pack",
+          "base": "Base",
+          "payg": "Pay-as-you-go",
+          "addon": "Add-on",
+          "trial": "Trial"
+        },
+        "overall_score": "Overall score",
+        "no_score": "No score",
+        "category_score": "Score",
+        "categories_section": "Categories",
+        "metrics_section": "Metrics",
+        "show_metrics": "Show metrics",
+        "hide_metrics": "Hide metrics",
+        "metric_passed": "Passed",
+        "metric_failed": "Needs work",
+        "metric_weight": "Weight {pct}%",
+        "metric_threshold": "Threshold {value}",
+        "metric_value": "Value",
+        "evidence": "Evidence",
+        "insights_section": "Insights",
+        "insights_unavailable": "Insights are not available for this analysis.",
+        "insights_synthesized_by": "Synthesized by {model}",
+        "insights_high_priority_capped": "Some high-priority items were demoted to medium to keep the list focused.",
+        "improvements_section": "Improvements",
+        "improvements_empty": "No specific improvements were generated for this analysis.",
+        "improvement_priority": {
+          "high": "High",
+          "medium": "Medium",
+          "low": "Low"
+        },
+        "improvement_effort": {
+          "low": "Low effort",
+          "medium": "Medium effort",
+          "high": "High effort"
+        },
+        "improvement_impact": "Impact {value}/10",
+        "improvement_related_metrics": "Related metrics",
+        "error_message": "Error",
+        "auto_refresh_paused": "Auto-refresh paused (tab inactive)."
       }
     }
   }

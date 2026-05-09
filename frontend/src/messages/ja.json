@@ -152,6 +152,63 @@
         "err_forbidden": "分析をトリガーする権限がありません。",
         "err_concurrent": "このワークスペースで別の分析が既に実行中です。",
         "err_cooldown": "このサイトは1時間以内に分析されました。後でもう一度お試しください。"
+      },
+      "results": {
+        "back_to_site": "サイトに戻る",
+        "result_not_found": "この分析結果が見つかりませんでした。",
+        "running_title": "分析実行中",
+        "running_subtitle": "サイトをスコアリング中です。このページは自動的に更新されます。",
+        "failed_title": "分析に失敗しました",
+        "queued_subtitle": "開始待機中…",
+        "completed_at": "完了",
+        "triggered_at": "開始",
+        "duration": "実行時間",
+        "duration_seconds": "{seconds}秒",
+        "version": "バージョン",
+        "trigger_type_manual": "手動",
+        "trigger_type_scheduled": "スケジュール設定済み",
+        "trigger_type_monthly_auto": "月次自動",
+        "funding_source": {
+          "pro_pack": "Pro Pack",
+          "basic_pack": "Basic Pack",
+          "base": "Base",
+          "payg": "従量課金",
+          "addon": "アドオン",
+          "trial": "トライアル"
+        },
+        "overall_score": "総合スコア",
+        "no_score": "スコアなし",
+        "category_score": "スコア",
+        "categories_section": "カテゴリー",
+        "metrics_section": "メトリクス",
+        "show_metrics": "メトリクスを表示",
+        "hide_metrics": "メトリクスを非表示",
+        "metric_passed": "合格",
+        "metric_failed": "改善が必要",
+        "metric_weight": "ウェイト {pct}%",
+        "metric_threshold": "閾値 {value}",
+        "metric_value": "値",
+        "evidence": "証拠",
+        "insights_section": "インサイト",
+        "insights_unavailable": "この分析ではインサイトが利用できません。",
+        "insights_synthesized_by": "{model}によって生成されました",
+        "insights_high_priority_capped": "リストを絞り込むために、優先度が高い項目の一部が中程度に変更されました。",
+        "improvements_section": "改善",
+        "improvements_empty": "この分析に対する具体的な改善案は生成されませんでした。",
+        "improvement_priority": {
+          "high": "高",
+          "medium": "中",
+          "low": "低"
+        },
+        "improvement_effort": {
+          "low": "低い工数",
+          "medium": "中程度の工数",
+          "high": "高い工数"
+        },
+        "improvement_impact": "インパクト {value}/10",
+        "improvement_related_metrics": "関連メトリクス",
+        "error_message": "エラー",
+        "auto_refresh_paused": "自動更新が一時停止されています（タブが非アクティブです）。"
       }
     }
   }

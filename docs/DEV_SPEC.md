@@ -1593,7 +1593,7 @@ Closes #123
 
 ### 20-1. Phase 1: 코어 (~6-8주)
 
-> 진행 상태: 2026-05-09 청크 F-i18n-2 완료. F-i18n-1 (인프라 20 lang) + F-i18n-2 (메일 17 lang 자동 생성, 4 trigger × 17 lang = 68 HTML, ko/es 사람 작성 보존). EMAIL_TEMPLATE_LANGS = core.locales.SUPPORTED_LANGS (20 lang) 통합. **다음 진입점: F2 (분석 결과 페이지).**
+> 진행 상태: 2026-05-09 청크 F2 완료. F-i18n-1 (인프라 20 lang) + F-i18n-2 (메일 17 lang) + F2 (분석 결과 페이지: components/analysis/v2/{MetricRow, CategoryCard, InsightsPanel, ImprovementsList, AnalysisResultView} + `[result_id]/page.tsx` + i18n 49 신규 키 × 20 lang). 메일 result_url CTA 활성화. **다음 진입점: F3 (시계열 차트 + Pricing/Contact).**
 
 **Backend**:
 - [x] Supabase Auth JWT 검증 미들웨어 (청크 B)
@@ -1617,9 +1617,9 @@ Closes #123
 **Frontend**:
 - [x] Supabase Auth 통합 (Magic Link) (C)
 - [x] 워크스페이스 CRUD UI + 온보딩 (C)
-- [ ] 사이트 CRUD UI (변경 1회/월 표시)
-- [ ] 분석 진행/결과 대시보드 (analyses/active polling, raw_metrics 카드)
-- [ ] Custom 재분석 모달 (5축 체크박스 + 잔여 카운터 funding_source 별)
+- [x] 사이트 CRUD UI (변경 1회/월 표시) — F1
+- [x] 분석 진행/결과 대시보드 — `(app)/sites/[id]` (F1) + `(app)/sites/[id]/results/[result_id]` (F2) + 폴링 (useApi pollIntervalMs, status='running' 동안만)
+- [x] Custom 재분석 모달 (5축 체크박스 + 잔여 카운터 funding_source 별) — F1
 - [ ] 시계열 그래프 (recharts, 전체/부분 시각 구분)
 - [ ] 멤버 초대 UI (Phase 2 invitations 테이블 필요)
 - [ ] 트라이얼 만료 임박/직후 모달 + 잔여 일수 카운트다운

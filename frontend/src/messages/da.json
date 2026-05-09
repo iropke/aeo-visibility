@@ -152,6 +152,63 @@
         "err_forbidden": "Du har ikke tilladelse til at udløse en analyse.",
         "err_concurrent": "En anden analyse kører allerede for dette arbejdsrum.",
         "err_cooldown": "Dette websted blev analyseret for mindre end en time siden. Prøv igen senere."
+      },
+      "results": {
+        "back_to_site": "Tilbage til websted",
+        "result_not_found": "Vi kunne ikke finde dette analyseresultat.",
+        "running_title": "Analyse i gang",
+        "running_subtitle": "Vi scorer dit websted. Denne side opdateres automatisk.",
+        "failed_title": "Analyse mislykkedes",
+        "queued_subtitle": "Afventer start…",
+        "completed_at": "Fuldført",
+        "triggered_at": "Startet",
+        "duration": "Varighed",
+        "duration_seconds": "{seconds}s",
+        "version": "Version",
+        "trigger_type_manual": "Manuel",
+        "trigger_type_scheduled": "Planlagt",
+        "trigger_type_monthly_auto": "Månedlig automatisk",
+        "funding_source": {
+          "pro_pack": "Pro Pack",
+          "basic_pack": "Basic Pack",
+          "base": "Base",
+          "payg": "Betaling efter forbrug",
+          "addon": "Tilføjelse",
+          "trial": "Prøveperiode"
+        },
+        "overall_score": "Samlet score",
+        "no_score": "Ingen score",
+        "category_score": "Score",
+        "categories_section": "Kategorier",
+        "metrics_section": "Målinger",
+        "show_metrics": "Vis målinger",
+        "hide_metrics": "Skjul målinger",
+        "metric_passed": "Bestået",
+        "metric_failed": "Kræver arbejde",
+        "metric_weight": "Vægt {pct}%",
+        "metric_threshold": "Tærskel {value}",
+        "metric_value": "Værdi",
+        "evidence": "Bevis",
+        "insights_section": "Indsigter",
+        "insights_unavailable": "Indsigter er ikke tilgængelige for denne analyse.",
+        "insights_synthesized_by": "Syntetiseret af {model}",
+        "insights_high_priority_capped": "Nogle højprioriterings-elementer blev degraderet til medium for at holde listen fokuseret.",
+        "improvements_section": "Forbedringer",
+        "improvements_empty": "Der blev ikke genereret specifikke forbedringer for denne analyse.",
+        "improvement_priority": {
+          "high": "Høj",
+          "medium": "Mellem",
+          "low": "Lav"
+        },
+        "improvement_effort": {
+          "low": "Lav indsats",
+          "medium": "Mellem indsats",
+          "high": "Høj indsats"
+        },
+        "improvement_impact": "Påvirkning {value}/10",
+        "improvement_related_metrics": "Relaterede målinger",
+        "error_message": "Fejl",
+        "auto_refresh_paused": "Automatisk opdatering paused (fane inaktiv)."
       }
     }
   }

@@ -152,6 +152,63 @@
         "err_forbidden": "Anda tidak mempunyai kebenaran untuk mencetuskan analisis.",
         "err_concurrent": "Analisis lain sudah berjalan untuk ruang kerja ini.",
         "err_cooldown": "Laman ini telah dianalisis kurang dari satu jam yang lalu. Cuba lagi kemudian."
+      },
+      "results": {
+        "back_to_site": "Kembali ke situs",
+        "result_not_found": "Kami tidak dapat menemukan hasil analisis ini.",
+        "running_title": "Analisis sedang berjalan",
+        "running_subtitle": "Kami sedang menilai situs Anda. Halaman ini akan diperbarui secara otomatis.",
+        "failed_title": "Analisis gagal",
+        "queued_subtitle": "Menunggu untuk dimulai…",
+        "completed_at": "Selesai",
+        "triggered_at": "Dimulai",
+        "duration": "Durasi",
+        "duration_seconds": "{seconds}d",
+        "version": "Versi",
+        "trigger_type_manual": "Manual",
+        "trigger_type_scheduled": "Terjadwal",
+        "trigger_type_monthly_auto": "Otomatis bulanan",
+        "funding_source": {
+          "pro_pack": "Pro Pack",
+          "basic_pack": "Basic Pack",
+          "base": "Dasar",
+          "payg": "Bayar sesuai penggunaan",
+          "addon": "Add-on",
+          "trial": "Uji coba"
+        },
+        "overall_score": "Skor keseluruhan",
+        "no_score": "Tidak ada skor",
+        "category_score": "Skor",
+        "categories_section": "Kategori",
+        "metrics_section": "Metrik",
+        "show_metrics": "Tampilkan metrik",
+        "hide_metrics": "Sembunyikan metrik",
+        "metric_passed": "Lulus",
+        "metric_failed": "Perlu perbaikan",
+        "metric_weight": "Bobot {pct}%",
+        "metric_threshold": "Ambang batas {value}",
+        "metric_value": "Nilai",
+        "evidence": "Bukti",
+        "insights_section": "Wawasan",
+        "insights_unavailable": "Wawasan tidak tersedia untuk analisis ini.",
+        "insights_synthesized_by": "Disintesis oleh {model}",
+        "insights_high_priority_capped": "Beberapa item prioritas tinggi diturunkan ke menengah untuk menjaga daftar tetap terfokus.",
+        "improvements_section": "Perbaikan",
+        "improvements_empty": "Tidak ada perbaikan spesifik yang dihasilkan untuk analisis ini.",
+        "improvement_priority": {
+          "high": "Tinggi",
+          "medium": "Menengah",
+          "low": "Rendah"
+        },
+        "improvement_effort": {
+          "low": "Usaha rendah",
+          "medium": "Usaha menengah",
+          "high": "Usaha tinggi"
+        },
+        "improvement_impact": "Dampak {value}/10",
+        "improvement_related_metrics": "Metrik terkait",
+        "error_message": "Kesalahan",
+        "auto_refresh_paused": "Penyegaran otomatis dijeda (tab tidak aktif)."
       }
     }
   }

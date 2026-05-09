@@ -152,6 +152,63 @@
         "err_forbidden": "ليس لديك إذن لتشغيل تحليل.",
         "err_concurrent": "تحليل آخر قيد التشغيل بالفعل لمساحة العمل هذه.",
         "err_cooldown": "تم تحليل هذا الموقع منذ أقل من ساعة. حاول لاحقًا."
+      },
+      "results": {
+        "back_to_site": "العودة إلى الموقع",
+        "result_not_found": "لم نتمكن من العثور على نتيجة التحليل هذه.",
+        "running_title": "جارٍ تحليل الموقع",
+        "running_subtitle": "نحن نقيّم موقعك. سيتم تحديث هذه الصفحة تلقائياً.",
+        "failed_title": "فشل التحليل",
+        "queued_subtitle": "في انتظار البدء…",
+        "completed_at": "مكتمل",
+        "triggered_at": "بدأ",
+        "duration": "المدة",
+        "duration_seconds": "{seconds}ث",
+        "version": "الإصدار",
+        "trigger_type_manual": "يدوي",
+        "trigger_type_scheduled": "مجدول",
+        "trigger_type_monthly_auto": "تلقائي شهري",
+        "funding_source": {
+          "pro_pack": "حزمة Pro",
+          "basic_pack": "حزمة Basic",
+          "base": "أساسي",
+          "payg": "الدفع حسب الاستخدام",
+          "addon": "إضافة",
+          "trial": "نسخة تجريبية"
+        },
+        "overall_score": "النتيجة الإجمالية",
+        "no_score": "لا توجد نتيجة",
+        "category_score": "النتيجة",
+        "categories_section": "الفئات",
+        "metrics_section": "المقاييس",
+        "show_metrics": "عرض المقاييس",
+        "hide_metrics": "إخفاء المقاييس",
+        "metric_passed": "نجح",
+        "metric_failed": "يحتاج إلى تحسين",
+        "metric_weight": "الوزن {pct}%",
+        "metric_threshold": "الحد الأدنى {value}",
+        "metric_value": "القيمة",
+        "evidence": "الأدلة",
+        "insights_section": "الرؤى",
+        "insights_unavailable": "الرؤى غير متاحة لهذا التحليل.",
+        "insights_synthesized_by": "تم تجميعها بواسطة {model}",
+        "insights_high_priority_capped": "تم خفض بعض العناصر ذات الأولوية العالية إلى الأولوية المتوسطة للحفاظ على تركيز القائمة.",
+        "improvements_section": "التحسينات",
+        "improvements_empty": "لم يتم إنشاء تحسينات محددة لهذا التحليل.",
+        "improvement_priority": {
+          "high": "عالية",
+          "medium": "متوسطة",
+          "low": "منخفضة"
+        },
+        "improvement_effort": {
+          "low": "جهد منخفض",
+          "medium": "جهد متوسط",
+          "high": "جهد عالي"
+        },
+        "improvement_impact": "التأثير {value}/10",
+        "improvement_related_metrics": "المقاييس ذات الصلة",
+        "error_message": "خطأ",
+        "auto_refresh_paused": "إيقاف التحديث التلقائي (علامة التبويب غير نشطة)."
       }
     }
   }

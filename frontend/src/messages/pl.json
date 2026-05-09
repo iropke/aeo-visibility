@@ -152,6 +152,63 @@
         "err_forbidden": "Nie masz uprawnień do uruchomienia analizy.",
         "err_concurrent": "Inna analiza jest już uruchomiona dla tej przestrzeni roboczej.",
         "err_cooldown": "Ta strona została przeanalizowana mniej niż godzinę temu. Spróbuj później."
+      },
+      "results": {
+        "back_to_site": "Wróć do witryny",
+        "result_not_found": "Nie możemy znaleźć tego wyniku analizy.",
+        "running_title": "Analiza w toku",
+        "running_subtitle": "Oceniamy Twoją witrynę. Ta strona będzie aktualizowana automatycznie.",
+        "failed_title": "Analiza nie powiodła się",
+        "queued_subtitle": "Oczekiwanie na rozpoczęcie…",
+        "completed_at": "Ukończono",
+        "triggered_at": "Rozpoczęto",
+        "duration": "Czas trwania",
+        "duration_seconds": "{seconds}s",
+        "version": "Wersja",
+        "trigger_type_manual": "Ręczne",
+        "trigger_type_scheduled": "Zaplanowane",
+        "trigger_type_monthly_auto": "Auto miesięczne",
+        "funding_source": {
+          "pro_pack": "Pakiet Pro",
+          "basic_pack": "Pakiet Podstawowy",
+          "base": "Podstawowy",
+          "payg": "Płatność za użycie",
+          "addon": "Dodatek",
+          "trial": "Wersja próbna"
+        },
+        "overall_score": "Ocena ogólna",
+        "no_score": "Brak oceny",
+        "category_score": "Ocena",
+        "categories_section": "Kategorie",
+        "metrics_section": "Metryki",
+        "show_metrics": "Pokaż metryki",
+        "hide_metrics": "Ukryj metryki",
+        "metric_passed": "Przeszło",
+        "metric_failed": "Wymaga pracy",
+        "metric_weight": "Waga {pct}%",
+        "metric_threshold": "Próg {value}",
+        "metric_value": "Wartość",
+        "evidence": "Dowody",
+        "insights_section": "Insights",
+        "insights_unavailable": "Insights nie są dostępne dla tej analizy.",
+        "insights_synthesized_by": "Syntezowane przez {model}",
+        "insights_high_priority_capped": "Algunas elementos o wysokim priorytecie zostały obniżone do średniego, aby zachować listę skoncentrowaną.",
+        "improvements_section": "Ulepszenia",
+        "improvements_empty": "Dla tej analizy nie wygenerowano żadnych konkretnych ulepszeń.",
+        "improvement_priority": {
+          "high": "Wysoki",
+          "medium": "Średni",
+          "low": "Niski"
+        },
+        "improvement_effort": {
+          "low": "Niska złożoność",
+          "medium": "Średnia złożoność",
+          "high": "Wysoka złożoność"
+        },
+        "improvement_impact": "Wpływ {value}/10",
+        "improvement_related_metrics": "Powiązane metryki",
+        "error_message": "Błąd",
+        "auto_refresh_paused": "Auto-odświeżanie wstrzymane (karta nieaktywna)."
       }
     }
   }

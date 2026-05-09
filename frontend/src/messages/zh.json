@@ -152,6 +152,63 @@
         "err_forbidden": "您没有权限触发分析。",
         "err_concurrent": "此工作区已有另一个分析正在运行。",
         "err_cooldown": "此网站在一小时内已被分析。请稍后重试。"
+      },
+      "results": {
+        "back_to_site": "返回网站",
+        "result_not_found": "我们找不到此分析结果。",
+        "running_title": "分析进行中",
+        "running_subtitle": "我们正在评分您的网站。此页面将自动更新。",
+        "failed_title": "分析失败",
+        "queued_subtitle": "等待开始…",
+        "completed_at": "已完成",
+        "triggered_at": "已开始",
+        "duration": "耗时",
+        "duration_seconds": "{seconds}秒",
+        "version": "版本",
+        "trigger_type_manual": "手动",
+        "trigger_type_scheduled": "计划",
+        "trigger_type_monthly_auto": "月度自动",
+        "funding_source": {
+          "pro_pack": "专业包",
+          "basic_pack": "基础包",
+          "base": "基础版",
+          "payg": "按需付费",
+          "addon": "附加服务",
+          "trial": "试用版"
+        },
+        "overall_score": "总体评分",
+        "no_score": "无评分",
+        "category_score": "评分",
+        "categories_section": "类别",
+        "metrics_section": "指标",
+        "show_metrics": "显示指标",
+        "hide_metrics": "隐藏指标",
+        "metric_passed": "通过",
+        "metric_failed": "需要改进",
+        "metric_weight": "权重 {pct}%",
+        "metric_threshold": "阈值 {value}",
+        "metric_value": "值",
+        "evidence": "证据",
+        "insights_section": "洞察",
+        "insights_unavailable": "此分析不提供洞察。",
+        "insights_synthesized_by": "由 {model} 生成",
+        "insights_high_priority_capped": "部分高优先级项目已降级为中优先级以保持列表的重点。",
+        "improvements_section": "改进",
+        "improvements_empty": "此分析未生成特定的改进建议。",
+        "improvement_priority": {
+          "high": "高",
+          "medium": "中",
+          "low": "低"
+        },
+        "improvement_effort": {
+          "low": "低难度",
+          "medium": "中难度",
+          "high": "高难度"
+        },
+        "improvement_impact": "影响 {value}/10",
+        "improvement_related_metrics": "相关指标",
+        "error_message": "错误",
+        "auto_refresh_paused": "自动刷新已暂停（标签页未激活）。"
       }
     }
   }

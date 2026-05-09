@@ -152,6 +152,63 @@
         "err_forbidden": "Non hai il permesso per avviare un'analisi.",
         "err_concurrent": "Un'altra analisi è già in corso per questo workspace.",
         "err_cooldown": "Questo sito è stato analizzato meno di un'ora fa. Riprova più tardi."
+      },
+      "results": {
+        "back_to_site": "Torna al sito",
+        "result_not_found": "Non abbiamo trovato questo risultato di analisi.",
+        "running_title": "Analisi in corso",
+        "running_subtitle": "Stiamo valutando il tuo sito. Questa pagina si aggiornerà automaticamente.",
+        "failed_title": "Analisi non riuscita",
+        "queued_subtitle": "In attesa di inizio…",
+        "completed_at": "Completato",
+        "triggered_at": "Avviato",
+        "duration": "Durata",
+        "duration_seconds": "{seconds}s",
+        "version": "Versione",
+        "trigger_type_manual": "Manuale",
+        "trigger_type_scheduled": "Programmato",
+        "trigger_type_monthly_auto": "Automatico mensile",
+        "funding_source": {
+          "pro_pack": "Pro Pack",
+          "basic_pack": "Basic Pack",
+          "base": "Base",
+          "payg": "Pay-as-you-go",
+          "addon": "Add-on",
+          "trial": "Prova"
+        },
+        "overall_score": "Punteggio complessivo",
+        "no_score": "Nessun punteggio",
+        "category_score": "Punteggio",
+        "categories_section": "Categorie",
+        "metrics_section": "Metriche",
+        "show_metrics": "Mostra metriche",
+        "hide_metrics": "Nascondi metriche",
+        "metric_passed": "Superato",
+        "metric_failed": "Richiede miglioramento",
+        "metric_weight": "Peso {pct}%",
+        "metric_threshold": "Soglia {value}",
+        "metric_value": "Valore",
+        "evidence": "Evidenza",
+        "insights_section": "Insights",
+        "insights_unavailable": "Gli insights non sono disponibili per questa analisi.",
+        "insights_synthesized_by": "Sintetizzato da {model}",
+        "insights_high_priority_capped": "Alcuni elementi ad alta priorità sono stati retrocessi a media priorità per mantenere l'elenco focalizzato.",
+        "improvements_section": "Miglioramenti",
+        "improvements_empty": "Nessun miglioramento specifico è stato generato per questa analisi.",
+        "improvement_priority": {
+          "high": "Alta",
+          "medium": "Media",
+          "low": "Bassa"
+        },
+        "improvement_effort": {
+          "low": "Basso sforzo",
+          "medium": "Sforzo medio",
+          "high": "Alto sforzo"
+        },
+        "improvement_impact": "Impatto {value}/10",
+        "improvement_related_metrics": "Metriche correlate",
+        "error_message": "Errore",
+        "auto_refresh_paused": "Aggiornamento automatico in pausa (scheda inattiva)."
       }
     }
   }

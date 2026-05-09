@@ -152,6 +152,63 @@
         "err_forbidden": "Sie haben keine Berechtigung, eine Analyse auszulösen.",
         "err_concurrent": "Eine andere Analyse wird bereits für diesen Arbeitsbereich ausgeführt.",
         "err_cooldown": "Diese Website wurde vor weniger als einer Stunde analysiert. Versuchen Sie es später erneut."
+      },
+      "results": {
+        "back_to_site": "Zurück zur Website",
+        "result_not_found": "Wir konnten dieses Analyseergebnis nicht finden.",
+        "running_title": "Analyse läuft",
+        "running_subtitle": "Wir bewerten Ihre Website. Diese Seite wird automatisch aktualisiert.",
+        "failed_title": "Analyse fehlgeschlagen",
+        "queued_subtitle": "Warten auf Start…",
+        "completed_at": "Abgeschlossen",
+        "triggered_at": "Gestartet",
+        "duration": "Dauer",
+        "duration_seconds": "{seconds}s",
+        "version": "Version",
+        "trigger_type_manual": "Manuell",
+        "trigger_type_scheduled": "Geplant",
+        "trigger_type_monthly_auto": "Monatlich automatisch",
+        "funding_source": {
+          "pro_pack": "Pro Pack",
+          "basic_pack": "Basic Pack",
+          "base": "Basis",
+          "payg": "Nutzungsbasiert",
+          "addon": "Add-on",
+          "trial": "Testversion"
+        },
+        "overall_score": "Gesamtbewertung",
+        "no_score": "Keine Bewertung",
+        "category_score": "Bewertung",
+        "categories_section": "Kategorien",
+        "metrics_section": "Metriken",
+        "show_metrics": "Metriken anzeigen",
+        "hide_metrics": "Metriken ausblenden",
+        "metric_passed": "Bestanden",
+        "metric_failed": "Verbesserung erforderlich",
+        "metric_weight": "Gewichtung {pct}%",
+        "metric_threshold": "Schwellwert {value}",
+        "metric_value": "Wert",
+        "evidence": "Nachweise",
+        "insights_section": "Erkenntnisse",
+        "insights_unavailable": "Erkenntnisse sind für diese Analyse nicht verfügbar.",
+        "insights_synthesized_by": "Zusammengefasst von {model}",
+        "insights_high_priority_capped": "Einige hochpriorisierte Elemente wurden auf Mittlere Priorität herabgestuft, um die Liste fokussiert zu halten.",
+        "improvements_section": "Verbesserungen",
+        "improvements_empty": "Für diese Analyse wurden keine spezifischen Verbesserungen generiert.",
+        "improvement_priority": {
+          "high": "Hoch",
+          "medium": "Mittel",
+          "low": "Niedrig"
+        },
+        "improvement_effort": {
+          "low": "Geringer Aufwand",
+          "medium": "Mittlerer Aufwand",
+          "high": "Hoher Aufwand"
+        },
+        "improvement_impact": "Auswirkung {value}/10",
+        "improvement_related_metrics": "Zugehörige Metriken",
+        "error_message": "Fehler",
+        "auto_refresh_paused": "Automatische Aktualisierung unterbrochen (Tab inaktiv)."
       }
     }
   }
