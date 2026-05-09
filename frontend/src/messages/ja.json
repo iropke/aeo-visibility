@@ -226,6 +226,110 @@
         "authority": "権威性",
         "visibility": "可視性"
       }
+    },
+    "pricing": {
+      "eyebrow": "料金",
+      "title": "可視性とともに成長するプラン",
+      "subtitle": "7日間無料で試してください。競合他社を追跡し、サイトを拡張し、過去のトレンドのロックを解除する準備ができたらアップグレードしてください。",
+      "footnote": "USD での価格。月額プランはいつでもキャンセルできます。年額プランで最大 15% 節約できます。",
+      "free": "無料",
+      "trial_duration": "7日間のトライアル",
+      "per_month": "/ 月",
+      "per_month_billed_annually": "/ 月（年単位で請求）",
+      "unlimited": "無制限",
+      "featured_badge": "最も人気",
+      "toggle": {
+        "monthly": "月額",
+        "annual": "年額",
+        "annual_save": "15% 節約"
+      },
+      "plans": {
+        "free": {
+          "name": "無料トライアル",
+          "tagline": "すべての機能を 7 日間試してください。クレジットカードは不要です。"
+        },
+        "basic": {
+          "name": "ベーシック",
+          "tagline": "1 つのサイトを測定する個人創業者向け。"
+        },
+        "pro": {
+          "name": "プロ",
+          "tagline": "複数のサイト間で比較を実行するマーケティング チーム向け。"
+        },
+        "business": {
+          "name": "ビジネス",
+          "tagline": "業界ベンチマークと SLA サポート を備えた成長チーム向け。"
+        }
+      },
+      "features": {
+        "sites": "{count} 個の所有サイト",
+        "competitors_per_site": "サイトあたり {count} 社の競合他社",
+        "custom_analyses": "{count} 件のカスタム分析 / 月",
+        "timeseries": "{months} ヶ月のトレンド履歴",
+        "members": "最大 {count} 人のチームメンバー",
+        "csv_export": "CSV エクスポート",
+        "competitor_comparison": "競合他社比較",
+        "industry_benchmark": "業界ベンチマーク",
+        "support": {
+          "self": "セルフサービス ドキュメント",
+          "email": "メール サポート",
+          "email_chat": "メール + チャット サポート",
+          "email_chat_sla4h": "メール + チャット（4 時間 SLA）",
+          "dedicated": "専任 CS"
+        }
+      },
+      "cta": {
+        "start_trial": "無料トライアルを開始",
+        "choose_plan": "プランを選択"
+      },
+      "enterprise": {
+        "badge": "エンタープライズ",
+        "title": "大規模組織向けカスタム プラン",
+        "description": "無制限のサイト、競合他社、カスタム分析、専任カスタマー サクセス マネージャー付きの年間契約。ワイヤー トランスファーに対応しています。",
+        "bullet_unlimited": "無制限のサイトと分析",
+        "bullet_dedicated": "専任 CS マネージャー",
+        "bullet_audit": "監査ログの保持",
+        "bullet_sla": "カスタム SLA とワイヤー トランスファー",
+        "cta": "営業チームに相談"
+      }
+    },
+    "contact": {
+      "eyebrow": "お問い合わせ",
+      "title": "ご相談ください",
+      "subtitle": "デモ、営業、サポート、その他のご希望についてお聞かせください。通常、営業日以内にご返信させていただきます。",
+      "submit": "メッセージを送信",
+      "submitting": "送信中…",
+      "privacy_note": "お送りいただいたメッセージはご返信のためにのみ使用されます。お客様のデータは共有されません。",
+      "fields": {
+        "name": "名前",
+        "email": "メール",
+        "company": "会社（任意）",
+        "topic": "これについて何ですか？",
+        "message": "メッセージ"
+      },
+      "topics": {
+        "general": "一般的なお問い合わせ",
+        "demo": "デモのリクエスト",
+        "sales": "営業に関するご質問",
+        "support": "サポートに関するご質問"
+      },
+      "errors": {
+        "name_required": "お名前を入力してください。",
+        "name_too_long": "名前は 200 文字以下である必要があります。",
+        "email_required": "メール アドレスを入力してください。",
+        "email_invalid": "有効なメール アドレスを入力してください。",
+        "company_too_long": "会社名は 200 文字以下である必要があります。",
+        "message_required": "メッセージを入力してください。",
+        "message_too_long": "メッセージは 5000 文字以下である必要があります。",
+        "rate_limit": "最近いくつかのメッセージを送信されました。1 分後に再度お試しください。",
+        "validation": "フォームのエラーを確認してください。",
+        "network": "サーバーに接続できませんでした。接続を確認して、もう一度お試しください。",
+        "generic": "メッセージの送信中に問題が発生しました。もう一度お試しください。"
+      },
+      "success": {
+        "title": "ありがとうございます。メッセージを受け取りました。",
+        "description": "営業日以内にご確認の上、メール でご返信させていただきます。"
+      }
     }
   }
 }

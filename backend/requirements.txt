@@ -2,6 +2,8 @@
 fastapi==0.115.6
 uvicorn[standard]==0.34.0
 pydantic-settings==2.7.1
+# Pydantic EmailStr 의존 — F3-pricing 청크 (Contact 폼 검증).
+email-validator==2.2.0
 
 # Database
 sqlalchemy[asyncio]==2.0.36

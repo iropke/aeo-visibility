@@ -11,6 +11,11 @@ from app.models.analysis_result import (
     AnalysisTriggerType,
 )
 from app.models.base import Base
+from app.models.contact_submission import (
+    ContactStatus,
+    ContactSubmission,
+    ContactTopic,
+)
 from app.models.monthly_usage import MonthlyUsage
 from app.models.plan import Plan
 from app.models.profile import Profile
@@ -24,6 +29,9 @@ __all__ = [
     "AnalysisStatus",
     "AnalysisTriggerType",
     "Base",
+    "ContactStatus",
+    "ContactSubmission",
+    "ContactTopic",
     "MonthlyUsage",
     "Plan",
     "Profile",

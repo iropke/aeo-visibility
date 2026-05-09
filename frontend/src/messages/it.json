@@ -226,6 +226,110 @@
         "authority": "Autorevolezza",
         "visibility": "Visibilità"
       }
+    },
+    "pricing": {
+      "eyebrow": "Prezzi",
+      "title": "Piani che crescono con la tua visibilità",
+      "subtitle": "Inizia gratuitamente per 7 giorni. Esegui l'upgrade quando sei pronto per tracciare i competitor, espandere i siti e sbloccare le tendenze storiche.",
+      "footnote": "Prezzi in USD. I piani mensili si possono annullare in qualsiasi momento. I piani annuali permettono di risparmiare fino al 15%.",
+      "free": "Gratuito",
+      "trial_duration": "Prova di 7 giorni",
+      "per_month": "/ mese",
+      "per_month_billed_annually": "/ mese, fatturato annualmente",
+      "unlimited": "Illimitato",
+      "featured_badge": "Il più popolare",
+      "toggle": {
+        "monthly": "Mensile",
+        "annual": "Annuale",
+        "annual_save": "Risparmia 15%"
+      },
+      "plans": {
+        "free": {
+          "name": "Prova Gratuita",
+          "tagline": "Prova ogni funzione per 7 giorni. Nessuna carta richiesta."
+        },
+        "basic": {
+          "name": "Basic",
+          "tagline": "Per founder singoli che misurano un sito unico."
+        },
+        "pro": {
+          "name": "Pro",
+          "tagline": "Per team di marketing che eseguono confronti tra siti."
+        },
+        "business": {
+          "name": "Business",
+          "tagline": "Per team in crescita con benchmark di settore e supporto SLA."
+        }
+      },
+      "features": {
+        "sites": "{count} siti di proprietà",
+        "competitors_per_site": "{count} competitor per sito",
+        "custom_analyses": "{count} analisi personalizzate / mese",
+        "timeseries": "{months} mesi di cronologia delle tendenze",
+        "members": "Fino a {count} membri del team",
+        "csv_export": "Esportazione CSV",
+        "competitor_comparison": "Confronto competitor",
+        "industry_benchmark": "Benchmark di settore",
+        "support": {
+          "self": "Documentazione self-serve",
+          "email": "Supporto email",
+          "email_chat": "Supporto email + chat",
+          "email_chat_sla4h": "Email + chat (SLA 4h)",
+          "dedicated": "Responsabile CS dedicato"
+        }
+      },
+      "cta": {
+        "start_trial": "Inizia la prova gratuita",
+        "choose_plan": "Scegli piano"
+      },
+      "enterprise": {
+        "badge": "Enterprise",
+        "title": "Piano personalizzato per grandi organizzazioni",
+        "description": "Contratto annuale con siti illimitati, competitor, analisi personalizzate e un responsabile dedito del customer success. Trasferimento bancario accettato.",
+        "bullet_unlimited": "Siti e analisi illimitati",
+        "bullet_dedicated": "Responsabile CS dedicato",
+        "bullet_audit": "Conservazione del registro audit",
+        "bullet_sla": "SLA personalizzato e trasferimento bancario",
+        "cta": "Parla con il team vendite"
+      }
+    },
+    "contact": {
+      "eyebrow": "Contatti",
+      "title": "Parliamone",
+      "subtitle": "Raccontaci di cosa hai bisogno — demo, vendite, supporto o qualsiasi altra cosa. Di solito rispondiamo entro un giorno lavorativo.",
+      "submit": "Invia messaggio",
+      "submitting": "Invio in corso…",
+      "privacy_note": "Utilizziamo il tuo messaggio solo per rispondere. I tuoi dati non vengono mai condivisi.",
+      "fields": {
+        "name": "Nome",
+        "email": "Email",
+        "company": "Azienda (opzionale)",
+        "topic": "Di cosa si tratta?",
+        "message": "Messaggio"
+      },
+      "topics": {
+        "general": "Richiesta generica",
+        "demo": "Richiedi una demo",
+        "sales": "Domanda di vendita",
+        "support": "Domanda di supporto"
+      },
+      "errors": {
+        "name_required": "Inserisci il tuo nome.",
+        "name_too_long": "Il nome deve contenere 200 caratteri o meno.",
+        "email_required": "Inserisci la tua email.",
+        "email_invalid": "Inserisci un indirizzo email valido.",
+        "company_too_long": "L'azienda deve contenere 200 caratteri o meno.",
+        "message_required": "Inserisci un messaggio.",
+        "message_too_long": "Il messaggio deve contenere 5000 caratteri o meno.",
+        "rate_limit": "Hai inviato diversi messaggi di recente. Riprova tra un minuto.",
+        "validation": "Controlla il modulo per eventuali errori.",
+        "network": "Non abbiamo potuto raggiungere il server. Controlla la tua connessione e riprova.",
+        "generic": "Si è verificato un errore durante l'invio del tuo messaggio. Riprova."
+      },
+      "success": {
+        "title": "Grazie — abbiamo ricevuto il tuo messaggio.",
+        "description": "Lo esamineremo e ti risponderemo via email entro un giorno lavorativo."
+      }
     }
   }
 }

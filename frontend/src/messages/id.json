@@ -226,6 +226,110 @@
         "authority": "Otoritas",
         "visibility": "Visibilitas"
       }
+    },
+    "pricing": {
+      "eyebrow": "Harga",
+      "title": "Paket yang tumbuh bersama visibilitas Anda",
+      "subtitle": "Mulai gratis selama 7 hari. Tingkatkan kapan Anda siap untuk melacak pesaing, memperluas situs, dan membuka tren historis.",
+      "footnote": "Harga dalam USD. Paket bulanan dapat dibatalkan kapan saja. Paket tahunan hemat hingga 15%.",
+      "free": "Gratis",
+      "trial_duration": "Uji coba 7 hari",
+      "per_month": "/ bulan",
+      "per_month_billed_annually": "/ bulan, ditagih setiap tahun",
+      "unlimited": "Tak terbatas",
+      "featured_badge": "Paling populer",
+      "toggle": {
+        "monthly": "Bulanan",
+        "annual": "Tahunan",
+        "annual_save": "Hemat 15%"
+      },
+      "plans": {
+        "free": {
+          "name": "Uji Coba Gratis",
+          "tagline": "Coba setiap fitur selama 7 hari. Tidak perlu kartu kredit."
+        },
+        "basic": {
+          "name": "Dasar",
+          "tagline": "Untuk pendiri solo yang mengukur satu situs."
+        },
+        "pro": {
+          "name": "Pro",
+          "tagline": "Untuk tim pemasaran yang menjalankan perbandingan di berbagai situs."
+        },
+        "business": {
+          "name": "Bisnis",
+          "tagline": "Untuk tim yang berkembang dengan tolok ukur industri dan dukungan SLA."
+        }
+      },
+      "features": {
+        "sites": "{count} situs milik sendiri",
+        "competitors_per_site": "{count} pesaing per situs",
+        "custom_analyses": "{count} analisis khusus / bulan",
+        "timeseries": "{months} bulan riwayat tren",
+        "members": "Hingga {count} anggota tim",
+        "csv_export": "Ekspor CSV",
+        "competitor_comparison": "Perbandingan pesaing",
+        "industry_benchmark": "Tolok ukur industri",
+        "support": {
+          "self": "Dokumentasi mandiri",
+          "email": "Dukungan email",
+          "email_chat": "Dukungan email + chat",
+          "email_chat_sla4h": "Email + chat (SLA 4 jam)",
+          "dedicated": "CS Dedicated"
+        }
+      },
+      "cta": {
+        "start_trial": "Mulai uji coba gratis",
+        "choose_plan": "Pilih paket"
+      },
+      "enterprise": {
+        "badge": "Enterprise",
+        "title": "Paket khusus untuk organisasi besar",
+        "description": "Kontrak tahunan dengan situs, pesaing, dan analisis khusus tak terbatas, serta manajer kesuksesan pelanggan dedicated. Transfer kawat diterima.",
+        "bullet_unlimited": "Situs & analisis tak terbatas",
+        "bullet_dedicated": "Manajer CS dedicated",
+        "bullet_audit": "Retensi log audit",
+        "bullet_sla": "SLA & transfer kawat khusus",
+        "cta": "Hubungi tim penjualan"
+      }
+    },
+    "contact": {
+      "eyebrow": "Kontak",
+      "title": "Mari kita bicara",
+      "subtitle": "Beri tahu kami apa yang Anda butuhkan — demo, penjualan, dukungan, atau hal lainnya. Kami biasanya membalas dalam satu hari kerja.",
+      "submit": "Kirim pesan",
+      "submitting": "Mengirim…",
+      "privacy_note": "Kami hanya menggunakan pesan Anda untuk membalas. Data Anda tidak pernah dibagikan.",
+      "fields": {
+        "name": "Nama",
+        "email": "Email",
+        "company": "Perusahaan (opsional)",
+        "topic": "Apa topiknya?",
+        "message": "Pesan"
+      },
+      "topics": {
+        "general": "Pertanyaan umum",
+        "demo": "Minta demo",
+        "sales": "Pertanyaan penjualan",
+        "support": "Pertanyaan dukungan"
+      },
+      "errors": {
+        "name_required": "Silakan masukkan nama Anda.",
+        "name_too_long": "Nama harus 200 karakter atau kurang.",
+        "email_required": "Silakan masukkan email Anda.",
+        "email_invalid": "Silakan masukkan alamat email yang valid.",
+        "company_too_long": "Perusahaan harus 200 karakter atau kurang.",
+        "message_required": "Silakan masukkan pesan.",
+        "message_too_long": "Pesan harus 5000 karakter atau kurang.",
+        "rate_limit": "Anda telah mengirim beberapa pesan baru-baru ini. Silakan coba lagi dalam satu menit.",
+        "validation": "Silakan periksa formulir untuk kesalahan.",
+        "network": "Kami tidak dapat menjangkau server. Periksa koneksi Anda dan coba lagi.",
+        "generic": "Terjadi kesalahan saat mengirim pesan Anda. Silakan coba lagi."
+      },
+      "success": {
+        "title": "Terima kasih — kami mendapat pesan Anda.",
+        "description": "Kami akan meninjau dan membalas email Anda dalam satu hari kerja."
+      }
     }
   }
 }

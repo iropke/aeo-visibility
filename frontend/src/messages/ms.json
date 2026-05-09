@@ -226,6 +226,110 @@
         "authority": "Autoriti",
         "visibility": "Keterlihatan"
       }
+    },
+    "pricing": {
+      "eyebrow": "Harga",
+      "title": "Pelan yang berkembang bersama keterlihatan anda",
+      "subtitle": "Mulai percuma selama 7 hari. Tingkatkan apabila anda siap untuk menjejaki pesaing, mengembangkan tapak, dan membuka arah aliran bersejarah.",
+      "footnote": "Harga dalam USD. Pelan bulanan boleh dibatalkan pada bila-bila masa. Pelan tahunan jimat sehingga 15%.",
+      "free": "Percuma",
+      "trial_duration": "Percubaan 7 hari",
+      "per_month": "/ bulan",
+      "per_month_billed_annually": "/ bulan, dibilkan setiap tahun",
+      "unlimited": "Tanpa had",
+      "featured_badge": "Paling popular",
+      "toggle": {
+        "monthly": "Bulanan",
+        "annual": "Tahunan",
+        "annual_save": "Jimat 15%"
+      },
+      "plans": {
+        "free": {
+          "name": "Percubaan Percuma",
+          "tagline": "Cubalah setiap ciri selama 7 hari. Tiada kad diperlukan."
+        },
+        "basic": {
+          "name": "Asas",
+          "tagline": "Untuk pengasas solo yang mengukur satu tapak."
+        },
+        "pro": {
+          "name": "Pro",
+          "tagline": "Untuk pasukan pemasaran yang menjalankan perbandingan di seluruh tapak."
+        },
+        "business": {
+          "name": "Perniagaan",
+          "tagline": "Untuk pasukan yang berkembang dengan penanda aras industri dan sokongan SLA."
+        }
+      },
+      "features": {
+        "sites": "{count} tapak milik",
+        "competitors_per_site": "{count} pesaing setiap tapak",
+        "custom_analyses": "{count} analisis tersuai / bulan",
+        "timeseries": "{months} bulan sejarah aliran",
+        "members": "Sehingga {count} anggota pasukan",
+        "csv_export": "Eksport CSV",
+        "competitor_comparison": "Perbandingan pesaing",
+        "industry_benchmark": "Penanda aras industri",
+        "support": {
+          "self": "Dokumentasi swalayan",
+          "email": "Sokongan e-mel",
+          "email_chat": "Sokongan e-mel + sembang",
+          "email_chat_sla4h": "E-mel + sembang (SLA 4j)",
+          "dedicated": "CS Berdedikasi"
+        }
+      },
+      "cta": {
+        "start_trial": "Mulai percubaan percuma",
+        "choose_plan": "Pilih pelan"
+      },
+      "enterprise": {
+        "badge": "Perusahaan",
+        "title": "Pelan tersuai untuk organisasi besar",
+        "description": "Kontrak tahunan dengan tapak tanpa had, pesaing, analisis tersuai, dan pengurus kejayaan pelanggan berdedikasi. Pemindahan kawat diterima.",
+        "bullet_unlimited": "Tapak & analisis tanpa had",
+        "bullet_dedicated": "Pengurus CS berdedikasi",
+        "bullet_audit": "Pengekalan log audit",
+        "bullet_sla": "SLA & pemindahan kawat tersuai",
+        "cta": "Bercakap dengan penjualan"
+      }
+    },
+    "contact": {
+      "eyebrow": "Hubungi",
+      "title": "Mari kita bercakap",
+      "subtitle": "Beritahu kami apa yang anda perlukan — demo, penjualan, sokongan, atau apa pun lagi. Kami biasanya membalas dalam satu hari perniagaan.",
+      "submit": "Hantar mesej",
+      "submitting": "Menghantar…",
+      "privacy_note": "Kami hanya menggunakan mesej anda untuk membalas. Data anda tidak pernah dikongsi.",
+      "fields": {
+        "name": "Nama",
+        "email": "E-mel",
+        "company": "Syarikat (pilihan)",
+        "topic": "Apakah ini mengenai?",
+        "message": "Mesej"
+      },
+      "topics": {
+        "general": "Pertanyaan umum",
+        "demo": "Minta demo",
+        "sales": "Soalan penjualan",
+        "support": "Soalan sokongan"
+      },
+      "errors": {
+        "name_required": "Sila masukkan nama anda.",
+        "name_too_long": "Nama mesti 200 aksara atau kurang.",
+        "email_required": "Sila masukkan e-mel anda.",
+        "email_invalid": "Sila masukkan alamat e-mel yang sah.",
+        "company_too_long": "Syarikat mesti 200 aksara atau kurang.",
+        "message_required": "Sila masukkan mesej.",
+        "message_too_long": "Mesej mesti 5000 aksara atau kurang.",
+        "rate_limit": "Anda telah menghantar beberapa mesej baru-baru ini. Sila cuba lagi dalam seminit.",
+        "validation": "Sila semak borang untuk ralat.",
+        "network": "Kami tidak dapat menjangkau pelayan. Periksa sambungan anda dan cuba lagi.",
+        "generic": "Sesuatu yang salah berlaku semasa menghantar mesej anda. Sila cuba lagi."
+      },
+      "success": {
+        "title": "Terima kasih — kami telah menerima mesej anda.",
+        "description": "Kami akan menyemak dan membalas e-mel anda dalam satu hari perniagaan."
+      }
     }
   }
 }

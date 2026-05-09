@@ -226,6 +226,110 @@
         "authority": "Auktoritet",
         "visibility": "Synlighet"
       }
+    },
+    "pricing": {
+      "eyebrow": "Prissättning",
+      "title": "Planer som växer med din synlighet",
+      "subtitle": "Börja gratis i 7 dagar. Uppgradera när du är redo att spåra konkurrenter, expandera webbplatser och låsa upp historiska trender.",
+      "footnote": "Priser i USD. Månatliga planer kan sägas upp när som helst. Årsplaner sparar upp till 15%.",
+      "free": "Gratis",
+      "trial_duration": "7-dagars provperiod",
+      "per_month": "/ månad",
+      "per_month_billed_annually": "/ månad, faktureras årligen",
+      "unlimited": "Obegränsad",
+      "featured_badge": "Mest populär",
+      "toggle": {
+        "monthly": "Månatlig",
+        "annual": "Årlig",
+        "annual_save": "Spara 15%"
+      },
+      "plans": {
+        "free": {
+          "name": "Gratis provperiod",
+          "tagline": "Prova varje funktion i 7 dagar. Inget kort krävs."
+        },
+        "basic": {
+          "name": "Basic",
+          "tagline": "För enskilda grundare som mäter en enskild webbplats."
+        },
+        "pro": {
+          "name": "Pro",
+          "tagline": "För marknadsföringsteam som kör jämförelser över webbplatser."
+        },
+        "business": {
+          "name": "Business",
+          "tagline": "För växande team med branschstandarder och SLA-stöd."
+        }
+      },
+      "features": {
+        "sites": "{count} ägda webbplatser",
+        "competitors_per_site": "{count} konkurrenter per webbplats",
+        "custom_analyses": "{count} anpassade analyser / månad",
+        "timeseries": "{months} månaders trendhistorik",
+        "members": "Upp till {count} teammedlemmar",
+        "csv_export": "CSV-export",
+        "competitor_comparison": "Konkurrentjämförelse",
+        "industry_benchmark": "Branschstandard",
+        "support": {
+          "self": "Självbetjäningsdokumentation",
+          "email": "E-poststöd",
+          "email_chat": "E-post + chattstöd",
+          "email_chat_sla4h": "E-post + chatt (4h SLA)",
+          "dedicated": "Dedikerad CS"
+        }
+      },
+      "cta": {
+        "start_trial": "Starta gratis provperiod",
+        "choose_plan": "Välj plan"
+      },
+      "enterprise": {
+        "badge": "Enterprise",
+        "title": "Anpassad plan för stora organisationer",
+        "description": "Årskontrakt med obegränsade webbplatser, konkurrenter, anpassade analyser och en dedikerad kundsupportansvarig. Banköverföring accepteras.",
+        "bullet_unlimited": "Obegränsade webbplatser och analyser",
+        "bullet_dedicated": "Dedikerad CS-ansvarig",
+        "bullet_audit": "Granskning av loggbevarandehistorik",
+        "bullet_sla": "Anpassad SLA och banköverföring",
+        "cta": "Prata med försäljning"
+      }
+    },
+    "contact": {
+      "eyebrow": "Kontakt",
+      "title": "Låt oss prata",
+      "subtitle": "Berätta vad du behöver — demo, försäljning, support eller något annat. Vi svarar vanligtvis inom en arbetsdag.",
+      "submit": "Skicka meddelande",
+      "submitting": "Skickar…",
+      "privacy_note": "Vi använder ditt meddelande endast för att svara. Dina data delas aldrig.",
+      "fields": {
+        "name": "Namn",
+        "email": "E-post",
+        "company": "Företag (valfritt)",
+        "topic": "Vad gäller detta?",
+        "message": "Meddelande"
+      },
+      "topics": {
+        "general": "Allmän förfrågan",
+        "demo": "Begär en demo",
+        "sales": "Försäljningsfråga",
+        "support": "Supportfråga"
+      },
+      "errors": {
+        "name_required": "Ange ditt namn.",
+        "name_too_long": "Namnet måste vara 200 tecken eller färre.",
+        "email_required": "Ange din e-postadress.",
+        "email_invalid": "Ange en giltig e-postadress.",
+        "company_too_long": "Företag måste vara 200 tecken eller färre.",
+        "message_required": "Ange ett meddelande.",
+        "message_too_long": "Meddelandet måste vara 5000 tecken eller färre.",
+        "rate_limit": "Du har skickat flera meddelanden nyligen. Försök igen om en minut.",
+        "validation": "Kontrollera formuläret för fel.",
+        "network": "Vi kunde inte nå servern. Kontrollera din anslutning och försök igen.",
+        "generic": "Något gick fel när du skickade meddelandet. Försök igen."
+      },
+      "success": {
+        "title": "Tack — vi fick ditt meddelande.",
+        "description": "Vi granskar och svarar på din e-post inom en arbetsdag."
+      }
     }
   }
 }

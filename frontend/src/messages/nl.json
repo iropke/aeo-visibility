@@ -226,6 +226,110 @@
         "authority": "Autoriteit",
         "visibility": "Zichtbaarheid"
       }
+    },
+    "pricing": {
+      "eyebrow": "Prijzen",
+      "title": "Plannen die groeien met uw zichtbaarheid",
+      "subtitle": "Start gratis voor 7 dagen. Upgrade wanneer u klaar bent om concurrenten bij te houden, sites uit te breiden en historische trends te ontdekken.",
+      "footnote": "Prijzen in USD. Maandelijkse plannen kunnen op elk moment worden geannuleerd. Jaarlijkse plannen besparen tot 15%.",
+      "free": "Gratis",
+      "trial_duration": "7-daagse proefperiode",
+      "per_month": "/ maand",
+      "per_month_billed_annually": "/ maand, jaarlijks gefactureerd",
+      "unlimited": "Onbeperkt",
+      "featured_badge": "Meest populair",
+      "toggle": {
+        "monthly": "Maandelijks",
+        "annual": "Jaarlijks",
+        "annual_save": "Bespaar 15%"
+      },
+      "plans": {
+        "free": {
+          "name": "Gratis proefperiode",
+          "tagline": "Probeer elke functie 7 dagen lang uit. Geen creditcard vereist."
+        },
+        "basic": {
+          "name": "Basic",
+          "tagline": "Voor solo-ondernemers die één site meten."
+        },
+        "pro": {
+          "name": "Pro",
+          "tagline": "Voor marketingteams die vergelijkingen tussen sites uitvoeren."
+        },
+        "business": {
+          "name": "Business",
+          "tagline": "Voor groeiende teams met branchebenchmarks en SLA-ondersteuning."
+        }
+      },
+      "features": {
+        "sites": "{count} eigen sites",
+        "competitors_per_site": "{count} concurrenten per site",
+        "custom_analyses": "{count} aangepaste analyses / maand",
+        "timeseries": "{months} maanden trendgeschiedenis",
+        "members": "Tot {count} teamleden",
+        "csv_export": "CSV-export",
+        "competitor_comparison": "Concurrentenvergelijking",
+        "industry_benchmark": "Branchebenchmark",
+        "support": {
+          "self": "Self-service documentatie",
+          "email": "E-mailondersteuning",
+          "email_chat": "E-mail + chatondersteuning",
+          "email_chat_sla4h": "E-mail + chat (4u SLA)",
+          "dedicated": "Dedicated CS"
+        }
+      },
+      "cta": {
+        "start_trial": "Start gratis proefperiode",
+        "choose_plan": "Kies plan"
+      },
+      "enterprise": {
+        "badge": "Enterprise",
+        "title": "Aangepast plan voor grote organisaties",
+        "description": "Jaarlijkse overeenkomst met onbeperkte sites, concurrenten, aangepaste analyses en een toegewezen customer success manager. Overboeking geaccepteerd.",
+        "bullet_unlimited": "Onbeperkte sites & analyses",
+        "bullet_dedicated": "Dedicated CS manager",
+        "bullet_audit": "Auditrail-retentie",
+        "bullet_sla": "Aangepaste SLA & overboeking",
+        "cta": "Spreek met verkoop"
+      }
+    },
+    "contact": {
+      "eyebrow": "Contact",
+      "title": "Laten we praten",
+      "subtitle": "Vertel ons wat u nodig hebt — demo, verkoop, ondersteuning of iets anders. We reageren meestal binnen één werkdag.",
+      "submit": "Bericht verzenden",
+      "submitting": "Bezig met verzenden…",
+      "privacy_note": "We gebruiken uw bericht alleen om te antwoorden. Uw gegevens worden nooit gedeeld.",
+      "fields": {
+        "name": "Naam",
+        "email": "E-mailadres",
+        "company": "Bedrijf (optioneel)",
+        "topic": "Waar gaat dit over?",
+        "message": "Bericht"
+      },
+      "topics": {
+        "general": "Algemene vraag",
+        "demo": "Demo aanvragen",
+        "sales": "Verkoopvraag",
+        "support": "Ondersteuningsvraag"
+      },
+      "errors": {
+        "name_required": "Voer alstublieft uw naam in.",
+        "name_too_long": "Naam mag niet langer zijn dan 200 tekens.",
+        "email_required": "Voer alstublieft uw e-mailadres in.",
+        "email_invalid": "Voer alstublieft een geldig e-mailadres in.",
+        "company_too_long": "Bedrijf mag niet langer zijn dan 200 tekens.",
+        "message_required": "Voer alstublieft een bericht in.",
+        "message_too_long": "Bericht mag niet langer zijn dan 5000 tekens.",
+        "rate_limit": "U hebt onlangs meerdere berichten verzonden. Probeer het over een minuut opnieuw.",
+        "validation": "Controleer het formulier op fouten.",
+        "network": "We konden de server niet bereiken. Controleer uw verbinding en probeer het opnieuw.",
+        "generic": "Er is iets fout gegaan bij het verzenden van uw bericht. Probeer het alstublieft opnieuw."
+      },
+      "success": {
+        "title": "Dank u — we hebben uw bericht ontvangen.",
+        "description": "We zullen uw e-mailbericht beoordelen en binnen één werkdag beantwoorden."
+      }
     }
   }
 }

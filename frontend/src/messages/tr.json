@@ -226,6 +226,110 @@
         "authority": "Otorite",
         "visibility": "Görünürlük"
       }
+    },
+    "pricing": {
+      "eyebrow": "Fiyatlandırma",
+      "title": "Görünürlüğünüzle birlikte büyüyen planlar",
+      "subtitle": "7 gün ücretsiz başlayın. Rakipleri takip etmeye, siteleri genişletmeye ve geçmiş eğilimleri açığa çıkarmaya hazır olduğunuzda yükseltin.",
+      "footnote": "Fiyatlar USD cinsindendir. Aylık planlar istediğiniz zaman iptal edilebilir. Yıllık planlar %15'e kadar tasarruf sağlar.",
+      "free": "Ücretsiz",
+      "trial_duration": "7 günlük deneme",
+      "per_month": "/ ay",
+      "per_month_billed_annually": "/ ay, yıllık faturalandırılır",
+      "unlimited": "Sınırsız",
+      "featured_badge": "En popüler",
+      "toggle": {
+        "monthly": "Aylık",
+        "annual": "Yıllık",
+        "annual_save": "%15 tasarruf edin"
+      },
+      "plans": {
+        "free": {
+          "name": "Ücretsiz Deneme",
+          "tagline": "Her özelliği 7 gün boyunca deneyin. Kart gerekmez."
+        },
+        "basic": {
+          "name": "Temel",
+          "tagline": "Tek bir siteyi ölçen solo kurucular için."
+        },
+        "pro": {
+          "name": "Pro",
+          "tagline": "Siteler arasında karşılaştırma yapan pazarlama ekipleri için."
+        },
+        "business": {
+          "name": "İşletme",
+          "tagline": "Endüstri karşılaştırmaları ve SLA desteği ile büyüyen ekipler için."
+        }
+      },
+      "features": {
+        "sites": "{count} sahip olunan site",
+        "competitors_per_site": "Site başına {count} rakip",
+        "custom_analyses": "Ayda {count} özel analiz",
+        "timeseries": "{months} aylık trend geçmişi",
+        "members": "En fazla {count} takım üyesi",
+        "csv_export": "CSV dışa aktarma",
+        "competitor_comparison": "Rakip karşılaştırması",
+        "industry_benchmark": "Endüstri karşılaştırması",
+        "support": {
+          "self": "Kendi kendine yardım belgeleri",
+          "email": "E-posta desteği",
+          "email_chat": "E-posta + sohbet desteği",
+          "email_chat_sla4h": "E-posta + sohbet (4s SLA)",
+          "dedicated": "Özel CS"
+        }
+      },
+      "cta": {
+        "start_trial": "Ücretsiz denemeyi başlat",
+        "choose_plan": "Plan seç"
+      },
+      "enterprise": {
+        "badge": "Kurumsal",
+        "title": "Büyük kuruluşlar için özel plan",
+        "description": "Sınırsız siteler, rakipler, özel analizler ve özel bir müşteri başarısı yöneticisi içeren yıllık sözleşme. Banka havalesi kabul edilir.",
+        "bullet_unlimited": "Sınırsız siteler ve analizler",
+        "bullet_dedicated": "Özel CS yöneticisi",
+        "bullet_audit": "Denetim günlüğü saklama",
+        "bullet_sla": "Özel SLA ve banka havalesi",
+        "cta": "Satış ekibiyle görüşün"
+      }
+    },
+    "contact": {
+      "eyebrow": "İletişim",
+      "title": "Konuşalım",
+      "subtitle": "Neye ihtiyacınız olduğunu bize söyleyin — demo, satış, destek veya başka bir şey. Genellikle bir iş günü içinde yanıt veririz.",
+      "submit": "Mesaj gönder",
+      "submitting": "Gönderiliyor…",
+      "privacy_note": "Mesajınızı yalnızca yanıt vermek için kullanırız. Verileriniz asla paylaşılmaz.",
+      "fields": {
+        "name": "Ad",
+        "email": "E-posta",
+        "company": "Şirket (opsiyonel)",
+        "topic": "Bu ne hakkında?",
+        "message": "Mesaj"
+      },
+      "topics": {
+        "general": "Genel soruşturma",
+        "demo": "Demo talep et",
+        "sales": "Satış sorusu",
+        "support": "Destek sorusu"
+      },
+      "errors": {
+        "name_required": "Lütfen adınızı girin.",
+        "name_too_long": "Ad 200 karakterden az olmalıdır.",
+        "email_required": "Lütfen e-postanızı girin.",
+        "email_invalid": "Lütfen geçerli bir e-posta adresi girin.",
+        "company_too_long": "Şirket 200 karakterden az olmalıdır.",
+        "message_required": "Lütfen bir mesaj girin.",
+        "message_too_long": "Mesaj 5000 karakterden az olmalıdır.",
+        "rate_limit": "Son zamanlarda birkaç mesaj gönderdikten sonra. Lütfen bir dakika içinde tekrar deneyin.",
+        "validation": "Lütfen formu hatalar açısından kontrol edin.",
+        "network": "Sunucuya ulaşamadık. Bağlantınızı kontrol edin ve tekrar deneyin.",
+        "generic": "Mesajınız gönderilirken bir sorun oluştu. Lütfen tekrar deneyin."
+      },
+      "success": {
+        "title": "Teşekkürler — mesajınızı aldık.",
+        "description": "Gözden geçireceğiz ve bir iş günü içinde e-postanıza yanıt vereceğiz."
+      }
     }
   }
 }

@@ -226,6 +226,110 @@
         "authority": "Autoritet",
         "visibility": "Synlighed"
       }
+    },
+    "pricing": {
+      "eyebrow": "Priser",
+      "title": "Planer, der vokser med din synlighed",
+      "subtitle": "Start gratis i 7 dage. Opgrader, når du er klar til at spore konkurrenter, udvide websteder og låse historiske trends op.",
+      "footnote": "Priser i USD. Månedlige planer kan annulleres når som helst. Årlige planer sparer op til 15%.",
+      "free": "Gratis",
+      "trial_duration": "7-dages prøveperiode",
+      "per_month": "/ måned",
+      "per_month_billed_annually": "/ måned, faktureret årligt",
+      "unlimited": "Ubegrænset",
+      "featured_badge": "Mest populær",
+      "toggle": {
+        "monthly": "Månedlig",
+        "annual": "Årlig",
+        "annual_save": "Spar 15%"
+      },
+      "plans": {
+        "free": {
+          "name": "Gratis prøveperiode",
+          "tagline": "Prøv alle funktioner i 7 dage. Intet kort påkrævet."
+        },
+        "basic": {
+          "name": "Basic",
+          "tagline": "For solo-grundlæggere, der måler et enkelt websted."
+        },
+        "pro": {
+          "name": "Pro",
+          "tagline": "For marketingteams, der sammenligner på tværs af websteder."
+        },
+        "business": {
+          "name": "Business",
+          "tagline": "For voksende teams med branchebenchmarks og SLA-support."
+        }
+      },
+      "features": {
+        "sites": "{count} ejede websteder",
+        "competitors_per_site": "{count} konkurrenter pr. websted",
+        "custom_analyses": "{count} brugerdefinerede analyser / måned",
+        "timeseries": "{months} måneders trendhistorik",
+        "members": "Op til {count} teammedlemmer",
+        "csv_export": "CSV-eksport",
+        "competitor_comparison": "Konkurrentsammenligning",
+        "industry_benchmark": "Branchebenchmark",
+        "support": {
+          "self": "Selvbetjenelses-dokumentation",
+          "email": "Emailsupport",
+          "email_chat": "Email- og chatsupport",
+          "email_chat_sla4h": "Email + chat (4t SLA)",
+          "dedicated": "Dedikeret CS"
+        }
+      },
+      "cta": {
+        "start_trial": "Start gratis prøveperiode",
+        "choose_plan": "Vælg plan"
+      },
+      "enterprise": {
+        "badge": "Enterprise",
+        "title": "Brugerdefineret plan til store organisationer",
+        "description": "Årlig kontrakt med ubegrænsede websteder, konkurrenter, brugerdefinerede analyser og en dedikeret kundesucces-manager. Bankoverførsel accepteret.",
+        "bullet_unlimited": "Ubegrænsede websteder og analyser",
+        "bullet_dedicated": "Dedikeret CS-manager",
+        "bullet_audit": "Audit log-opbevaring",
+        "bullet_sla": "Brugerdefineret SLA og bankoverførsel",
+        "cta": "Tal med salg"
+      }
+    },
+    "contact": {
+      "eyebrow": "Kontakt",
+      "title": "Lad os tale",
+      "subtitle": "Fortæl os hvad du har brug for — demo, salg, support eller andet. Vi svarer typisk inden for en arbejdsdag.",
+      "submit": "Send besked",
+      "submitting": "Sender…",
+      "privacy_note": "Vi bruger kun din besked til at svare. Dine data deles aldrig.",
+      "fields": {
+        "name": "Navn",
+        "email": "Email",
+        "company": "Virksomhed (valgfri)",
+        "topic": "Hvad handler dette om?",
+        "message": "Besked"
+      },
+      "topics": {
+        "general": "Generel forespørgsel",
+        "demo": "Anmod om demo",
+        "sales": "Salg spørgsmål",
+        "support": "Support spørgsmål"
+      },
+      "errors": {
+        "name_required": "Angiv venligst dit navn.",
+        "name_too_long": "Navn skal være 200 tegn eller færre.",
+        "email_required": "Angiv venligst din email.",
+        "email_invalid": "Angiv venligst en gyldig emailadresse.",
+        "company_too_long": "Virksomhed skal være 200 tegn eller færre.",
+        "message_required": "Angiv venligst en besked.",
+        "message_too_long": "Besked skal være 5000 tegn eller færre.",
+        "rate_limit": "Du har sendt flere beskeder for nylig. Prøv igen om et minut.",
+        "validation": "Kontroller formularen for fejl.",
+        "network": "Vi kunne ikke nå serveren. Kontroller din forbindelse og prøv igen.",
+        "generic": "Noget gik galt ved afsendelse af din besked. Prøv igen."
+      },
+      "success": {
+        "title": "Tak — vi modtog din besked.",
+        "description": "Vi gennemgår og svarer på din email inden for en arbejdsdag."
+      }
     }
   }
 }

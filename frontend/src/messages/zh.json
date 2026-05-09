@@ -226,6 +226,110 @@
         "authority": "权威性",
         "visibility": "可见性"
       }
+    },
+    "pricing": {
+      "eyebrow": "价格",
+      "title": "随着您的可见性增长的计划",
+      "subtitle": "免费试用7天。准备好跟踪竞争对手、扩展网站和解锁历史趋势后，升级您的账户。",
+      "footnote": "价格以美元计。月度计划可随时取消。年度计划可节省高达15%。",
+      "free": "免费",
+      "trial_duration": "7天试用",
+      "per_month": "/ 月",
+      "per_month_billed_annually": "/ 月，按年计费",
+      "unlimited": "无限",
+      "featured_badge": "最受欢迎",
+      "toggle": {
+        "monthly": "月度",
+        "annual": "年度",
+        "annual_save": "节省15%"
+      },
+      "plans": {
+        "free": {
+          "name": "免费试用",
+          "tagline": "7天内试用所有功能。无需信用卡。"
+        },
+        "basic": {
+          "name": "基础版",
+          "tagline": "适合单独创始人测量单个网站。"
+        },
+        "pro": {
+          "name": "专业版",
+          "tagline": "适合营销团队在多个网站间进行比较。"
+        },
+        "business": {
+          "name": "商业版",
+          "tagline": "适合拥有行业基准和SLA支持的成长中团队。"
+        }
+      },
+      "features": {
+        "sites": "{count} 个自有网站",
+        "competitors_per_site": "每个网站 {count} 个竞争对手",
+        "custom_analyses": "{count} 项自定义分析 / 月",
+        "timeseries": "{months} 个月的趋势历史",
+        "members": "最多 {count} 个团队成员",
+        "csv_export": "CSV导出",
+        "competitor_comparison": "竞争对手比较",
+        "industry_benchmark": "行业基准",
+        "support": {
+          "self": "自助文档",
+          "email": "电子邮件支持",
+          "email_chat": "电子邮件和聊天支持",
+          "email_chat_sla4h": "电子邮件和聊天（4小时SLA）",
+          "dedicated": "专属客服"
+        }
+      },
+      "cta": {
+        "start_trial": "开始免费试用",
+        "choose_plan": "选择计划"
+      },
+      "enterprise": {
+        "badge": "企业版",
+        "title": "为大型组织定制的计划",
+        "description": "年度合同，包含无限网站、竞争对手、自定义分析和专属客户成功经理。接受电汇。",
+        "bullet_unlimited": "无限网站和分析",
+        "bullet_dedicated": "专属客服经理",
+        "bullet_audit": "审计日志保留",
+        "bullet_sla": "自定义SLA和电汇",
+        "cta": "与销售团队交流"
+      }
+    },
+    "contact": {
+      "eyebrow": "联系我们",
+      "title": "让我们交流",
+      "subtitle": "告诉我们您需要什么——演示、销售、支持或其他任何内容。我们通常在一个工作日内回复。",
+      "submit": "发送消息",
+      "submitting": "发送中…",
+      "privacy_note": "我们仅使用您的消息进行回复。您的数据永远不会被共享。",
+      "fields": {
+        "name": "姓名",
+        "email": "电子邮件",
+        "company": "公司（可选）",
+        "topic": "这是关于什么的？",
+        "message": "消息"
+      },
+      "topics": {
+        "general": "常见咨询",
+        "demo": "请求演示",
+        "sales": "销售问题",
+        "support": "支持问题"
+      },
+      "errors": {
+        "name_required": "请输入您的姓名。",
+        "name_too_long": "姓名必须是200个字符或更少。",
+        "email_required": "请输入您的电子邮件。",
+        "email_invalid": "请输入有效的电子邮件地址。",
+        "company_too_long": "公司名称必须是200个字符或更少。",
+        "message_required": "请输入消息。",
+        "message_too_long": "消息必须是5000个字符或更少。",
+        "rate_limit": "您最近发送了多条消息。请在一分钟后重试。",
+        "validation": "请检查表单中是否有错误。",
+        "network": "我们无法连接到服务器。请检查您的连接并重试。",
+        "generic": "发送消息时出现问题。请重试。"
+      },
+      "success": {
+        "title": "感谢 — 我们收到了您的消息。",
+        "description": "我们将在一个工作日内审阅并回复您的电子邮件。"
+      }
     }
   }
 }

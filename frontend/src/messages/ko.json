@@ -226,6 +226,110 @@
         "authority": "권위",
         "visibility": "가시성"
       }
+    },
+    "pricing": {
+      "eyebrow": "가격",
+      "title": "당신의 가시성과 함께 성장하는 요금제",
+      "subtitle": "7일 무료로 시작하세요. 경쟁사를 추적하고, 사이트를 확장하며, 과거 트렌드를 잠금 해제할 준비가 되면 업그레이드하세요.",
+      "footnote": "USD 기준 가격입니다. 월간 요금제는 언제든지 취소할 수 있습니다. 연간 요금제는 최대 15%를 절감합니다.",
+      "free": "무료",
+      "trial_duration": "7일 체험판",
+      "per_month": "/ 월",
+      "per_month_billed_annually": "/ 월, 연간 청구",
+      "unlimited": "무제한",
+      "featured_badge": "가장 인기 있는",
+      "toggle": {
+        "monthly": "월간",
+        "annual": "연간",
+        "annual_save": "15% 절감"
+      },
+      "plans": {
+        "free": {
+          "name": "무료 체험판",
+          "tagline": "7일 동안 모든 기능을 시도하세요. 카드 필수 아닙니다."
+        },
+        "basic": {
+          "name": "Basic",
+          "tagline": "단일 사이트를 측정하는 개인 창업자용입니다."
+        },
+        "pro": {
+          "name": "Pro",
+          "tagline": "여러 사이트에서 비교를 진행하는 마케팅 팀용입니다."
+        },
+        "business": {
+          "name": "Business",
+          "tagline": "업계 벤치마크와 SLA 지원을 갖춘 성장 중인 팀용입니다."
+        }
+      },
+      "features": {
+        "sites": "{count}개 소유 사이트",
+        "competitors_per_site": "사이트당 {count}개 경쟁사",
+        "custom_analyses": "월 {count}개 맞춤형 분석",
+        "timeseries": "{months}개월의 트렌드 기록",
+        "members": "최대 {count}명의 팀 구성원",
+        "csv_export": "CSV 내보내기",
+        "competitor_comparison": "경쟁사 비교",
+        "industry_benchmark": "업계 벤치마크",
+        "support": {
+          "self": "셀프 서비스 문서",
+          "email": "이메일 지원",
+          "email_chat": "이메일 + 채팅 지원",
+          "email_chat_sla4h": "이메일 + 채팅 (4시간 SLA)",
+          "dedicated": "전담 CS"
+        }
+      },
+      "cta": {
+        "start_trial": "무료 체험판 시작",
+        "choose_plan": "요금제 선택"
+      },
+      "enterprise": {
+        "badge": "Enterprise",
+        "title": "대규모 조직을 위한 맞춤형 요금제",
+        "description": "무제한 사이트, 경쟁사, 맞춤형 분석 및 전담 고객 성공 관리자가 포함된 연간 계약입니다. 전신환송 가능합니다.",
+        "bullet_unlimited": "무제한 사이트 & 분석",
+        "bullet_dedicated": "전담 CS 관리자",
+        "bullet_audit": "감사 로그 보존",
+        "bullet_sla": "맞춤형 SLA 및 전신환송",
+        "cta": "영업팀과 상담"
+      }
+    },
+    "contact": {
+      "eyebrow": "연락하기",
+      "title": "대화하겠습니다",
+      "subtitle": "데모, 영업, 지원 또는 기타 필요한 사항을 알려주세요. 일반적으로 영업일 기준 1일 이내에 회신합니다.",
+      "submit": "메시지 보내기",
+      "submitting": "전송 중…",
+      "privacy_note": "귀사의 메시지는 회신용으로만 사용합니다. 귀사의 데이터는 공유되지 않습니다.",
+      "fields": {
+        "name": "이름",
+        "email": "이메일",
+        "company": "회사명 (선택 사항)",
+        "topic": "이 문의는 무엇에 관한 것인가요?",
+        "message": "메시지"
+      },
+      "topics": {
+        "general": "일반 문의",
+        "demo": "데모 요청",
+        "sales": "영업 관련 문의",
+        "support": "지원 관련 문의"
+      },
+      "errors": {
+        "name_required": "이름을 입력해 주세요.",
+        "name_too_long": "이름은 200자 이하여야 합니다.",
+        "email_required": "이메일을 입력해 주세요.",
+        "email_invalid": "올바른 이메일 주소를 입력해 주세요.",
+        "company_too_long": "회사명은 200자 이하여야 합니다.",
+        "message_required": "메시지를 입력해 주세요.",
+        "message_too_long": "메시지는 5000자 이하여야 합니다.",
+        "rate_limit": "최근에 여러 메시지를 보내셨습니다. 1분 후에 다시 시도해 주세요.",
+        "validation": "양식의 오류를 확인해 주세요.",
+        "network": "서버에 연결할 수 없습니다. 연결을 확인하고 다시 시도해 주세요.",
+        "generic": "메시지 전송 중 오류가 발생했습니다. 다시 시도해 주세요."
+      },
+      "success": {
+        "title": "감사합니다. 메시지를 받았습니다.",
+        "description": "영업일 기준 1일 이내에 귀사의 이메일을 검토하고 회신하겠습니다."
+      }
     }
   }
 }

@@ -226,6 +226,110 @@
         "authority": "Autorität",
         "visibility": "Sichtbarkeit"
       }
+    },
+    "pricing": {
+      "eyebrow": "Preise",
+      "title": "Pläne, die mit Ihrer Sichtbarkeit wachsen",
+      "subtitle": "Kostenlos 7 Tage testen. Upgraden Sie, wenn Sie bereit sind, Konkurrenten zu verfolgen, Websites zu erweitern und historische Trends freizuschalten.",
+      "footnote": "Preise in USD. Monatliche Pläne können jederzeit gekündigt werden. Jahrespläne sparen bis zu 15%.",
+      "free": "Kostenlos",
+      "trial_duration": "7-Tage-Testversion",
+      "per_month": "/ Monat",
+      "per_month_billed_annually": "/ Monat, jährlich abgerechnet",
+      "unlimited": "Unbegrenzt",
+      "featured_badge": "Am beliebtesten",
+      "toggle": {
+        "monthly": "Monatlich",
+        "annual": "Jährlich",
+        "annual_save": "Sparen Sie 15%"
+      },
+      "plans": {
+        "free": {
+          "name": "Kostenlose Testversion",
+          "tagline": "Testen Sie alle Funktionen 7 Tage lang. Keine Karte erforderlich."
+        },
+        "basic": {
+          "name": "Basic",
+          "tagline": "Für einzelne Gründer, die eine einzelne Website messen."
+        },
+        "pro": {
+          "name": "Pro",
+          "tagline": "Für Marketing-Teams, die Vergleiche über mehrere Websites durchführen."
+        },
+        "business": {
+          "name": "Business",
+          "tagline": "Für wachsende Teams mit Branchen-Benchmarks und SLA-Support."
+        }
+      },
+      "features": {
+        "sites": "{count} eigene Websites",
+        "competitors_per_site": "{count} Konkurrenten pro Website",
+        "custom_analyses": "{count} benutzerdefinierte Analysen / Monat",
+        "timeseries": "{months} Monate Trend-Verlauf",
+        "members": "Bis zu {count} Teamkollegen",
+        "csv_export": "CSV-Export",
+        "competitor_comparison": "Konkurrenzvergleich",
+        "industry_benchmark": "Branchen-Benchmark",
+        "support": {
+          "self": "Self-Service-Dokumentation",
+          "email": "E-Mail-Support",
+          "email_chat": "E-Mail- und Chat-Support",
+          "email_chat_sla4h": "E-Mail und Chat (4h SLA)",
+          "dedicated": "Dedizierter Customer Success"
+        }
+      },
+      "cta": {
+        "start_trial": "Kostenlose Testversion starten",
+        "choose_plan": "Plan wählen"
+      },
+      "enterprise": {
+        "badge": "Enterprise",
+        "title": "Benutzerdefinierter Plan für große Organisationen",
+        "description": "Jahresvertrag mit unbegrenzten Websites, Konkurrenten, benutzerdefinierten Analysen und einem dedizierten Customer Success Manager. Banküberweisung akzeptiert.",
+        "bullet_unlimited": "Unbegrenzte Websites und Analysen",
+        "bullet_dedicated": "Dedizierter CS-Manager",
+        "bullet_audit": "Audit-Log-Aufbewahrung",
+        "bullet_sla": "Benutzerdefinierte SLA und Banküberweisung",
+        "cta": "Mit Verkauf sprechen"
+      }
+    },
+    "contact": {
+      "eyebrow": "Kontakt",
+      "title": "Lassen Sie uns sprechen",
+      "subtitle": "Teilen Sie uns mit, was Sie benötigen – eine Demo, Vertrieb, Support oder etwas anderes. Wir antworten in der Regel innerhalb eines Geschäftstages.",
+      "submit": "Nachricht senden",
+      "submitting": "Wird gesendet…",
+      "privacy_note": "Wir verwenden Ihre Nachricht nur zur Beantwortung. Ihre Daten werden nie weitergegeben.",
+      "fields": {
+        "name": "Name",
+        "email": "E-Mail",
+        "company": "Unternehmen (optional)",
+        "topic": "Worum geht es?",
+        "message": "Nachricht"
+      },
+      "topics": {
+        "general": "Allgemeine Anfrage",
+        "demo": "Demo anfordern",
+        "sales": "Vertriebsfrage",
+        "support": "Support-Frage"
+      },
+      "errors": {
+        "name_required": "Bitte geben Sie Ihren Namen ein.",
+        "name_too_long": "Der Name darf nicht länger als 200 Zeichen sein.",
+        "email_required": "Bitte geben Sie Ihre E-Mail-Adresse ein.",
+        "email_invalid": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
+        "company_too_long": "Das Unternehmen darf nicht länger als 200 Zeichen sein.",
+        "message_required": "Bitte geben Sie eine Nachricht ein.",
+        "message_too_long": "Die Nachricht darf nicht länger als 5000 Zeichen sein.",
+        "rate_limit": "Sie haben in letzter Zeit mehrere Nachrichten gesendet. Bitte versuchen Sie es in einer Minute erneut.",
+        "validation": "Bitte überprüfen Sie das Formular auf Fehler.",
+        "network": "Wir konnten den Server nicht erreichen. Überprüfen Sie Ihre Verbindung und versuchen Sie es erneut.",
+        "generic": "Beim Senden Ihrer Nachricht ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
+      },
+      "success": {
+        "title": "Danke – wir haben Ihre Nachricht erhalten.",
+        "description": "Wir werden Ihre E-Mail überprüfen und innerhalb eines Geschäftstages antworten."
+      }
     }
   }
 }

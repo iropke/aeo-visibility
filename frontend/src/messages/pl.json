@@ -226,6 +226,110 @@
         "authority": "Autorytet",
         "visibility": "Widoczność"
       }
+    },
+    "pricing": {
+      "eyebrow": "Cennik",
+      "title": "Plany, które rosną wraz z Twoją widocznością",
+      "subtitle": "Zacznij bezpłatnie na 7 dni. Przeprowadź upgrade, gdy będziesz gotowy do śledzenia konkurentów, rozszerzenia witryn i odblokowania trendów historycznych.",
+      "footnote": "Ceny w USD. Plany miesięczne można anulować w dowolnym momencie. Plany roczne oszczędzają do 15%.",
+      "free": "Bezpłatnie",
+      "trial_duration": "7-dniowy okres próbny",
+      "per_month": "/ miesiąc",
+      "per_month_billed_annually": "/ miesiąc, rozliczane rocznie",
+      "unlimited": "Nieograniczony",
+      "featured_badge": "Najpopularniejszy",
+      "toggle": {
+        "monthly": "Miesięczny",
+        "annual": "Roczny",
+        "annual_save": "Zaoszczędź 15%"
+      },
+      "plans": {
+        "free": {
+          "name": "Bezpłatny okres próbny",
+          "tagline": "Spróbuj każdej funkcji przez 7 dni. Bez wymaganych danych karty."
+        },
+        "basic": {
+          "name": "Basic",
+          "tagline": "Dla założycieli pracujących samodzielnie mierzących jedną witrynę."
+        },
+        "pro": {
+          "name": "Pro",
+          "tagline": "Dla zespołów marketingowych przeprowadzających porównania między witrynami."
+        },
+        "business": {
+          "name": "Business",
+          "tagline": "Dla rozwijających się zespołów z benchmarkami branżowymi i wsparciem SLA."
+        }
+      },
+      "features": {
+        "sites": "{count} będących własnością witryn",
+        "competitors_per_site": "{count} konkurentów na witrynę",
+        "custom_analyses": "{count} niestandardowych analiz / miesiąc",
+        "timeseries": "{months} miesięcy historii trendów",
+        "members": "Do {count} członków zespołu",
+        "csv_export": "Eksport CSV",
+        "competitor_comparison": "Porównanie konkurentów",
+        "industry_benchmark": "Benchmark branżowy",
+        "support": {
+          "self": "Dokumentacja self-service",
+          "email": "Wsparcie e-mailowe",
+          "email_chat": "Wsparcie e-mailowe + czat",
+          "email_chat_sla4h": "E-mail + czat (SLA 4h)",
+          "dedicated": "Dedykowany menedżer CS"
+        }
+      },
+      "cta": {
+        "start_trial": "Zacznij bezpłatny okres próbny",
+        "choose_plan": "Wybierz plan"
+      },
+      "enterprise": {
+        "badge": "Enterprise",
+        "title": "Niestandardowy plan dla dużych organizacji",
+        "description": "Umowa roczna z nieograniczoną liczbą witryn, konkurentów, niestandardowych analiz i dedykowanym menedżerem sukcesu klienta. Akceptujemy przelewy bankowe.",
+        "bullet_unlimited": "Nieograniczone witryny i analizy",
+        "bullet_dedicated": "Dedykowany menedżer CS",
+        "bullet_audit": "Przechowywanie dziennika audytu",
+        "bullet_sla": "Niestandardowe SLA i przelewy bankowe",
+        "cta": "Porozmawiaj ze sprzedażą"
+      }
+    },
+    "contact": {
+      "eyebrow": "Kontakt",
+      "title": "Porozmawiajmy",
+      "subtitle": "Powiedz nam, czego potrzebujesz — demonstracja, sprzedaż, wsparcie lub coś innego. Zwykle odpowiadamy w ciągu jednego dnia roboczego.",
+      "submit": "Wyślij wiadomość",
+      "submitting": "Wysyłanie…",
+      "privacy_note": "Używamy Twojej wiadomości tylko aby odpowiedzieć. Twoje dane nigdy nie są udostępniane.",
+      "fields": {
+        "name": "Imię i nazwisko",
+        "email": "E-mail",
+        "company": "Firma (opcjonalnie)",
+        "topic": "O czym to dotyczy?",
+        "message": "Wiadomość"
+      },
+      "topics": {
+        "general": "Zapytanie ogólne",
+        "demo": "Poproś o demonstrację",
+        "sales": "Pytanie dotyczące sprzedaży",
+        "support": "Pytanie dotyczące wsparcia"
+      },
+      "errors": {
+        "name_required": "Proszę wpisać swoje imię i nazwisko.",
+        "name_too_long": "Imię i nazwisko musi zawierać co najwyżej 200 znaków.",
+        "email_required": "Proszę wpisać swój e-mail.",
+        "email_invalid": "Proszę wpisać prawidłowy adres e-mail.",
+        "company_too_long": "Nazwa firmy musi zawierać co najwyżej 200 znaków.",
+        "message_required": "Proszę wpisać wiadomość.",
+        "message_too_long": "Wiadomość musi zawierać co najwyżej 5000 znaków.",
+        "rate_limit": "Wysłałeś kilka wiadomości w ostatnim czasie. Spróbuj ponownie za minutę.",
+        "validation": "Proszę sprawdzić formularz pod kątem błędów.",
+        "network": "Nie mogliśmy połączyć się z serwerem. Sprawdź połączenie i spróbuj ponownie.",
+        "generic": "Coś poszło nie tak podczas wysyłania wiadomości. Spróbuj ponownie."
+      },
+      "success": {
+        "title": "Dziękujemy — otrzymaliśmy Twoją wiadomość.",
+        "description": "Przejrzymy i odpowiemy na Twój e-mail w ciągu jednego dnia roboczego."
+      }
     }
   }
 }
