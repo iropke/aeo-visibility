@@ -1,9 +1,9 @@
 {
   "common": {
     "site_title": "AEO Visibility",
-    "site_description": "AI 답변 엔진에서 사이트 가시성을 측정합니다",
-    "loading": "불러오는 중…",
-    "error": "오류가 발생했습니다",
+    "site_description": "AI 응답 엔진에 대한 사이트의 가시성을 측정하세요",
+    "loading": "로딩 중…",
+    "error": "문제가 발생했습니다",
     "save": "저장",
     "cancel": "취소",
     "delete": "삭제",
@@ -15,52 +15,52 @@
     "magic_link_form": {
       "email_label": "이메일 주소",
       "email_placeholder": "you@example.com",
-      "submit": "매직 링크 받기",
-      "checking": "보내는 중…",
+      "submit": "매직 링크 전송",
+      "checking": "전송 중…",
       "errors": {
-        "invalid_email": "올바른 이메일 주소를 입력해주세요",
-        "send_failed": "링크 전송에 실패했습니다. 다시 시도해주세요."
+        "invalid_email": "올바른 이메일 주소를 입력하세요",
+        "send_failed": "링크를 전송할 수 없습니다. 다시 시도하세요."
       }
     },
     "signup": {
-      "title": "회원가입",
-      "subtitle": "이메일로 매직 링크를 보내드려요. 비밀번호 필요 없음.",
+      "title": "계정 생성",
+      "subtitle": "매직 링크를 이메일로 보내드립니다 — 비밀번호가 필요하지 않습니다.",
       "have_account": "이미 계정이 있으신가요?",
       "login_link": "로그인"
     },
     "login": {
       "title": "로그인",
-      "subtitle": "이메일을 입력하시면 매직 링크를 보내드립니다.",
-      "no_account": "아직 계정이 없으신가요?",
-      "signup_link": "회원가입"
+      "subtitle": "이메일을 입력하면 매직 링크를 보내드립니다.",
+      "no_account": "계정이 없으신가요?",
+      "signup_link": "만들기"
     },
     "verify": {
-      "title": "이메일을 확인해주세요",
-      "subtitle": "{email} 으로 매직 링크를 보냈습니다. 이메일의 링크를 클릭해 계속 진행하세요.",
-      "resend": "다시 보내기",
-      "did_not_receive": "받지 못하셨나요? 스팸함을 확인하거나 다른 이메일을 사용해보세요."
+      "title": "이메일을 확인하세요",
+      "subtitle": "{email}로 매직 링크를 보냈습니다. 이메일의 링크를 클릭하여 계속하세요.",
+      "resend": "링크 다시 전송",
+      "did_not_receive": "받지 못하셨나요? 스팸함을 확인하거나 다른 이메일을 사용하세요."
     },
     "onboarding": {
-      "title": "워크스페이스 만들기",
-      "subtitle": "워크스페이스는 사이트와 분석을 담는 공간입니다.",
+      "title": "워크스페이스 설정",
+      "subtitle": "워크스페이스에서 사이트와 분석을 관리합니다.",
       "name_label": "워크스페이스 이름",
-      "name_placeholder": "Acme 마케팅",
+      "name_placeholder": "Acme Marketing",
       "language_label": "기본 언어",
-      "timezone_label": "타임존",
-      "submit": "워크스페이스 만들기",
-      "creating": "만드는 중…"
+      "timezone_label": "시간대",
+      "submit": "워크스페이스 생성",
+      "creating": "생성 중…"
     },
     "callback": {
-      "completing": "로그인 처리 중…",
+      "completing": "로그인 중…",
       "failed_title": "로그인 실패",
-      "failed_subtitle": "링크가 만료되었을 수 있습니다. 새 링크를 요청해주세요."
+      "failed_subtitle": "링크가 만료되었을 수 있습니다. 새 링크를 요청해 보세요."
     }
   },
   "app": {
     "nav": {
       "dashboard": "대시보드",
       "sites": "사이트",
-      "reports": "리포트",
+      "reports": "보고서",
       "qa": "Q&A",
       "settings": "설정",
       "logout": "로그아웃"
@@ -68,45 +68,45 @@
     "dashboard": {
       "title": "대시보드",
       "no_workspace": "아직 워크스페이스가 없습니다.",
-      "create_workspace": "첫 워크스페이스 만들기",
-      "your_workspaces": "내 워크스페이스",
+      "create_workspace": "첫 번째 워크스페이스 생성",
+      "your_workspaces": "귀사의 워크스페이스",
       "manage_sites": "사이트 관리",
-      "role_owner": "Owner",
-      "role_admin": "Admin",
-      "role_member": "Member",
-      "role_viewer": "Viewer"
+      "role_owner": "소유자",
+      "role_admin": "관리자",
+      "role_member": "멤버",
+      "role_viewer": "뷰어"
     },
     "sites": {
       "title": "사이트",
-      "subtitle": "{workspace} 워크스페이스의 자사·경쟁사 사이트.",
+      "subtitle": "{workspace}에서 추적 중인 사이트 및 경쟁사.",
       "add_site": "사이트 추가",
-      "own_sites": "자사 사이트",
+      "own_sites": "귀사의 사이트",
       "competitor_sites": "경쟁사",
-      "own_empty": "첫 사이트를 추가하고 AEO 가시성 측정을 시작하세요.",
-      "competitors_empty": "등록된 경쟁사가 없습니다.",
-      "no_workspace_yet": "사이트를 추적하려면 워크스페이스가 필요합니다.",
-      "create_workspace": "워크스페이스 만들기",
+      "own_empty": "첫 번째 사이트를 추가하여 AEO 가시성 측정을 시작하세요.",
+      "competitors_empty": "아직 경쟁사 사이트가 없습니다.",
+      "no_workspace_yet": "사이트 추적을 시작하려면 워크스페이스를 설정하세요.",
+      "create_workspace": "워크스페이스 생성",
       "last_analyzed": "마지막 분석",
       "last_url_change": "마지막 URL 변경",
       "run_analysis": "분석 실행",
-      "analyses_history": "분석 내역",
-      "analyses_empty": "아직 분석 결과가 없습니다. 첫 분석을 실행해보세요.",
+      "analyses_history": "분석",
+      "analyses_empty": "아직 분석이 없습니다. 첫 번째 분석을 실행하여 결과를 확인하세요.",
       "view_result": "결과 보기",
-      "back_to_sites": "사이트 목록으로",
-      "site_not_found": "이 사이트를 어떤 워크스페이스에서도 찾을 수 없습니다.",
-      "delete_confirm": "{domain} 사이트를 삭제할까요? 30일 cooldown 동안 같은 도메인을 다시 등록할 수 없습니다.",
-      "delete_forbidden": "워크스페이스 관리자(Admin) 또는 소유자(Owner)만 사이트를 삭제할 수 있습니다.",
+      "back_to_sites": "사이트로 돌아가기",
+      "site_not_found": "워크스페이스에서 이 사이트를 찾을 수 없습니다.",
+      "delete_confirm": "사이트 {domain}을(를) 삭제하시겠습니까? 30일 대기 기간 후 도메인을 다시 추가할 수 있습니다.",
+      "delete_forbidden": "워크스페이스 관리자 또는 소유자만 사이트를 삭제할 수 있습니다.",
       "categories": {
         "technical": "기술",
-        "structured": "구조화 데이터",
+        "structured": "구조화된 데이터",
         "content": "콘텐츠",
         "authority": "권위",
         "visibility": "가시성"
       },
       "status": {
         "queued": "대기 중",
-        "running": "분석 중",
-        "completed": "완료",
+        "running": "실행 중",
+        "completed": "완료됨",
         "failed": "실패"
       },
       "form": {
@@ -114,44 +114,44 @@
         "title_edit": "사이트 편집",
         "url_label": "URL",
         "url_placeholder": "https://example.com",
-        "nickname_label": "별칭 (선택)",
-        "nickname_placeholder": "프로덕션 사이트",
+        "nickname_label": "별칭 (선택사항)",
+        "nickname_placeholder": "Production site",
         "type_label": "유형",
-        "type_own": "자사 사이트",
-        "type_own_desc": "직접 운영하며 개선하려는 사이트.",
+        "type_own": "귀사의 사이트",
+        "type_own_desc": "개선하려는 귀사의 사이트입니다.",
         "type_competitor": "경쟁사",
-        "type_competitor_desc": "비교/벤치마킹할 사이트.",
+        "type_competitor_desc": "비교 분석하려는 사이트입니다.",
         "create": "사이트 추가",
         "saving": "저장 중…",
-        "url_required": "URL을 입력해주세요.",
-        "err_invalid_url": "유효한 URL이 아니거나 도메인이 없습니다.",
-        "err_trial_expired": "트라이얼이 만료되었습니다. 계속하려면 업그레이드가 필요합니다.",
-        "err_plan_limit": "플랜 한도에 도달했습니다. 업그레이드하거나 사이트를 정리해주세요.",
-        "err_conflict": "이 도메인은 이미 등록되어 있거나 30일 cooldown 중입니다.",
-        "err_url_change_limit": "URL 변경은 워크스페이스당 30일에 1회로 제한됩니다."
+        "url_required": "URL을 입력하세요.",
+        "err_invalid_url": "URL이 유효하지 않거나 도메인이 없습니다.",
+        "err_trial_expired": "평가판이 종료되었습니다. 계속 편집하려면 업그레이드하세요.",
+        "err_plan_limit": "요금제 한도에 도달했습니다. 업그레이드하거나 사이트를 제거하세요.",
+        "err_conflict": "이 도메인은 이미 등록되었거나 30일 대기 기간 중입니다.",
+        "err_url_change_limit": "URL 변경은 워크스페이스당 30일마다 한 번으로 제한됩니다."
       },
       "analyze": {
         "title": "분석 실행",
-        "description": "분석할 카테고리를 선택하세요. 5축 모두 선택 시 전체 분석.",
+        "description": "분석할 카테고리를 선택하세요. 전체 스캔은 5개 카테고리를 모두 포함합니다.",
         "categories_label": "카테고리",
-        "select_at_least_one": "최소 한 개 카테고리를 선택해주세요.",
-        "quota_loading": "잔여 횟수 확인 중…",
-        "quota_title": "이번 달 잔여 ({ym})",
-        "quota_remaining": "{quota}회 중 {remaining}회",
+        "select_at_least_one": "최소 1개 카테고리를 선택하세요.",
+        "quota_loading": "할당량 로딩 중…",
+        "quota_title": "이번 달 남은 할당량 ({ym})",
+        "quota_remaining": "{quota} 중 {remaining}",
         "quota_unlimited": "무제한",
-        "quota_none": "이번 달 사용 가능한 분석 횟수가 없습니다.",
+        "quota_none": "이번 달 분석 할당량이 남지 않았습니다.",
         "pack": {
           "pro_pack": "Pro Pack",
           "basic_pack": "Basic Pack",
           "base": "Base"
         },
         "trigger_full": "전체 분석 실행",
-        "trigger_partial": "{n}개 카테고리 분석",
+        "trigger_partial": "{n}개 카테고리에서 실행",
         "triggering": "시작 중…",
-        "err_quota_or_trial": "잔여 횟수가 없거나 트라이얼이 만료되었습니다. 업그레이드해주세요.",
-        "err_forbidden": "분석 실행 권한이 없습니다.",
-        "err_concurrent": "이미 진행 중인 분석이 있습니다.",
-        "err_cooldown": "1시간 이내에 분석한 사이트입니다. 잠시 후 다시 시도해주세요."
+        "err_quota_or_trial": "분석이 부족하거나 평가판이 종료되었습니다. 업그레이드하세요.",
+        "err_forbidden": "분석을 실행할 권한이 없습니다.",
+        "err_concurrent": "이 워크스페이스에서 이미 다른 분석이 실행 중입니다.",
+        "err_cooldown": "이 사이트는 1시간 이내에 분석되었습니다. 나중에 다시 시도하세요."
       }
     }
   }

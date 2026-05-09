@@ -40,6 +40,7 @@ from sqlalchemy import select, text
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.config import get_settings
+from app.core.locales import DEFAULT_LANG as _CORE_DEFAULT_LANG
 from app.models.analysis_result import AnalysisResult
 from app.models.profile import Profile
 from app.models.site import Site
@@ -53,10 +54,20 @@ log = logging.getLogger(__name__)
 
 TEMPLATES_DIR: Path = Path(__file__).parent.parent / "templates"
 
-# i18n 지원 언어 — profiles.preferred_language CHECK 와 동일.
-SUPPORTED_LANGS: tuple[str, ...] = ("en", "ko", "es")
-SUPPORTED_LANG_SET: frozenset[str] = frozenset(SUPPORTED_LANGS)
-DEFAULT_LANG: str = "en"
+# i18n 메일 템플릿 디스크 보유 lang.
+# **profiles.preferred_language CHECK 와 별개:** profile 은 20 lang (core.locales).
+# F-i18n-1 진입 시점에는 메일 템플릿이 3 lang 만 존재 → 그 외 lang 은 'en' 폴백.
+# F-i18n-2 청크에서 17 lang HTML 자동 생성하면 EMAIL_TEMPLATE_LANGS 도 20 lang 으로 확장.
+EMAIL_TEMPLATE_LANGS: tuple[str, ...] = ("en", "ko", "es")
+EMAIL_TEMPLATE_LANG_SET: frozenset[str] = frozenset(EMAIL_TEMPLATE_LANGS)
+
+# 폴백 lang. core.locales.DEFAULT_LANG 와 동일 값.
+DEFAULT_LANG: str = _CORE_DEFAULT_LANG
+
+# 하위 호환 alias — 기존 `SUPPORTED_LANGS` import 처. 메일 템플릿 보유 lang 의미.
+# 신규 코드는 EMAIL_TEMPLATE_LANGS 사용 권장.
+SUPPORTED_LANGS: tuple[str, ...] = EMAIL_TEMPLATE_LANGS
+SUPPORTED_LANG_SET: frozenset[str] = EMAIL_TEMPLATE_LANG_SET
 
 # 발송 alias — SPEC §17-1 (no-reply@ahxov.com), 도메인 ahxov.com 확정 (2026-05-03).
 FROM_ADDRESS: str = "AEO Visibility <no-reply@ahxov.com>"
@@ -106,8 +117,12 @@ def _get_jinja_env() -> Environment:
 
 
 def _normalize_lang(lang: str | None) -> str:
-    """SUPPORTED_LANGS 외 → DEFAULT_LANG 폴백."""
-    return lang if lang in SUPPORTED_LANG_SET else DEFAULT_LANG
+    """메일 템플릿 디스크 보유 lang 으로 정규화. 미보유 lang → DEFAULT_LANG 폴백.
+
+    예: lang='fr' (profiles 에는 valid) → templates/fr.html 미존재 → 'en' 반환.
+    F-i18n-2 청크에서 17 lang 템플릿 자동 생성 후 미보유 lang ❌.
+    """
+    return lang if lang in EMAIL_TEMPLATE_LANG_SET else DEFAULT_LANG
 
 
 def render_template(trigger: str, lang: str, ctx: dict[str, Any]) -> str:

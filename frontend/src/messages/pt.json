@@ -1,0 +1,158 @@
+{
+  "common": {
+    "site_title": "AEO Visibility",
+    "site_description": "Meça a visibilidade do seu site em relação aos mecanismos de resposta de IA",
+    "loading": "Carregando…",
+    "error": "Algo deu errado",
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "delete": "Excluir",
+    "deleting": "Excluindo…",
+    "edit": "Editar",
+    "back": "Voltar"
+  },
+  "auth": {
+    "magic_link_form": {
+      "email_label": "Endereço de e-mail",
+      "email_placeholder": "voce@exemplo.com",
+      "submit": "Enviar link mágico",
+      "checking": "Enviando…",
+      "errors": {
+        "invalid_email": "Digite um endereço de e-mail válido",
+        "send_failed": "Não foi possível enviar o link. Tente novamente."
+      }
+    },
+    "signup": {
+      "title": "Crie sua conta",
+      "subtitle": "Enviaremos um link mágico por e-mail — sem senha necessária.",
+      "have_account": "Já tem uma conta?",
+      "login_link": "Entrar"
+    },
+    "login": {
+      "title": "Entrar",
+      "subtitle": "Digite seu e-mail e enviaremos um link mágico.",
+      "no_account": "Não tem uma conta?",
+      "signup_link": "Criar uma"
+    },
+    "verify": {
+      "title": "Verifique seu e-mail",
+      "subtitle": "Enviamos um link mágico para {email}. Clique no link no e-mail para continuar.",
+      "resend": "Reenviar o link",
+      "did_not_receive": "Não recebeu? Verifique a pasta de spam ou use um e-mail diferente."
+    },
+    "onboarding": {
+      "title": "Configure seu espaço de trabalho",
+      "subtitle": "Espaços de trabalho contêm seus sites e análises.",
+      "name_label": "Nome do espaço de trabalho",
+      "name_placeholder": "Acme Marketing",
+      "language_label": "Idioma principal",
+      "timezone_label": "Fuso horário",
+      "submit": "Criar espaço de trabalho",
+      "creating": "Criando…"
+    },
+    "callback": {
+      "completing": "Entrando…",
+      "failed_title": "Falha ao entrar",
+      "failed_subtitle": "O link pode ter expirado. Tente solicitar um novo."
+    }
+  },
+  "app": {
+    "nav": {
+      "dashboard": "Painel",
+      "sites": "Sites",
+      "reports": "Relatórios",
+      "qa": "Perguntas e Respostas",
+      "settings": "Configurações",
+      "logout": "Sair"
+    },
+    "dashboard": {
+      "title": "Painel",
+      "no_workspace": "Você ainda não tem um espaço de trabalho.",
+      "create_workspace": "Crie seu primeiro espaço de trabalho",
+      "your_workspaces": "Seus espaços de trabalho",
+      "manage_sites": "Gerenciar sites",
+      "role_owner": "Proprietário",
+      "role_admin": "Administrador",
+      "role_member": "Membro",
+      "role_viewer": "Visualizador"
+    },
+    "sites": {
+      "title": "Sites",
+      "subtitle": "Sites e concorrentes rastreados em {workspace}.",
+      "add_site": "Adicionar site",
+      "own_sites": "Seus sites",
+      "competitor_sites": "Concorrentes",
+      "own_empty": "Adicione seu primeiro site para começar a medir a visibilidade de AEO.",
+      "competitors_empty": "Nenhum site concorrente ainda.",
+      "no_workspace_yet": "Configure um espaço de trabalho para começar a rastrear sites.",
+      "create_workspace": "Criar um espaço de trabalho",
+      "last_analyzed": "Última análise",
+      "last_url_change": "Última alteração de URL",
+      "run_analysis": "Executar análise",
+      "analyses_history": "Análises",
+      "analyses_empty": "Nenhuma análise ainda. Execute sua primeira análise para ver os resultados.",
+      "view_result": "Ver resultado",
+      "back_to_sites": "Voltar aos sites",
+      "site_not_found": "Não conseguimos encontrar este site em nenhum de seus espaços de trabalho.",
+      "delete_confirm": "Excluir site {domain}? Ele entrará em um período de espera de 30 dias antes que o domínio possa ser re-adicionado.",
+      "delete_forbidden": "Apenas administradores ou proprietários do espaço de trabalho podem excluir sites.",
+      "categories": {
+        "technical": "Técnico",
+        "structured": "Estruturado",
+        "content": "Conteúdo",
+        "authority": "Autoridade",
+        "visibility": "Visibilidade"
+      },
+      "status": {
+        "queued": "Na fila",
+        "running": "Em execução",
+        "completed": "Concluída",
+        "failed": "Falhou"
+      },
+      "form": {
+        "title_create": "Adicionar um site",
+        "title_edit": "Editar site",
+        "url_label": "URL",
+        "url_placeholder": "https://exemplo.com",
+        "nickname_label": "Apelido (opcional)",
+        "nickname_placeholder": "Site de produção",
+        "type_label": "Tipo",
+        "type_own": "Seu site",
+        "type_own_desc": "Um site que você possui e deseja melhorar.",
+        "type_competitor": "Concorrente",
+        "type_competitor_desc": "Um site que você deseja comparar.",
+        "create": "Adicionar site",
+        "saving": "Salvando…",
+        "url_required": "Digite uma URL.",
+        "err_invalid_url": "A URL é inválida ou está faltando um domínio.",
+        "err_trial_expired": "Sua avaliação terminou. Faça upgrade para continuar editando.",
+        "err_plan_limit": "O limite do seu plano foi atingido. Faça upgrade ou remova um site.",
+        "err_conflict": "Este domínio já está registrado ou em período de espera de 30 dias.",
+        "err_url_change_limit": "As alterações de URL são limitadas a uma vez a cada 30 dias por espaço de trabalho."
+      },
+      "analyze": {
+        "title": "Executar análise",
+        "description": "Escolha quais categorias analisar. Verificações completas abrangem todas as cinco.",
+        "categories_label": "Categorias",
+        "select_at_least_one": "Selecione pelo menos uma categoria.",
+        "quota_loading": "Carregando cota…",
+        "quota_title": "Restante este mês ({ym})",
+        "quota_remaining": "{remaining} de {quota}",
+        "quota_unlimited": "Ilimitado",
+        "quota_none": "Seu plano não tem análises restantes este mês.",
+        "pack": {
+          "pro_pack": "Pacote Pro",
+          "basic_pack": "Pacote Básico",
+          "base": "Base"
+        },
+        "trigger_full": "Executar análise completa",
+        "trigger_partial": "Executar em {n} categorias",
+        "triggering": "Iniciando…",
+        "err_quota_or_trial": "Sem análises ou avaliação expirada. Faça upgrade para continuar.",
+        "err_forbidden": "Você não tem permissão para disparar uma análise.",
+        "err_concurrent": "Outra análise já está em execução para este espaço de trabalho.",
+        "err_cooldown": "Este site foi analisado há menos de uma hora. Tente novamente mais tarde."
+      }
+    }
+  }
+}

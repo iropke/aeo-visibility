@@ -1,0 +1,158 @@
+{
+  "common": {
+    "site_title": "AEO Visibility",
+    "site_description": "Messen Sie, wie sichtbar Ihre Website für KI-Antwortsuchmaschinen ist",
+    "loading": "Lädt…",
+    "error": "Etwas ist schief gelaufen",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "delete": "Löschen",
+    "deleting": "Wird gelöscht…",
+    "edit": "Bearbeiten",
+    "back": "Zurück"
+  },
+  "auth": {
+    "magic_link_form": {
+      "email_label": "E-Mail-Adresse",
+      "email_placeholder": "you@example.com",
+      "submit": "Magic Link senden",
+      "checking": "Wird gesendet…",
+      "errors": {
+        "invalid_email": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
+        "send_failed": "Der Link konnte nicht gesendet werden. Bitte versuchen Sie es erneut."
+      }
+    },
+    "signup": {
+      "title": "Erstellen Sie Ihr Konto",
+      "subtitle": "Wir senden Ihnen einen Magic Link per E-Mail – kein Passwort erforderlich.",
+      "have_account": "Sie haben bereits ein Konto?",
+      "login_link": "Anmelden"
+    },
+    "login": {
+      "title": "Anmelden",
+      "subtitle": "Geben Sie Ihre E-Mail ein und wir senden Ihnen einen Magic Link.",
+      "no_account": "Sie haben noch kein Konto?",
+      "signup_link": "Erstellen Sie eines"
+    },
+    "verify": {
+      "title": "Überprüfen Sie Ihre E-Mail",
+      "subtitle": "Wir haben einen Magic Link an {email} gesendet. Klicken Sie auf den Link in der E-Mail, um fortzufahren.",
+      "resend": "Link erneut senden",
+      "did_not_receive": "Nicht erhalten? Überprüfen Sie den Spam-Ordner oder verwenden Sie eine andere E-Mail."
+    },
+    "onboarding": {
+      "title": "Richten Sie Ihren Arbeitsbereich ein",
+      "subtitle": "Arbeitsbereiche enthalten Ihre Websites und Analysen.",
+      "name_label": "Name des Arbeitsbereichs",
+      "name_placeholder": "Acme Marketing",
+      "language_label": "Primäre Sprache",
+      "timezone_label": "Zeitzone",
+      "submit": "Arbeitsbereich erstellen",
+      "creating": "Wird erstellt…"
+    },
+    "callback": {
+      "completing": "Sie werden angemeldet…",
+      "failed_title": "Anmeldung fehlgeschlagen",
+      "failed_subtitle": "Der Link ist möglicherweise abgelaufen. Versuchen Sie, einen neuen anzufordern."
+    }
+  },
+  "app": {
+    "nav": {
+      "dashboard": "Dashboard",
+      "sites": "Websites",
+      "reports": "Berichte",
+      "qa": "Fragen und Antworten",
+      "settings": "Einstellungen",
+      "logout": "Abmelden"
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "no_workspace": "Sie haben noch keinen Arbeitsbereich.",
+      "create_workspace": "Erstellen Sie Ihren ersten Arbeitsbereich",
+      "your_workspaces": "Ihre Arbeitsbereiche",
+      "manage_sites": "Websites verwalten",
+      "role_owner": "Eigentümer",
+      "role_admin": "Administrator",
+      "role_member": "Mitglied",
+      "role_viewer": "Betrachter"
+    },
+    "sites": {
+      "title": "Websites",
+      "subtitle": "Websites und Konkurrenten, die in {workspace} nachverfolgt werden.",
+      "add_site": "Website hinzufügen",
+      "own_sites": "Ihre Websites",
+      "competitor_sites": "Konkurrenten",
+      "own_empty": "Fügen Sie Ihre erste Website hinzu, um die AEO-Sichtbarkeit zu messen.",
+      "competitors_empty": "Noch keine Konkurrenz-Websites.",
+      "no_workspace_yet": "Richten Sie einen Arbeitsbereich ein, um mit der Nachverfolgung von Websites zu beginnen.",
+      "create_workspace": "Arbeitsbereich erstellen",
+      "last_analyzed": "Zuletzt analysiert",
+      "last_url_change": "Letzte URL-Änderung",
+      "run_analysis": "Analyse ausführen",
+      "analyses_history": "Analysen",
+      "analyses_empty": "Noch keine Analysen. Führen Sie Ihre erste Analyse aus, um Ergebnisse zu sehen.",
+      "view_result": "Ergebnis anzeigen",
+      "back_to_sites": "Zurück zu Websites",
+      "site_not_found": "Wir konnten diese Website in keinem Ihrer Arbeitsbereiche finden.",
+      "delete_confirm": "Website {domain} löschen? Sie wird für 30 Tage gesperrt, bevor die Domain erneut hinzugefügt werden kann.",
+      "delete_forbidden": "Nur Arbeitsbereich-Administratoren oder -Eigentümer können Websites löschen.",
+      "categories": {
+        "technical": "Technisch",
+        "structured": "Strukturiert",
+        "content": "Inhalt",
+        "authority": "Autorität",
+        "visibility": "Sichtbarkeit"
+      },
+      "status": {
+        "queued": "In Warteschlange",
+        "running": "Wird ausgeführt",
+        "completed": "Abgeschlossen",
+        "failed": "Fehlgeschlagen"
+      },
+      "form": {
+        "title_create": "Website hinzufügen",
+        "title_edit": "Website bearbeiten",
+        "url_label": "URL",
+        "url_placeholder": "https://example.com",
+        "nickname_label": "Spitzname (optional)",
+        "nickname_placeholder": "Produktions-Website",
+        "type_label": "Typ",
+        "type_own": "Ihre Website",
+        "type_own_desc": "Eine Website, die Sie besitzen und verbessern möchten.",
+        "type_competitor": "Konkurrenz",
+        "type_competitor_desc": "Eine Website, die Sie als Benchmark verwenden möchten.",
+        "create": "Website hinzufügen",
+        "saving": "Wird gespeichert…",
+        "url_required": "Bitte geben Sie eine URL ein.",
+        "err_invalid_url": "URL ist ungültig oder hat keine Domain.",
+        "err_trial_expired": "Ihre Testversion ist abgelaufen. Aktualisieren Sie, um fortzufahren.",
+        "err_plan_limit": "Das Limit Ihres Plans wurde erreicht. Aktualisieren Sie oder entfernen Sie eine Website.",
+        "err_conflict": "Diese Domain ist bereits registriert oder in einer 30-Tage-Sperrfrist.",
+        "err_url_change_limit": "URL-Änderungen sind auf einmal pro 30 Tage pro Arbeitsbereich begrenzt."
+      },
+      "analyze": {
+        "title": "Analyse ausführen",
+        "description": "Wählen Sie die Kategorien aus, die analysiert werden sollen. Vollständige Scans decken alle fünf ab.",
+        "categories_label": "Kategorien",
+        "select_at_least_one": "Wählen Sie mindestens eine Kategorie aus.",
+        "quota_loading": "Kontingent wird geladen…",
+        "quota_title": "Verbleibend diesen Monat ({ym})",
+        "quota_remaining": "{remaining} von {quota}",
+        "quota_unlimited": "Unbegrenzt",
+        "quota_none": "Ihr Plan hat in diesem Monat keine Analysen mehr.",
+        "pack": {
+          "pro_pack": "Pro Pack",
+          "basic_pack": "Basic Pack",
+          "base": "Basis"
+        },
+        "trigger_full": "Vollständige Analyse ausführen",
+        "trigger_partial": "Auf {n} Kategorien ausführen",
+        "triggering": "Wird gestartet…",
+        "err_quota_or_trial": "Keine Analysen mehr oder Testversion abgelaufen. Aktualisieren Sie, um fortzufahren.",
+        "err_forbidden": "Sie haben keine Berechtigung, eine Analyse auszulösen.",
+        "err_concurrent": "Eine andere Analyse wird bereits für diesen Arbeitsbereich ausgeführt.",
+        "err_cooldown": "Diese Website wurde vor weniger als einer Stunde analysiert. Versuchen Sie es später erneut."
+      }
+    }
+  }
+}

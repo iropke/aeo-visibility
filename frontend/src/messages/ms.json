@@ -1,0 +1,158 @@
+{
+  "common": {
+    "site_title": "AEO Visibility",
+    "site_description": "Ukur seberapa terlihat laman anda kepada enjin jawapan AI",
+    "loading": "Memuatkan…",
+    "error": "Sesuatu telah berlaku",
+    "save": "Simpan",
+    "cancel": "Batal",
+    "delete": "Padam",
+    "deleting": "Memadamkan…",
+    "edit": "Edit",
+    "back": "Kembali"
+  },
+  "auth": {
+    "magic_link_form": {
+      "email_label": "Alamat e-mel",
+      "email_placeholder": "anda@contoh.com",
+      "submit": "Hantar pautan ajaib",
+      "checking": "Menghantar…",
+      "errors": {
+        "invalid_email": "Sila masukkan alamat e-mel yang sah",
+        "send_failed": "Tidak dapat menghantar pautan. Sila cuba lagi."
+      }
+    },
+    "signup": {
+      "title": "Buat akaun anda",
+      "subtitle": "Kami akan menghantar pautan ajaib kepada anda melalui e-mel — tidak perlu kata laluan.",
+      "have_account": "Sudah mempunyai akaun?",
+      "login_link": "Daftar masuk"
+    },
+    "login": {
+      "title": "Daftar masuk",
+      "subtitle": "Masukkan e-mel anda dan kami akan menghantar pautan ajaib.",
+      "no_account": "Tidak mempunyai akaun?",
+      "signup_link": "Buat satu"
+    },
+    "verify": {
+      "title": "Semak e-mel anda",
+      "subtitle": "Kami telah menghantar pautan ajaib ke {email}. Klik pautan dalam e-mel untuk meneruskan.",
+      "resend": "Hantar semula pautan",
+      "did_not_receive": "Tidak menerimanya? Periksa spam atau gunakan e-mel yang berbeza."
+    },
+    "onboarding": {
+      "title": "Sediakan ruang kerja anda",
+      "subtitle": "Ruang kerja menyimpan laman dan analisis anda.",
+      "name_label": "Nama ruang kerja",
+      "name_placeholder": "Acme Marketing",
+      "language_label": "Bahasa utama",
+      "timezone_label": "Zon masa",
+      "submit": "Buat ruang kerja",
+      "creating": "Membuat…"
+    },
+    "callback": {
+      "completing": "Mendaftar masuk…",
+      "failed_title": "Gagal mendaftar masuk",
+      "failed_subtitle": "Pautan mungkin telah tamat tempoh. Cuba minta yang baru."
+    }
+  },
+  "app": {
+    "nav": {
+      "dashboard": "Papan pemuka",
+      "sites": "Laman",
+      "reports": "Laporan",
+      "qa": "Soalan & Jawapan",
+      "settings": "Tetapan",
+      "logout": "Daftar keluar"
+    },
+    "dashboard": {
+      "title": "Papan pemuka",
+      "no_workspace": "Anda belum mempunyai ruang kerja.",
+      "create_workspace": "Buat ruang kerja pertama anda",
+      "your_workspaces": "Ruang kerja anda",
+      "manage_sites": "Kelola laman",
+      "role_owner": "Pemilik",
+      "role_admin": "Admin",
+      "role_member": "Ahli",
+      "role_viewer": "Penjelihat"
+    },
+    "sites": {
+      "title": "Laman",
+      "subtitle": "Laman dan pesaing yang dijejaki dalam {workspace}.",
+      "add_site": "Tambah laman",
+      "own_sites": "Laman anda",
+      "competitor_sites": "Pesaing",
+      "own_empty": "Tambah laman pertama anda untuk mula mengukur keterlihatan AEO.",
+      "competitors_empty": "Belum ada laman pesaing.",
+      "no_workspace_yet": "Sediakan ruang kerja untuk mula menjejaki laman.",
+      "create_workspace": "Buat ruang kerja",
+      "last_analyzed": "Dianalisis terakhir",
+      "last_url_change": "Perubahan URL terakhir",
+      "run_analysis": "Jalankan analisis",
+      "analyses_history": "Analisis",
+      "analyses_empty": "Belum ada analisis. Jalankan analisis pertama anda untuk melihat keputusan.",
+      "view_result": "Lihat keputusan",
+      "back_to_sites": "Kembali ke laman",
+      "site_not_found": "Kami tidak dapat mencari laman ini dalam mana-mana ruang kerja anda.",
+      "delete_confirm": "Padam laman {domain}? Ia akan memasuki tempoh penyejukan 30 hari sebelum domain boleh ditambah semula.",
+      "delete_forbidden": "Hanya admin atau pemilik ruang kerja boleh memadamkan laman.",
+      "categories": {
+        "technical": "Teknikal",
+        "structured": "Berstruktur",
+        "content": "Kandungan",
+        "authority": "Autoriti",
+        "visibility": "Keterlihatan"
+      },
+      "status": {
+        "queued": "Beratur",
+        "running": "Berjalan",
+        "completed": "Selesai",
+        "failed": "Gagal"
+      },
+      "form": {
+        "title_create": "Tambah laman",
+        "title_edit": "Edit laman",
+        "url_label": "URL",
+        "url_placeholder": "https://contoh.com",
+        "nickname_label": "Nama panggilan (pilihan)",
+        "nickname_placeholder": "Laman Produksi",
+        "type_label": "Jenis",
+        "type_own": "Laman anda",
+        "type_own_desc": "Laman yang anda miliki dan ingin tingkatkan.",
+        "type_competitor": "Pesaing",
+        "type_competitor_desc": "Laman yang ingin anda bandingkan.",
+        "create": "Tambah laman",
+        "saving": "Menyimpan…",
+        "url_required": "Sila masukkan URL.",
+        "err_invalid_url": "URL tidak sah atau hilang domain.",
+        "err_trial_expired": "Percubaan anda telah tamat. Tingkatkan untuk meneruskan pengeditan.",
+        "err_plan_limit": "Had had pelan anda telah tercapai. Tingkatkan atau alih keluar laman.",
+        "err_conflict": "Domain ini sudah berdaftar atau dalam tempoh penyejukan 30 hari.",
+        "err_url_change_limit": "Perubahan URL terhad kepada sekali per 30 hari bagi setiap ruang kerja."
+      },
+      "analyze": {
+        "title": "Jalankan analisis",
+        "description": "Pilih kategori yang ingin dianalisis. Imbasan penuh merangkumi semua lima.",
+        "categories_label": "Kategori",
+        "select_at_least_one": "Pilih sekurang-kurangnya satu kategori.",
+        "quota_loading": "Memuatkan kuota…",
+        "quota_title": "Baki bulan ini ({ym})",
+        "quota_remaining": "{remaining} daripada {quota}",
+        "quota_unlimited": "Tanpa had",
+        "quota_none": "Pelan anda tidak mempunyai analisis baki bulan ini.",
+        "pack": {
+          "pro_pack": "Pakej Pro",
+          "basic_pack": "Pakej Asas",
+          "base": "Asas"
+        },
+        "trigger_full": "Jalankan analisis penuh",
+        "trigger_partial": "Jalankan pada {n} kategori",
+        "triggering": "Memulai…",
+        "err_quota_or_trial": "Analisis habis atau percubaan tamat. Tingkatkan untuk meneruskan.",
+        "err_forbidden": "Anda tidak mempunyai kebenaran untuk mencetuskan analisis.",
+        "err_concurrent": "Analisis lain sudah berjalan untuk ruang kerja ini.",
+        "err_cooldown": "Laman ini telah dianalisis kurang dari satu jam yang lalu. Cuba lagi kemudian."
+      }
+    }
+  }
+}

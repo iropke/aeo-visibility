@@ -1,0 +1,158 @@
+{
+  "common": {
+    "site_title": "AEO Visibility",
+    "site_description": "Misura la visibilità del tuo sito nei motori di risposta AI",
+    "loading": "Caricamento…",
+    "error": "Si è verificato un errore",
+    "save": "Salva",
+    "cancel": "Annulla",
+    "delete": "Elimina",
+    "deleting": "Eliminazione in corso…",
+    "edit": "Modifica",
+    "back": "Indietro"
+  },
+  "auth": {
+    "magic_link_form": {
+      "email_label": "Indirizzo email",
+      "email_placeholder": "you@example.com",
+      "submit": "Invia magic link",
+      "checking": "Invio in corso…",
+      "errors": {
+        "invalid_email": "Inserisci un indirizzo email valido",
+        "send_failed": "Impossibile inviare il link. Riprova."
+      }
+    },
+    "signup": {
+      "title": "Crea il tuo account",
+      "subtitle": "Ti invieremo un magic link via email — nessuna password richiesta.",
+      "have_account": "Hai già un account?",
+      "login_link": "Accedi"
+    },
+    "login": {
+      "title": "Accedi",
+      "subtitle": "Inserisci la tua email e ti invieremo un magic link.",
+      "no_account": "Non hai un account?",
+      "signup_link": "Creane uno"
+    },
+    "verify": {
+      "title": "Controlla la tua email",
+      "subtitle": "Abbiamo inviato un magic link a {email}. Fai clic sul link nell'email per continuare.",
+      "resend": "Reinvia il link",
+      "did_not_receive": "Non l'hai ricevuto? Controlla la cartella spam o usa un'email diversa."
+    },
+    "onboarding": {
+      "title": "Configura il tuo workspace",
+      "subtitle": "I workspace contengono i tuoi siti e le tue analisi.",
+      "name_label": "Nome workspace",
+      "name_placeholder": "Acme Marketing",
+      "language_label": "Lingua principale",
+      "timezone_label": "Fuso orario",
+      "submit": "Crea workspace",
+      "creating": "Creazione in corso…"
+    },
+    "callback": {
+      "completing": "Accesso in corso…",
+      "failed_title": "Accesso non riuscito",
+      "failed_subtitle": "Il link potrebbe essere scaduto. Prova a richiederne uno nuovo."
+    }
+  },
+  "app": {
+    "nav": {
+      "dashboard": "Dashboard",
+      "sites": "Siti",
+      "reports": "Report",
+      "qa": "Domande e risposte",
+      "settings": "Impostazioni",
+      "logout": "Esci"
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "no_workspace": "Non hai ancora un workspace.",
+      "create_workspace": "Crea il tuo primo workspace",
+      "your_workspaces": "I tuoi workspace",
+      "manage_sites": "Gestisci siti",
+      "role_owner": "Proprietario",
+      "role_admin": "Admin",
+      "role_member": "Membro",
+      "role_viewer": "Visualizzatore"
+    },
+    "sites": {
+      "title": "Siti",
+      "subtitle": "Siti e competitor monitorati in {workspace}.",
+      "add_site": "Aggiungi sito",
+      "own_sites": "I tuoi siti",
+      "competitor_sites": "Competitor",
+      "own_empty": "Aggiungi il tuo primo sito per iniziare a misurare la visibilità AEO.",
+      "competitors_empty": "Nessun sito competitor per ora.",
+      "no_workspace_yet": "Configura un workspace per iniziare a tracciare i siti.",
+      "create_workspace": "Crea un workspace",
+      "last_analyzed": "Ultimo aggiornamento analisi",
+      "last_url_change": "Ultimo cambio URL",
+      "run_analysis": "Esegui analisi",
+      "analyses_history": "Analisi",
+      "analyses_empty": "Nessuna analisi ancora. Esegui la tua prima analisi per vedere i risultati.",
+      "view_result": "Visualizza risultato",
+      "back_to_sites": "Torna ai siti",
+      "site_not_found": "Non abbiamo trovato questo sito in nessuno dei tuoi workspace.",
+      "delete_confirm": "Eliminare il sito {domain}? Entrerà in un periodo di standstill di 30 giorni prima che il dominio possa essere aggiunto di nuovo.",
+      "delete_forbidden": "Solo gli admin o i proprietari del workspace possono eliminare i siti.",
+      "categories": {
+        "technical": "Tecnico",
+        "structured": "Strutturato",
+        "content": "Contenuto",
+        "authority": "Autorità",
+        "visibility": "Visibilità"
+      },
+      "status": {
+        "queued": "In coda",
+        "running": "In corso",
+        "completed": "Completato",
+        "failed": "Non riuscito"
+      },
+      "form": {
+        "title_create": "Aggiungi un sito",
+        "title_edit": "Modifica sito",
+        "url_label": "URL",
+        "url_placeholder": "https://example.com",
+        "nickname_label": "Nickname (opzionale)",
+        "nickname_placeholder": "Sito di produzione",
+        "type_label": "Tipo",
+        "type_own": "Il tuo sito",
+        "type_own_desc": "Un sito che possiedi e che vuoi migliorare.",
+        "type_competitor": "Competitor",
+        "type_competitor_desc": "Un sito con cui vuoi fare un confronto.",
+        "create": "Aggiungi sito",
+        "saving": "Salvataggio in corso…",
+        "url_required": "Inserisci un URL.",
+        "err_invalid_url": "L'URL non è valido o manca un dominio.",
+        "err_trial_expired": "La tua prova è terminata. Esegui l'upgrade per continuare a modificare.",
+        "err_plan_limit": "È stato raggiunto il limite del tuo piano. Esegui l'upgrade o rimuovi un sito.",
+        "err_conflict": "Questo dominio è già registrato o in un periodo di standstill di 30 giorni.",
+        "err_url_change_limit": "I cambi URL sono limitati a una volta ogni 30 giorni per workspace."
+      },
+      "analyze": {
+        "title": "Esegui analisi",
+        "description": "Scegli quali categorie analizzare. Le scansioni complete coprono tutte e cinque.",
+        "categories_label": "Categorie",
+        "select_at_least_one": "Seleziona almeno una categoria.",
+        "quota_loading": "Caricamento quota…",
+        "quota_title": "Rimanente questo mese ({ym})",
+        "quota_remaining": "{remaining} di {quota}",
+        "quota_unlimited": "Illimitato",
+        "quota_none": "Il tuo piano non ha analisi rimanenti questo mese.",
+        "pack": {
+          "pro_pack": "Pro Pack",
+          "basic_pack": "Basic Pack",
+          "base": "Base"
+        },
+        "trigger_full": "Esegui analisi completa",
+        "trigger_partial": "Esegui su {n} categorie",
+        "triggering": "Avvio in corso…",
+        "err_quota_or_trial": "Analisi esaurite o prova scaduta. Esegui l'upgrade per continuare.",
+        "err_forbidden": "Non hai il permesso per avviare un'analisi.",
+        "err_concurrent": "Un'altra analisi è già in corso per questo workspace.",
+        "err_cooldown": "Questo sito è stato analizzato meno di un'ora fa. Riprova più tardi."
+      }
+    }
+  }
+}

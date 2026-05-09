@@ -2,11 +2,11 @@
 from __future__ import annotations
 
 from datetime import datetime
-from typing import Literal
 from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict, Field
 
+from app.core.locales import LangLiteral
 from app.models.workspace import WorkspaceRole
 
 
@@ -17,14 +17,14 @@ from app.models.workspace import WorkspaceRole
 
 class WorkspaceCreate(BaseModel):
     name: str = Field(min_length=1, max_length=100)
-    primary_language: Literal["en", "ko", "es"] = "en"
+    primary_language: LangLiteral = "en"
     timezone: str = Field(default="UTC", max_length=64)
 
 
 class WorkspaceUpdate(BaseModel):
     """PATCH 페이로드. 모두 optional, owner/admin만 호출 가능 (라우터에서 강제)."""
     name: str | None = Field(default=None, min_length=1, max_length=100)
-    primary_language: Literal["en", "ko", "es"] | None = None
+    primary_language: LangLiteral | None = None
     timezone: str | None = Field(default=None, max_length=64)
 
 

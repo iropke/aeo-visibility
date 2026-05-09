@@ -1,0 +1,158 @@
+{
+  "common": {
+    "site_title": "AEO Visibility",
+    "site_description": "Meet hoe zichtbaar uw site is voor AI-antwoordengines",
+    "loading": "Laden…",
+    "error": "Er is iets misgegaan",
+    "save": "Opslaan",
+    "cancel": "Annuleren",
+    "delete": "Verwijderen",
+    "deleting": "Verwijderen…",
+    "edit": "Bewerken",
+    "back": "Terug"
+  },
+  "auth": {
+    "magic_link_form": {
+      "email_label": "E-mailadres",
+      "email_placeholder": "u@voorbeeld.com",
+      "submit": "Magic link verzenden",
+      "checking": "Verzenden…",
+      "errors": {
+        "invalid_email": "Voer een geldig e-mailadres in",
+        "send_failed": "Kon de link niet verzenden. Probeer het opnieuw."
+      }
+    },
+    "signup": {
+      "title": "Account aanmaken",
+      "subtitle": "We sturen u een magic link per e-mail — geen wachtwoord nodig.",
+      "have_account": "Hebt u al een account?",
+      "login_link": "Aanmelden"
+    },
+    "login": {
+      "title": "Aanmelden",
+      "subtitle": "Voer uw e-mailadres in en we sturen u een magic link.",
+      "no_account": "Hebt u nog geen account?",
+      "signup_link": "Maak er een aan"
+    },
+    "verify": {
+      "title": "Controleer uw e-mail",
+      "subtitle": "We hebben een magic link naar {email} verzonden. Klik op de link in de e-mail om door te gaan.",
+      "resend": "Link opnieuw verzenden",
+      "did_not_receive": "Niet ontvangen? Controleer spam of gebruik een ander e-mailadres."
+    },
+    "onboarding": {
+      "title": "Stel uw werkruimte in",
+      "subtitle": "Werkruimten bevatten uw sites en analyses.",
+      "name_label": "Naam werkruimte",
+      "name_placeholder": "Acme Marketing",
+      "language_label": "Primaire taal",
+      "timezone_label": "Tijdzone",
+      "submit": "Werkruimte aanmaken",
+      "creating": "Aanmaken…"
+    },
+    "callback": {
+      "completing": "U wordt aangemeld…",
+      "failed_title": "Aanmelden mislukt",
+      "failed_subtitle": "De link is mogelijk verlopen. Vraag een nieuwe aan."
+    }
+  },
+  "app": {
+    "nav": {
+      "dashboard": "Dashboard",
+      "sites": "Sites",
+      "reports": "Rapporten",
+      "qa": "Vragen & Antwoorden",
+      "settings": "Instellingen",
+      "logout": "Afmelden"
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "no_workspace": "U hebt nog geen werkruimte.",
+      "create_workspace": "Maak uw eerste werkruimte aan",
+      "your_workspaces": "Uw werkruimten",
+      "manage_sites": "Sites beheren",
+      "role_owner": "Eigenaar",
+      "role_admin": "Beheerder",
+      "role_member": "Lid",
+      "role_viewer": "Viewer"
+    },
+    "sites": {
+      "title": "Sites",
+      "subtitle": "Sites en concurrenten bijgehouden in {workspace}.",
+      "add_site": "Site toevoegen",
+      "own_sites": "Uw sites",
+      "competitor_sites": "Concurrenten",
+      "own_empty": "Voeg uw eerste site toe om AEO-zichtbaarheid te meten.",
+      "competitors_empty": "Nog geen concurrentsites.",
+      "no_workspace_yet": "Stel een werkruimte in om sites bij te houden.",
+      "create_workspace": "Werkruimte aanmaken",
+      "last_analyzed": "Laatst geanalyseerd",
+      "last_url_change": "Laatste URL-wijziging",
+      "run_analysis": "Analyse uitvoeren",
+      "analyses_history": "Analyses",
+      "analyses_empty": "Nog geen analyses. Voer uw eerste analyse uit om resultaten te zien.",
+      "view_result": "Resultaat weergeven",
+      "back_to_sites": "Terug naar sites",
+      "site_not_found": "We konden deze site in geen van uw werkruimten vinden.",
+      "delete_confirm": "Site {domain} verwijderen? Het domein gaat in een 30-daagse stilteperiode voordat het opnieuw kan worden toegevoegd.",
+      "delete_forbidden": "Alleen werkruimtebeheerders of -eigenaren kunnen sites verwijderen.",
+      "categories": {
+        "technical": "Technisch",
+        "structured": "Gestructureerd",
+        "content": "Inhoud",
+        "authority": "Autoriteit",
+        "visibility": "Zichtbaarheid"
+      },
+      "status": {
+        "queued": "In wachtrij",
+        "running": "Actief",
+        "completed": "Voltooid",
+        "failed": "Mislukt"
+      },
+      "form": {
+        "title_create": "Site toevoegen",
+        "title_edit": "Site bewerken",
+        "url_label": "URL",
+        "url_placeholder": "https://voorbeeld.com",
+        "nickname_label": "Bijnaam (optioneel)",
+        "nickname_placeholder": "Productiesite",
+        "type_label": "Type",
+        "type_own": "Uw site",
+        "type_own_desc": "Een site die u bezit en wilt verbeteren.",
+        "type_competitor": "Concurrent",
+        "type_competitor_desc": "Een site waartegen u wilt benchmarken.",
+        "create": "Site toevoegen",
+        "saving": "Opslaan…",
+        "url_required": "Voer een URL in.",
+        "err_invalid_url": "URL is ongeldig of het domein ontbreekt.",
+        "err_trial_expired": "Uw proefperiode is verlopen. Upgrade om door te gaan met bewerken.",
+        "err_plan_limit": "De limiet van uw abonnement is bereikt. Upgrade of verwijder een site.",
+        "err_conflict": "Dit domein is al geregistreerd of bevindt zich in een 30-daagse stilteperiode.",
+        "err_url_change_limit": "URL-wijzigingen zijn beperkt tot eenmaal per 30 dagen per werkruimte."
+      },
+      "analyze": {
+        "title": "Analyse uitvoeren",
+        "description": "Kies welke categorieën u wilt analyseren. Volledige scans dekken alle vijf.",
+        "categories_label": "Categorieën",
+        "select_at_least_one": "Selecteer minstens één categorie.",
+        "quota_loading": "Quotum laden…",
+        "quota_title": "Resterend deze maand ({ym})",
+        "quota_remaining": "{remaining} van {quota}",
+        "quota_unlimited": "Onbeperkt",
+        "quota_none": "Uw abonnement heeft geen analyses meer deze maand.",
+        "pack": {
+          "pro_pack": "Pro Pack",
+          "basic_pack": "Basic Pack",
+          "base": "Basis"
+        },
+        "trigger_full": "Volledige analyse uitvoeren",
+        "trigger_partial": "Uitvoeren voor {n} categorieën",
+        "triggering": "Starten…",
+        "err_quota_or_trial": "Geen analyses meer of proefperiode verlopen. Upgrade om door te gaan.",
+        "err_forbidden": "U hebt geen toestemming om een analyse te starten.",
+        "err_concurrent": "Voor deze werkruimte wordt al een analyse uitgevoerd.",
+        "err_cooldown": "Deze site werd minder dan een uur geleden geanalyseerd. Probeer later opnieuw."
+      }
+    }
+  }
+}

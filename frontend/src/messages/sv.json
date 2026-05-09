@@ -1,0 +1,158 @@
+{
+  "common": {
+    "site_title": "AEO Visibility",
+    "site_description": "Mät hur synlig din webbplats är för AI-svarsmotor",
+    "loading": "Läser in…",
+    "error": "Något gick fel",
+    "save": "Spara",
+    "cancel": "Avbryt",
+    "delete": "Ta bort",
+    "deleting": "Tar bort…",
+    "edit": "Redigera",
+    "back": "Tillbaka"
+  },
+  "auth": {
+    "magic_link_form": {
+      "email_label": "E-postadress",
+      "email_placeholder": "du@exempel.com",
+      "submit": "Skicka magisk länk",
+      "checking": "Skickar…",
+      "errors": {
+        "invalid_email": "Ange en giltig e-postadress.",
+        "send_failed": "Kunde inte skicka länken. Försök igen."
+      }
+    },
+    "signup": {
+      "title": "Skapa ditt konto",
+      "subtitle": "Vi skickar dig en magisk länk via e-post — inget lösenord krävs.",
+      "have_account": "Har du redan ett konto?",
+      "login_link": "Logga in"
+    },
+    "login": {
+      "title": "Logga in",
+      "subtitle": "Ange din e-postadress och vi skickar en magisk länk.",
+      "no_account": "Har du inget konto?",
+      "signup_link": "Skapa ett"
+    },
+    "verify": {
+      "title": "Kontrollera din e-post",
+      "subtitle": "Vi skickade en magisk länk till {email}. Klicka på länken i e-postmeddelandet för att fortsätta.",
+      "resend": "Skicka länken igen",
+      "did_not_receive": "Mottog du den inte? Kontrollera skräppostmappen eller använd en annan e-postadress."
+    },
+    "onboarding": {
+      "title": "Konfigurera din arbetsyta",
+      "subtitle": "Arbetsytor innehåller dina webbplatser och analyser.",
+      "name_label": "Namn på arbetsyta",
+      "name_placeholder": "Acme Marketing",
+      "language_label": "Primärt språk",
+      "timezone_label": "Tidszon",
+      "submit": "Skapa arbetsyta",
+      "creating": "Skapar…"
+    },
+    "callback": {
+      "completing": "Loggar in dig…",
+      "failed_title": "Inloggning misslyckades",
+      "failed_subtitle": "Länken kan ha upphört att gälla. Försök begära en ny."
+    }
+  },
+  "app": {
+    "nav": {
+      "dashboard": "Instrumentpanel",
+      "sites": "Webbplatser",
+      "reports": "Rapporter",
+      "qa": "Frågor och svar",
+      "settings": "Inställningar",
+      "logout": "Logga ut"
+    },
+    "dashboard": {
+      "title": "Instrumentpanel",
+      "no_workspace": "Du har ännu ingen arbetsyta.",
+      "create_workspace": "Skapa din första arbetsyta",
+      "your_workspaces": "Dina arbetsytor",
+      "manage_sites": "Hantera webbplatser",
+      "role_owner": "Ägare",
+      "role_admin": "Admin",
+      "role_member": "Medlem",
+      "role_viewer": "Visare"
+    },
+    "sites": {
+      "title": "Webbplatser",
+      "subtitle": "Webbplatser och konkurrenter spårade i {workspace}.",
+      "add_site": "Lägg till webbplats",
+      "own_sites": "Dina webbplatser",
+      "competitor_sites": "Konkurrenter",
+      "own_empty": "Lägg till din första webbplats för att börja mäta AEO-synlighet.",
+      "competitors_empty": "Inga konkurrentwebbplatser ännu.",
+      "no_workspace_yet": "Konfigurera en arbetsyta för att börja spåra webbplatser.",
+      "create_workspace": "Skapa en arbetsyta",
+      "last_analyzed": "Senast analyserad",
+      "last_url_change": "Senaste URL-ändring",
+      "run_analysis": "Kör analys",
+      "analyses_history": "Analyser",
+      "analyses_empty": "Inga analyser ännu. Kör din första analys för att se resultaten.",
+      "view_result": "Visa resultat",
+      "back_to_sites": "Tillbaka till webbplatser",
+      "site_not_found": "Vi kunde inte hitta denna webbplats i någon av dina arbetsytor.",
+      "delete_confirm": "Ta bort webbplats {domain}? Den går in i en 30-dagars nedkylningsperiod innan domänen kan läggas till igen.",
+      "delete_forbidden": "Endast arbetsytans administratörer eller ägare kan ta bort webbplatser.",
+      "categories": {
+        "technical": "Teknisk",
+        "structured": "Strukturerad",
+        "content": "Innehåll",
+        "authority": "Auktoritet",
+        "visibility": "Synlighet"
+      },
+      "status": {
+        "queued": "I kö",
+        "running": "Körs",
+        "completed": "Slutförd",
+        "failed": "Misslyckad"
+      },
+      "form": {
+        "title_create": "Lägg till en webbplats",
+        "title_edit": "Redigera webbplats",
+        "url_label": "URL",
+        "url_placeholder": "https://exempel.com",
+        "nickname_label": "Smeknamn (valfritt)",
+        "nickname_placeholder": "Produktionswebbplats",
+        "type_label": "Typ",
+        "type_own": "Din webbplats",
+        "type_own_desc": "En webbplats du äger och vill förbättra.",
+        "type_competitor": "Konkurrent",
+        "type_competitor_desc": "En webbplats du vill jämföra dig mot.",
+        "create": "Lägg till webbplats",
+        "saving": "Sparar…",
+        "url_required": "Ange en URL.",
+        "err_invalid_url": "URL är ogiltig eller saknar en domän.",
+        "err_trial_expired": "Din testperiod har upphört. Uppgradera för att fortsätta redigera.",
+        "err_plan_limit": "Din planlimit har nåtts. Uppgradera eller ta bort en webbplats.",
+        "err_conflict": "Denna domän är redan registrerad eller i en 30-dagars nedkylningsperiod.",
+        "err_url_change_limit": "URL-ändringar är begränsade till en gång per 30 dagar per arbetsyta."
+      },
+      "analyze": {
+        "title": "Kör analys",
+        "description": "Välj vilka kategorier som ska analyseras. Fullständiga skanningar täcker alla fem.",
+        "categories_label": "Kategorier",
+        "select_at_least_one": "Välj minst en kategori.",
+        "quota_loading": "Läser in kvot…",
+        "quota_title": "Återstår denna månad ({ym})",
+        "quota_remaining": "{remaining} av {quota}",
+        "quota_unlimited": "Obegränsat",
+        "quota_none": "Din plan har inga analyser kvar denna månad.",
+        "pack": {
+          "pro_pack": "Pro Pack",
+          "basic_pack": "Basic Pack",
+          "base": "Bas"
+        },
+        "trigger_full": "Kör fullständig analys",
+        "trigger_partial": "Kör på {n} kategorier",
+        "triggering": "Startar…",
+        "err_quota_or_trial": "Inga analyser kvar eller testperioden upphörd. Uppgradera för att fortsätta.",
+        "err_forbidden": "Du har inte behörighet att starta en analys.",
+        "err_concurrent": "En annan analys körs redan för denna arbetsyta.",
+        "err_cooldown": "Denna webbplats analyserades för mindre än en timme sedan. Försök senare."
+      }
+    }
+  }
+}

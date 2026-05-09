@@ -1,0 +1,158 @@
+{
+  "common": {
+    "site_title": "AEO Visibility",
+    "site_description": "Måle hvor synlig dit websted er for AI-svarmaskiner",
+    "loading": "Indlæser…",
+    "error": "Der opstod en fejl",
+    "save": "Gem",
+    "cancel": "Annuller",
+    "delete": "Slet",
+    "deleting": "Sletter…",
+    "edit": "Rediger",
+    "back": "Tilbage"
+  },
+  "auth": {
+    "magic_link_form": {
+      "email_label": "E-mailadresse",
+      "email_placeholder": "du@eksempel.dk",
+      "submit": "Send magisk link",
+      "checking": "Sender…",
+      "errors": {
+        "invalid_email": "Indtast venligst en gyldig e-mailadresse",
+        "send_failed": "Linket kunne ikke sendes. Prøv igen."
+      }
+    },
+    "signup": {
+      "title": "Opret din konto",
+      "subtitle": "Vi sender dig et magisk link pr. e-mail — intet kodeord påkrævet.",
+      "have_account": "Har du allerede en konto?",
+      "login_link": "Log ind"
+    },
+    "login": {
+      "title": "Log ind",
+      "subtitle": "Indtast din e-mailadresse, og vi sender et magisk link.",
+      "no_account": "Har du ikke en konto?",
+      "signup_link": "Opret en"
+    },
+    "verify": {
+      "title": "Tjek din e-mail",
+      "subtitle": "Vi har sendt et magisk link til {email}. Klik på linket i e-mailen for at fortsætte.",
+      "resend": "Send linket igen",
+      "did_not_receive": "Modtog du det ikke? Tjek spam, eller brug en anden e-mailadresse."
+    },
+    "onboarding": {
+      "title": "Opsætning af dit arbejdsrum",
+      "subtitle": "Arbejdsrum indeholder dine websteder og analyser.",
+      "name_label": "Arbejdsrumsnavn",
+      "name_placeholder": "Acme Marketing",
+      "language_label": "Primært sprog",
+      "timezone_label": "Tidszone",
+      "submit": "Opret arbejdsrum",
+      "creating": "Opretter…"
+    },
+    "callback": {
+      "completing": "Logger dig ind…",
+      "failed_title": "Log ind mislykkedes",
+      "failed_subtitle": "Linket kan være udløbet. Prøv at anmode om et nyt."
+    }
+  },
+  "app": {
+    "nav": {
+      "dashboard": "Dashboard",
+      "sites": "Websteder",
+      "reports": "Rapporter",
+      "qa": "Spørgsmål og svar",
+      "settings": "Indstillinger",
+      "logout": "Log ud"
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "no_workspace": "Du har endnu ikke et arbejdsrum.",
+      "create_workspace": "Opret dit første arbejdsrum",
+      "your_workspaces": "Dine arbejdsrum",
+      "manage_sites": "Administrer websteder",
+      "role_owner": "Ejer",
+      "role_admin": "Administrator",
+      "role_member": "Medlem",
+      "role_viewer": "Seer"
+    },
+    "sites": {
+      "title": "Websteder",
+      "subtitle": "Websteder og konkurrenter sporet i {workspace}.",
+      "add_site": "Tilføj websted",
+      "own_sites": "Dine websteder",
+      "competitor_sites": "Konkurrenter",
+      "own_empty": "Tilføj dit første websted for at begynde at måle AEO-synlighed.",
+      "competitors_empty": "Ingen konkurrentwebsteder endnu.",
+      "no_workspace_yet": "Opsætning af et arbejdsrum for at begynde at spore websteder.",
+      "create_workspace": "Opret et arbejdsrum",
+      "last_analyzed": "Sidst analyseret",
+      "last_url_change": "Sidste URL-ændring",
+      "run_analysis": "Kør analyse",
+      "analyses_history": "Analyser",
+      "analyses_empty": "Ingen analyser endnu. Kør din første analyse for at se resultaterne.",
+      "view_result": "Se resultat",
+      "back_to_sites": "Tilbage til websteder",
+      "site_not_found": "Vi kunne ikke finde dette websted i nogen af dine arbejdsrum.",
+      "delete_confirm": "Slet websted {domain}? Det vil indgå i en 30-dages kuldeperiode, før domænet kan tilføjes igen.",
+      "delete_forbidden": "Kun arbejdsrumsadministratorer eller ejere kan slette websteder.",
+      "categories": {
+        "technical": "Teknisk",
+        "structured": "Struktureret",
+        "content": "Indhold",
+        "authority": "Autoritet",
+        "visibility": "Synlighed"
+      },
+      "status": {
+        "queued": "I kø",
+        "running": "Kører",
+        "completed": "Afsluttet",
+        "failed": "Mislykket"
+      },
+      "form": {
+        "title_create": "Tilføj et websted",
+        "title_edit": "Rediger websted",
+        "url_label": "URL",
+        "url_placeholder": "https://eksempel.dk",
+        "nickname_label": "Kaldenavn (valgfrit)",
+        "nickname_placeholder": "Produktionswebsted",
+        "type_label": "Type",
+        "type_own": "Dit websted",
+        "type_own_desc": "Et websted, som du ejer, og som du gerne vil forbedre.",
+        "type_competitor": "Konkurrent",
+        "type_competitor_desc": "Et websted, som du gerne vil måle dig selv imod.",
+        "create": "Tilføj websted",
+        "saving": "Gemmer…",
+        "url_required": "Indtast venligst en URL.",
+        "err_invalid_url": "URL er ugyldig eller mangler et domæne.",
+        "err_trial_expired": "Din prøveperiode er udløbet. Opgrader for at fortsætte redigeringen.",
+        "err_plan_limit": "Din plangrænse er nået. Opgrader eller fjern et websted.",
+        "err_conflict": "Dette domæne er allerede registreret eller i en 30-dages kuldeperiode.",
+        "err_url_change_limit": "URL-ændringer er begrænset til en gang pr. 30 dage pr. arbejdsrum."
+      },
+      "analyze": {
+        "title": "Kør analyse",
+        "description": "Vælg hvilke kategorier du vil analysere. Fulde scan dækker alle fem.",
+        "categories_label": "Kategorier",
+        "select_at_least_one": "Vælg mindst én kategori.",
+        "quota_loading": "Indlæser kvote…",
+        "quota_title": "Resterende denne måned ({ym})",
+        "quota_remaining": "{remaining} af {quota}",
+        "quota_unlimited": "Ubegrænset",
+        "quota_none": "Din plan har ingen analyser tilbage denne måned.",
+        "pack": {
+          "pro_pack": "Pro-pakke",
+          "basic_pack": "Basis-pakke",
+          "base": "Base"
+        },
+        "trigger_full": "Kør fuld analyse",
+        "trigger_partial": "Kør på {n} kategorier",
+        "triggering": "Starter…",
+        "err_quota_or_trial": "Ingen analyser tilbage, eller prøveperiode udløbet. Opgrader for at fortsætte.",
+        "err_forbidden": "Du har ikke tilladelse til at udløse en analyse.",
+        "err_concurrent": "En anden analyse kører allerede for dette arbejdsrum.",
+        "err_cooldown": "Dette websted blev analyseret for mindre end en time siden. Prøv igen senere."
+      }
+    }
+  }
+}

@@ -1,0 +1,158 @@
+{
+  "common": {
+    "site_title": "AEO Visibility",
+    "site_description": "Ukur seberapa terlihat situs Anda di mesin penjawab AI",
+    "loading": "Memuat…",
+    "error": "Terjadi kesalahan",
+    "save": "Simpan",
+    "cancel": "Batal",
+    "delete": "Hapus",
+    "deleting": "Menghapus…",
+    "edit": "Sunting",
+    "back": "Kembali"
+  },
+  "auth": {
+    "magic_link_form": {
+      "email_label": "Alamat email",
+      "email_placeholder": "anda@contoh.com",
+      "submit": "Kirim tautan ajaib",
+      "checking": "Mengirim…",
+      "errors": {
+        "invalid_email": "Masukkan alamat email yang valid.",
+        "send_failed": "Tidak dapat mengirim tautan. Silakan coba lagi."
+      }
+    },
+    "signup": {
+      "title": "Buat akun Anda",
+      "subtitle": "Kami akan mengirimkan tautan ajaib melalui email — tidak perlu kata sandi.",
+      "have_account": "Sudah memiliki akun?",
+      "login_link": "Masuk"
+    },
+    "login": {
+      "title": "Masuk",
+      "subtitle": "Masukkan email Anda dan kami akan mengirimkan tautan ajaib.",
+      "no_account": "Belum memiliki akun?",
+      "signup_link": "Buat satu"
+    },
+    "verify": {
+      "title": "Periksa email Anda",
+      "subtitle": "Kami mengirimkan tautan ajaib ke {email}. Klik tautan di email untuk melanjutkan.",
+      "resend": "Kirim ulang tautan",
+      "did_not_receive": "Tidak menerima? Periksa folder spam, atau gunakan email yang berbeda."
+    },
+    "onboarding": {
+      "title": "Atur ruang kerja Anda",
+      "subtitle": "Ruang kerja menyimpan situs dan analisis Anda.",
+      "name_label": "Nama ruang kerja",
+      "name_placeholder": "Pemasaran Acme",
+      "language_label": "Bahasa utama",
+      "timezone_label": "Zona waktu",
+      "submit": "Buat ruang kerja",
+      "creating": "Membuat…"
+    },
+    "callback": {
+      "completing": "Masuk…",
+      "failed_title": "Masuk gagal",
+      "failed_subtitle": "Tautan mungkin telah kadaluarsa. Coba minta yang baru."
+    }
+  },
+  "app": {
+    "nav": {
+      "dashboard": "Dasbor",
+      "sites": "Situs",
+      "reports": "Laporan",
+      "qa": "T&J",
+      "settings": "Pengaturan",
+      "logout": "Keluar"
+    },
+    "dashboard": {
+      "title": "Dasbor",
+      "no_workspace": "Anda belum memiliki ruang kerja.",
+      "create_workspace": "Buat ruang kerja pertama Anda",
+      "your_workspaces": "Ruang kerja Anda",
+      "manage_sites": "Kelola situs",
+      "role_owner": "Pemilik",
+      "role_admin": "Admin",
+      "role_member": "Anggota",
+      "role_viewer": "Penampil"
+    },
+    "sites": {
+      "title": "Situs",
+      "subtitle": "Situs dan pesaing yang dilacak di {workspace}.",
+      "add_site": "Tambah situs",
+      "own_sites": "Situs Anda",
+      "competitor_sites": "Pesaing",
+      "own_empty": "Tambahkan situs pertama Anda untuk mulai mengukur visibilitas AEO.",
+      "competitors_empty": "Belum ada situs pesaing.",
+      "no_workspace_yet": "Atur ruang kerja untuk mulai melacak situs.",
+      "create_workspace": "Buat ruang kerja",
+      "last_analyzed": "Terakhir dianalisis",
+      "last_url_change": "Perubahan URL terakhir",
+      "run_analysis": "Jalankan analisis",
+      "analyses_history": "Analisis",
+      "analyses_empty": "Belum ada analisis. Jalankan analisis pertama Anda untuk melihat hasil.",
+      "view_result": "Lihat hasil",
+      "back_to_sites": "Kembali ke situs",
+      "site_not_found": "Kami tidak dapat menemukan situs ini di salah satu ruang kerja Anda.",
+      "delete_confirm": "Hapus situs {domain}? Situs akan memasuki periode pendinginan 30 hari sebelum domain dapat ditambahkan kembali.",
+      "delete_forbidden": "Hanya admin atau pemilik ruang kerja yang dapat menghapus situs.",
+      "categories": {
+        "technical": "Teknis",
+        "structured": "Terstruktur",
+        "content": "Konten",
+        "authority": "Otoritas",
+        "visibility": "Visibilitas"
+      },
+      "status": {
+        "queued": "Antrean",
+        "running": "Berjalan",
+        "completed": "Selesai",
+        "failed": "Gagal"
+      },
+      "form": {
+        "title_create": "Tambah situs",
+        "title_edit": "Sunting situs",
+        "url_label": "URL",
+        "url_placeholder": "https://contoh.com",
+        "nickname_label": "Julukan (opsional)",
+        "nickname_placeholder": "Situs produksi",
+        "type_label": "Tipe",
+        "type_own": "Situs Anda",
+        "type_own_desc": "Situs yang Anda miliki dan ingin tingkatkan.",
+        "type_competitor": "Pesaing",
+        "type_competitor_desc": "Situs yang ingin Anda bandingkan.",
+        "create": "Tambah situs",
+        "saving": "Menyimpan…",
+        "url_required": "Masukkan URL.",
+        "err_invalid_url": "URL tidak valid atau tidak memiliki domain.",
+        "err_trial_expired": "Uji coba Anda telah berakhir. Tingkatkan untuk melanjutkan pengeditan.",
+        "err_plan_limit": "Batas paket Anda telah tercapai. Tingkatkan atau hapus situs.",
+        "err_conflict": "Domain ini sudah terdaftar atau dalam periode pendinginan 30 hari.",
+        "err_url_change_limit": "Perubahan URL terbatas satu kali per 30 hari per ruang kerja."
+      },
+      "analyze": {
+        "title": "Jalankan analisis",
+        "description": "Pilih kategori mana yang akan dianalisis. Pemindaian lengkap mencakup semua lima.",
+        "categories_label": "Kategori",
+        "select_at_least_one": "Pilih setidaknya satu kategori.",
+        "quota_loading": "Memuat kuota…",
+        "quota_title": "Tersisa bulan ini ({ym})",
+        "quota_remaining": "{remaining} dari {quota}",
+        "quota_unlimited": "Tidak terbatas",
+        "quota_none": "Paket Anda tidak memiliki analisis tersisa bulan ini.",
+        "pack": {
+          "pro_pack": "Paket Pro",
+          "basic_pack": "Paket Dasar",
+          "base": "Dasar"
+        },
+        "trigger_full": "Jalankan analisis lengkap",
+        "trigger_partial": "Jalankan pada {n} kategori",
+        "triggering": "Memulai…",
+        "err_quota_or_trial": "Kehabisan analisis atau uji coba kadaluarsa. Tingkatkan untuk melanjutkan.",
+        "err_forbidden": "Anda tidak memiliki izin untuk memicu analisis.",
+        "err_concurrent": "Analisis lain sudah berjalan untuk ruang kerja ini.",
+        "err_cooldown": "Situs ini dianalisis kurang dari satu jam yang lalu. Coba lagi nanti."
+      }
+    }
+  }
+}

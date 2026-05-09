@@ -1,0 +1,158 @@
+{
+  "common": {
+    "site_title": "AEO Visibility",
+    "site_description": "Zmierz widoczność Twojej strony dla AI answer engines",
+    "loading": "Wczytywanie…",
+    "error": "Coś poszło nie tak",
+    "save": "Zapisz",
+    "cancel": "Anuluj",
+    "delete": "Usuń",
+    "deleting": "Usuwanie…",
+    "edit": "Edytuj",
+    "back": "Wróć"
+  },
+  "auth": {
+    "magic_link_form": {
+      "email_label": "Adres email",
+      "email_placeholder": "ty@example.com",
+      "submit": "Wyślij magic link",
+      "checking": "Wysyłanie…",
+      "errors": {
+        "invalid_email": "Proszę wpisać poprawny adres email",
+        "send_failed": "Nie udało się wysłać linku. Spróbuj ponownie."
+      }
+    },
+    "signup": {
+      "title": "Utwórz swoje konto",
+      "subtitle": "Wyślemy Ci magic link na email — bez konieczności hasła.",
+      "have_account": "Masz już konto?",
+      "login_link": "Zaloguj się"
+    },
+    "login": {
+      "title": "Zaloguj się",
+      "subtitle": "Wpisz swój email, a my wyślemy Ci magic link.",
+      "no_account": "Nie masz konta?",
+      "signup_link": "Utwórz jedno"
+    },
+    "verify": {
+      "title": "Sprawdź swój email",
+      "subtitle": "Wysłaliśmy magic link na {email}. Kliknij link w wiadomości email, aby kontynuować.",
+      "resend": "Wyślij link ponownie",
+      "did_not_receive": "Nie otrzymałeś wiadomości? Sprawdź folder spam lub użyj innego adresu email."
+    },
+    "onboarding": {
+      "title": "Skonfiguruj swoją przestrzeń roboczą",
+      "subtitle": "Przestrzenie robocze zawierają Twoje strony i analizy.",
+      "name_label": "Nazwa przestrzeni roboczej",
+      "name_placeholder": "Acme Marketing",
+      "language_label": "Język podstawowy",
+      "timezone_label": "Strefa czasowa",
+      "submit": "Utwórz przestrzeń roboczą",
+      "creating": "Tworzenie…"
+    },
+    "callback": {
+      "completing": "Logowanie…",
+      "failed_title": "Logowanie nie powiodło się",
+      "failed_subtitle": "Link może wygasnąć. Spróbuj poprosić o nowy."
+    }
+  },
+  "app": {
+    "nav": {
+      "dashboard": "Dashboard",
+      "sites": "Strony",
+      "reports": "Raporty",
+      "qa": "Q&A",
+      "settings": "Ustawienia",
+      "logout": "Wyloguj się"
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "no_workspace": "Nie masz jeszcze przestrzeni roboczej.",
+      "create_workspace": "Utwórz swoją pierwszą przestrzeń roboczą",
+      "your_workspaces": "Twoje przestrzenie robocze",
+      "manage_sites": "Zarządzaj stronami",
+      "role_owner": "Właściciel",
+      "role_admin": "Administrator",
+      "role_member": "Członek",
+      "role_viewer": "Przeglądający"
+    },
+    "sites": {
+      "title": "Strony",
+      "subtitle": "Strony i konkurenci śledzone w {workspace}.",
+      "add_site": "Dodaj stronę",
+      "own_sites": "Twoje strony",
+      "competitor_sites": "Konkurenci",
+      "own_empty": "Dodaj swoją pierwszą stronę, aby rozpocząć pomiar widoczności AEO.",
+      "competitors_empty": "Brak stron konkurentów.",
+      "no_workspace_yet": "Skonfiguruj przestrzeń roboczą, aby rozpocząć śledzenie stron.",
+      "create_workspace": "Utwórz przestrzeń roboczą",
+      "last_analyzed": "Ostatnio analizowana",
+      "last_url_change": "Ostatnia zmiana URL",
+      "run_analysis": "Uruchom analizę",
+      "analyses_history": "Analizy",
+      "analyses_empty": "Brak analiz. Uruchom pierwszą analizę, aby zobaczyć wyniki.",
+      "view_result": "Wyświetl wynik",
+      "back_to_sites": "Wróć do stron",
+      "site_not_found": "Nie mogliśmy znaleźć tej strony w żadnej z Twoich przestrzeni roboczych.",
+      "delete_confirm": "Usunąć stronę {domain}? Wejdzie ona w 30-dniowy okres ochłodzenia zanim domena będzie mogła być ponownie dodana.",
+      "delete_forbidden": "Tylko administratorzy lub właściciele przestrzeni roboczej mogą usuwać strony.",
+      "categories": {
+        "technical": "Techniczne",
+        "structured": "Strukturyzowane",
+        "content": "Treść",
+        "authority": "Autorytet",
+        "visibility": "Widoczność"
+      },
+      "status": {
+        "queued": "W kolejce",
+        "running": "Uruchomiona",
+        "completed": "Ukończona",
+        "failed": "Nie powiodła się"
+      },
+      "form": {
+        "title_create": "Dodaj stronę",
+        "title_edit": "Edytuj stronę",
+        "url_label": "URL",
+        "url_placeholder": "https://example.com",
+        "nickname_label": "Pseudonim (opcjonalnie)",
+        "nickname_placeholder": "Strona produkcyjna",
+        "type_label": "Typ",
+        "type_own": "Twoja strona",
+        "type_own_desc": "Strona, którą posiadasz i chcesz ulepszyć.",
+        "type_competitor": "Konkurent",
+        "type_competitor_desc": "Strona, którą chcesz porównać.",
+        "create": "Dodaj stronę",
+        "saving": "Zapisywanie…",
+        "url_required": "Proszę wpisać URL.",
+        "err_invalid_url": "URL jest niepoprawny lub brakuje domeny.",
+        "err_trial_expired": "Twój okres próbny wygasł. Uaktualnij, aby kontynuować edycję.",
+        "err_plan_limit": "Osiągnięto limit Twojego planu. Uaktualnij lub usuń stronę.",
+        "err_conflict": "Ta domena jest już zarejestrowana lub w 30-dniowym okresie ochłodzenia.",
+        "err_url_change_limit": "Zmiany URL są ograniczone do jeden raz na 30 dni na przestrzeń roboczą."
+      },
+      "analyze": {
+        "title": "Uruchom analizę",
+        "description": "Wybierz, które kategorie analizować. Pełne skanowanie obejmuje wszystkie pięć.",
+        "categories_label": "Kategorie",
+        "select_at_least_one": "Wybierz co najmniej jedną kategorię.",
+        "quota_loading": "Wczytywanie limitu…",
+        "quota_title": "Pozostałe w tym miesiącu ({ym})",
+        "quota_remaining": "{remaining} z {quota}",
+        "quota_unlimited": "Nieograniczone",
+        "quota_none": "Twój plan nie ma pozostałych analiz w tym miesiącu.",
+        "pack": {
+          "pro_pack": "Pro Pack",
+          "basic_pack": "Basic Pack",
+          "base": "Base"
+        },
+        "trigger_full": "Uruchom pełną analizę",
+        "trigger_partial": "Uruchom na {n} kategoriach",
+        "triggering": "Rozpoczynanie…",
+        "err_quota_or_trial": "Brak analiz lub okres próbny wygasł. Uaktualnij, aby kontynuować.",
+        "err_forbidden": "Nie masz uprawnień do uruchomienia analizy.",
+        "err_concurrent": "Inna analiza jest już uruchomiona dla tej przestrzeni roboczej.",
+        "err_cooldown": "Ta strona została przeanalizowana mniej niż godzinę temu. Spróbuj później."
+      }
+    }
+  }
+}

@@ -17,6 +17,7 @@ from sqlalchemy import (
 from sqlalchemy.dialects.postgresql import UUID as PG_UUID
 from sqlalchemy.orm import Mapped, mapped_column
 
+from app.core.locales import sql_check_clause
 from app.models.base import Base
 
 
@@ -70,7 +71,7 @@ class Workspace(Base):
 
     __table_args__ = (
         CheckConstraint(
-            "primary_language IN ('en', 'ko', 'es')",
+            sql_check_clause("primary_language"),
             name="workspaces_primary_language_check",
         ),
     )

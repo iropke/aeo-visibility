@@ -1,0 +1,158 @@
+{
+  "common": {
+    "site_title": "AEO Visibility",
+    "site_description": "测量您的网站对AI答案引擎的可见度",
+    "loading": "加载中…",
+    "error": "出现错误",
+    "save": "保存",
+    "cancel": "取消",
+    "delete": "删除",
+    "deleting": "删除中…",
+    "edit": "编辑",
+    "back": "返回"
+  },
+  "auth": {
+    "magic_link_form": {
+      "email_label": "电子邮件地址",
+      "email_placeholder": "you@example.com",
+      "submit": "发送魔法链接",
+      "checking": "发送中…",
+      "errors": {
+        "invalid_email": "请输入有效的电子邮件地址",
+        "send_failed": "无法发送链接。请重试。"
+      }
+    },
+    "signup": {
+      "title": "创建账户",
+      "subtitle": "我们将向您发送一个魔法链接 — 无需密码。",
+      "have_account": "已有账户？",
+      "login_link": "登录"
+    },
+    "login": {
+      "title": "登录",
+      "subtitle": "输入您的电子邮件，我们将发送一个魔法链接。",
+      "no_account": "没有账户？",
+      "signup_link": "创建一个"
+    },
+    "verify": {
+      "title": "检查您的电子邮件",
+      "subtitle": "我们已将魔法链接发送到 {email}。点击电子邮件中的链接以继续。",
+      "resend": "重新发送链接",
+      "did_not_receive": "未收到？检查垃圾箱或使用不同的电子邮件。"
+    },
+    "onboarding": {
+      "title": "设置您的工作区",
+      "subtitle": "工作区用于保存您的网站和分析结果。",
+      "name_label": "工作区名称",
+      "name_placeholder": "Acme Marketing",
+      "language_label": "主要语言",
+      "timezone_label": "时区",
+      "submit": "创建工作区",
+      "creating": "创建中…"
+    },
+    "callback": {
+      "completing": "正在登录…",
+      "failed_title": "登录失败",
+      "failed_subtitle": "链接可能已过期。请尝试请求新链接。"
+    }
+  },
+  "app": {
+    "nav": {
+      "dashboard": "仪表板",
+      "sites": "网站",
+      "reports": "报告",
+      "qa": "问答",
+      "settings": "设置",
+      "logout": "登出"
+    },
+    "dashboard": {
+      "title": "仪表板",
+      "no_workspace": "您还没有工作区。",
+      "create_workspace": "创建您的第一个工作区",
+      "your_workspaces": "您的工作区",
+      "manage_sites": "管理网站",
+      "role_owner": "所有者",
+      "role_admin": "管理员",
+      "role_member": "成员",
+      "role_viewer": "查看者"
+    },
+    "sites": {
+      "title": "网站",
+      "subtitle": "在 {workspace} 中跟踪的网站和竞争对手。",
+      "add_site": "添加网站",
+      "own_sites": "您的网站",
+      "competitor_sites": "竞争对手",
+      "own_empty": "添加您的第一个网站以开始测量 AEO 可见度。",
+      "competitors_empty": "尚无竞争对手网站。",
+      "no_workspace_yet": "设置工作区以开始跟踪网站。",
+      "create_workspace": "创建工作区",
+      "last_analyzed": "最后分析时间",
+      "last_url_change": "最后 URL 更改",
+      "run_analysis": "运行分析",
+      "analyses_history": "分析",
+      "analyses_empty": "尚无分析。运行您的第一次分析以查看结果。",
+      "view_result": "查看结果",
+      "back_to_sites": "返回网站",
+      "site_not_found": "我们找不到任何工作区中的这个网站。",
+      "delete_confirm": "删除网站 {domain}？它将进入 30 天的冷却期，之后才能重新添加该域名。",
+      "delete_forbidden": "只有工作区管理员或所有者可以删除网站。",
+      "categories": {
+        "technical": "技术",
+        "structured": "结构化",
+        "content": "内容",
+        "authority": "权威性",
+        "visibility": "可见性"
+      },
+      "status": {
+        "queued": "已排队",
+        "running": "运行中",
+        "completed": "已完成",
+        "failed": "失败"
+      },
+      "form": {
+        "title_create": "添加网站",
+        "title_edit": "编辑网站",
+        "url_label": "URL",
+        "url_placeholder": "https://example.com",
+        "nickname_label": "昵称（可选）",
+        "nickname_placeholder": "生产网站",
+        "type_label": "类型",
+        "type_own": "您的网站",
+        "type_own_desc": "您拥有并希望改进的网站。",
+        "type_competitor": "竞争对手",
+        "type_competitor_desc": "您希望与之比较的网站。",
+        "create": "添加网站",
+        "saving": "保存中…",
+        "url_required": "请输入 URL。",
+        "err_invalid_url": "URL 无效或缺少域名。",
+        "err_trial_expired": "您的试用期已结束。升级以继续编辑。",
+        "err_plan_limit": "您的计划限制已达到。升级或删除一个网站。",
+        "err_conflict": "此域名已注册或在 30 天冷却期内。",
+        "err_url_change_limit": "每个工作区 URL 更改限制为每 30 天一次。"
+      },
+      "analyze": {
+        "title": "运行分析",
+        "description": "选择要分析的类别。完整扫描涵盖全部五个类别。",
+        "categories_label": "类别",
+        "select_at_least_one": "请至少选择一个类别。",
+        "quota_loading": "加载配额中…",
+        "quota_title": "本月剩余 ({ym})",
+        "quota_remaining": "{remaining} / {quota}",
+        "quota_unlimited": "无限制",
+        "quota_none": "您的计划本月没有剩余的分析次数。",
+        "pack": {
+          "pro_pack": "专业包",
+          "basic_pack": "基础包",
+          "base": "基础"
+        },
+        "trigger_full": "运行完整分析",
+        "trigger_partial": "在 {n} 个类别上运行",
+        "triggering": "开始中…",
+        "err_quota_or_trial": "分析次数已用尽或试用期已过期。升级以继续。",
+        "err_forbidden": "您没有权限触发分析。",
+        "err_concurrent": "此工作区已有另一个分析正在运行。",
+        "err_cooldown": "此网站在一小时内已被分析。请稍后重试。"
+      }
+    }
+  }
+}

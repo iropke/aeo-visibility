@@ -1,0 +1,158 @@
+{
+  "common": {
+    "site_title": "AEO Visibility",
+    "site_description": "AIアンサーエンジンへのサイトの表示可視性を測定します",
+    "loading": "読み込み中…",
+    "error": "エラーが発生しました",
+    "save": "保存",
+    "cancel": "キャンセル",
+    "delete": "削除",
+    "deleting": "削除中…",
+    "edit": "編集",
+    "back": "戻る"
+  },
+  "auth": {
+    "magic_link_form": {
+      "email_label": "メールアドレス",
+      "email_placeholder": "you@example.com",
+      "submit": "マジックリンクを送信",
+      "checking": "送信中…",
+      "errors": {
+        "invalid_email": "有効なメールアドレスを入力してください",
+        "send_failed": "リンクを送信できませんでした。もう一度お試しください。"
+      }
+    },
+    "signup": {
+      "title": "アカウントを作成",
+      "subtitle": "マジックリンクをメールでお送りします。パスワードは不要です。",
+      "have_account": "既にアカウントをお持ちですか？",
+      "login_link": "サインイン"
+    },
+    "login": {
+      "title": "サインイン",
+      "subtitle": "メールアドレスを入力すると、マジックリンクをお送りします。",
+      "no_account": "アカウントをお持ちでないですか？",
+      "signup_link": "作成する"
+    },
+    "verify": {
+      "title": "メールを確認してください",
+      "subtitle": "マジックリンクを{email}に送信しました。メール内のリンクをクリックして続行してください。",
+      "resend": "リンクを再送信",
+      "did_not_receive": "届いていませんか？スパムフォルダを確認するか、別のメールアドレスをお試しください。"
+    },
+    "onboarding": {
+      "title": "ワークスペースのセットアップ",
+      "subtitle": "ワークスペースにサイトと分析を保存します。",
+      "name_label": "ワークスペース名",
+      "name_placeholder": "Acme Marketing",
+      "language_label": "主な言語",
+      "timezone_label": "タイムゾーン",
+      "submit": "ワークスペースを作成",
+      "creating": "作成中…"
+    },
+    "callback": {
+      "completing": "サインイン中…",
+      "failed_title": "サインインに失敗しました",
+      "failed_subtitle": "リンクの有効期限が切れている可能性があります。新しいリンクをリクエストしてみてください。"
+    }
+  },
+  "app": {
+    "nav": {
+      "dashboard": "ダッシュボード",
+      "sites": "サイト",
+      "reports": "レポート",
+      "qa": "Q&A",
+      "settings": "設定",
+      "logout": "サインアウト"
+    },
+    "dashboard": {
+      "title": "ダッシュボード",
+      "no_workspace": "ワークスペースがまだありません。",
+      "create_workspace": "最初のワークスペースを作成",
+      "your_workspaces": "ワークスペース",
+      "manage_sites": "サイトを管理",
+      "role_owner": "オーナー",
+      "role_admin": "管理者",
+      "role_member": "メンバー",
+      "role_viewer": "ビューアー"
+    },
+    "sites": {
+      "title": "サイト",
+      "subtitle": "{workspace}で追跡しているサイトと競合他社。",
+      "add_site": "サイトを追加",
+      "own_sites": "自社サイト",
+      "competitor_sites": "競合他社",
+      "own_empty": "最初のサイトを追加してAEO可視性の測定を開始してください。",
+      "competitors_empty": "競合他社のサイトはまだありません。",
+      "no_workspace_yet": "サイトの追跡を開始するにはワークスペースをセットアップしてください。",
+      "create_workspace": "ワークスペースを作成",
+      "last_analyzed": "最後に分析したのは",
+      "last_url_change": "最後のURL変更",
+      "run_analysis": "分析を実行",
+      "analyses_history": "分析",
+      "analyses_empty": "分析がまだありません。最初の分析を実行して結果を確認してください。",
+      "view_result": "結果を表示",
+      "back_to_sites": "サイトに戻る",
+      "site_not_found": "ワークスペースでこのサイトが見つかりませんでした。",
+      "delete_confirm": "サイト{domain}を削除しますか？ドメインを再追加する前に30日間のクールダウン期間に入ります。",
+      "delete_forbidden": "ワークスペースの管理者またはオーナーのみがサイトを削除できます。",
+      "categories": {
+        "technical": "技術的",
+        "structured": "構造化",
+        "content": "コンテンツ",
+        "authority": "権威性",
+        "visibility": "可視性"
+      },
+      "status": {
+        "queued": "キュー中",
+        "running": "実行中",
+        "completed": "完了",
+        "failed": "失敗"
+      },
+      "form": {
+        "title_create": "サイトを追加",
+        "title_edit": "サイトを編集",
+        "url_label": "URL",
+        "url_placeholder": "https://example.com",
+        "nickname_label": "ニックネーム（オプション）",
+        "nickname_placeholder": "本番環境サイト",
+        "type_label": "タイプ",
+        "type_own": "自社サイト",
+        "type_own_desc": "改善したい自社サイト。",
+        "type_competitor": "競合他社",
+        "type_competitor_desc": "ベンチマーク対象の競合他社のサイト。",
+        "create": "サイトを追加",
+        "saving": "保存中…",
+        "url_required": "URLを入力してください。",
+        "err_invalid_url": "URLが無効であるか、ドメインが不足しています。",
+        "err_trial_expired": "トライアルが終了しました。編集を続行するにはアップグレードしてください。",
+        "err_plan_limit": "プラン上限に達しました。アップグレードするか、サイトを削除してください。",
+        "err_conflict": "このドメインは既に登録されているか、30日間のクールダウン中です。",
+        "err_url_change_limit": "URLの変更はワークスペースごとに30日に1回に制限されています。"
+      },
+      "analyze": {
+        "title": "分析を実行",
+        "description": "分析するカテゴリを選択してください。フルスキャンは5つすべてに対応しています。",
+        "categories_label": "カテゴリ",
+        "select_at_least_one": "少なくとも1つのカテゴリを選択してください。",
+        "quota_loading": "クォータを読み込み中…",
+        "quota_title": "今月の残数（{ym}）",
+        "quota_remaining": "{quota}中{remaining}",
+        "quota_unlimited": "無制限",
+        "quota_none": "プランの今月の分析は残っていません。",
+        "pack": {
+          "pro_pack": "Proパック",
+          "basic_pack": "Basicパック",
+          "base": "ベース"
+        },
+        "trigger_full": "フル分析を実行",
+        "trigger_partial": "{n}個のカテゴリで実行",
+        "triggering": "開始中…",
+        "err_quota_or_trial": "分析が不足しているか、トライアルが終了しました。アップグレードして続行してください。",
+        "err_forbidden": "分析をトリガーする権限がありません。",
+        "err_concurrent": "このワークスペースで別の分析が既に実行中です。",
+        "err_cooldown": "このサイトは1時間以内に分析されました。後でもう一度お試しください。"
+      }
+    }
+  }
+}

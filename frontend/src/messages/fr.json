@@ -1,0 +1,158 @@
+{
+  "common": {
+    "site_title": "AEO Visibility",
+    "site_description": "Mesurez la visibilité de votre site auprès des moteurs de réponse IA",
+    "loading": "Chargement…",
+    "error": "Une erreur s'est produite",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "deleting": "Suppression…",
+    "edit": "Modifier",
+    "back": "Retour"
+  },
+  "auth": {
+    "magic_link_form": {
+      "email_label": "Adresse e-mail",
+      "email_placeholder": "vous@exemple.com",
+      "submit": "Envoyer le lien magique",
+      "checking": "Envoi…",
+      "errors": {
+        "invalid_email": "Veuillez entrer une adresse e-mail valide",
+        "send_failed": "Impossible d'envoyer le lien. Veuillez réessayer."
+      }
+    },
+    "signup": {
+      "title": "Créer votre compte",
+      "subtitle": "Nous vous enverrons un lien magique par e-mail — aucun mot de passe requis.",
+      "have_account": "Vous avez déjà un compte ?",
+      "login_link": "Se connecter"
+    },
+    "login": {
+      "title": "Se connecter",
+      "subtitle": "Entrez votre e-mail et nous vous enverrons un lien magique.",
+      "no_account": "Vous n'avez pas de compte ?",
+      "signup_link": "En créer un"
+    },
+    "verify": {
+      "title": "Vérifiez votre e-mail",
+      "subtitle": "Nous avons envoyé un lien magique à {email}. Cliquez sur le lien dans l'e-mail pour continuer.",
+      "resend": "Renvoyer le lien",
+      "did_not_receive": "Vous ne l'avez pas reçu ? Vérifiez vos spams ou utilisez une adresse e-mail différente."
+    },
+    "onboarding": {
+      "title": "Configurez votre espace de travail",
+      "subtitle": "Les espaces de travail contiennent vos sites et analyses.",
+      "name_label": "Nom de l'espace de travail",
+      "name_placeholder": "Acme Marketing",
+      "language_label": "Langue principale",
+      "timezone_label": "Fuseau horaire",
+      "submit": "Créer l'espace de travail",
+      "creating": "Création…"
+    },
+    "callback": {
+      "completing": "Connexion en cours…",
+      "failed_title": "Échec de la connexion",
+      "failed_subtitle": "Le lien a peut-être expiré. Essayez d'en demander un nouveau."
+    }
+  },
+  "app": {
+    "nav": {
+      "dashboard": "Tableau de bord",
+      "sites": "Sites",
+      "reports": "Rapports",
+      "qa": "Questions et réponses",
+      "settings": "Paramètres",
+      "logout": "Se déconnecter"
+    },
+    "dashboard": {
+      "title": "Tableau de bord",
+      "no_workspace": "Vous n'avez pas encore d'espace de travail.",
+      "create_workspace": "Créer votre premier espace de travail",
+      "your_workspaces": "Vos espaces de travail",
+      "manage_sites": "Gérer les sites",
+      "role_owner": "Propriétaire",
+      "role_admin": "Administrateur",
+      "role_member": "Membre",
+      "role_viewer": "Lecteur"
+    },
+    "sites": {
+      "title": "Sites",
+      "subtitle": "Sites et concurrents suivis dans {workspace}.",
+      "add_site": "Ajouter un site",
+      "own_sites": "Vos sites",
+      "competitor_sites": "Concurrents",
+      "own_empty": "Ajoutez votre premier site pour commencer à mesurer la visibilité AEO.",
+      "competitors_empty": "Aucun site concurrent pour le moment.",
+      "no_workspace_yet": "Configurez un espace de travail pour commencer à suivre les sites.",
+      "create_workspace": "Créer un espace de travail",
+      "last_analyzed": "Dernière analyse",
+      "last_url_change": "Dernier changement d'URL",
+      "run_analysis": "Exécuter l'analyse",
+      "analyses_history": "Analyses",
+      "analyses_empty": "Aucune analyse pour le moment. Exécutez votre première analyse pour voir les résultats.",
+      "view_result": "Afficher le résultat",
+      "back_to_sites": "Retour aux sites",
+      "site_not_found": "Nous n'avons pas pu trouver ce site dans l'un de vos espaces de travail.",
+      "delete_confirm": "Supprimer le site {domain} ? Il entrera dans une période de refroidissement de 30 jours avant que le domaine puisse être ajouté à nouveau.",
+      "delete_forbidden": "Seuls les administrateurs ou propriétaires de l'espace de travail peuvent supprimer des sites.",
+      "categories": {
+        "technical": "Technique",
+        "structured": "Structuré",
+        "content": "Contenu",
+        "authority": "Autorité",
+        "visibility": "Visibilité"
+      },
+      "status": {
+        "queued": "En attente",
+        "running": "En cours",
+        "completed": "Terminé",
+        "failed": "Échoué"
+      },
+      "form": {
+        "title_create": "Ajouter un site",
+        "title_edit": "Modifier le site",
+        "url_label": "URL",
+        "url_placeholder": "https://exemple.com",
+        "nickname_label": "Surnom (facultatif)",
+        "nickname_placeholder": "Site de production",
+        "type_label": "Type",
+        "type_own": "Votre site",
+        "type_own_desc": "Un site que vous possédez et que vous souhaitez améliorer.",
+        "type_competitor": "Concurrent",
+        "type_competitor_desc": "Un site que vous souhaitez comparer.",
+        "create": "Ajouter un site",
+        "saving": "Enregistrement…",
+        "url_required": "Veuillez entrer une URL.",
+        "err_invalid_url": "L'URL est invalide ou ne dispose pas de domaine.",
+        "err_trial_expired": "Votre période d'essai a expiré. Mettez à niveau pour continuer à modifier.",
+        "err_plan_limit": "La limite de votre plan a été atteinte. Mettez à niveau ou supprimez un site.",
+        "err_conflict": "Ce domaine est déjà enregistré ou en période de refroidissement de 30 jours.",
+        "err_url_change_limit": "Les changements d'URL sont limités à une fois par 30 jours par espace de travail."
+      },
+      "analyze": {
+        "title": "Exécuter l'analyse",
+        "description": "Choisissez les catégories à analyser. Les analyses complètes couvrent les cinq catégories.",
+        "categories_label": "Catégories",
+        "select_at_least_one": "Sélectionnez au moins une catégorie.",
+        "quota_loading": "Chargement du quota…",
+        "quota_title": "Restant ce mois-ci ({ym})",
+        "quota_remaining": "{remaining} sur {quota}",
+        "quota_unlimited": "Illimité",
+        "quota_none": "Votre plan n'a pas d'analyses restantes ce mois-ci.",
+        "pack": {
+          "pro_pack": "Pack Pro",
+          "basic_pack": "Pack Basic",
+          "base": "Base"
+        },
+        "trigger_full": "Exécuter l'analyse complète",
+        "trigger_partial": "Exécuter sur {n} catégories",
+        "triggering": "Démarrage…",
+        "err_quota_or_trial": "Analyses épuisées ou période d'essai expirée. Mettez à niveau pour continuer.",
+        "err_forbidden": "Vous n'avez pas la permission de déclencher une analyse.",
+        "err_concurrent": "Une autre analyse est déjà en cours pour cet espace de travail.",
+        "err_cooldown": "Ce site a été analysé il y a moins d'une heure. Réessayez plus tard."
+      }
+    }
+  }
+}
