@@ -1747,9 +1747,12 @@ frontend/src/messages/
 
 ### 17-4. 다국어 템플릿
 
-- Resend 템플릿 ID를 언어별로 분리: `auth_magic_link_en`, `_ko`, `_es`
-- 또는 Jinja2 템플릿 + Resend HTML 직접 발송
-- 사용자 `profiles.preferred_language` 기준
+- Jinja2 템플릿 + Resend HTML 직접 발송 (`backend/app/services/email_service.py::render_template`).
+- 디렉토리 구조: `backend/app/templates/{trigger}/{lang}.html`. 4 trigger × 20 lang = 80 파일 (F-i18n-2, 2026-05-09).
+- 영어 마스터 사람 작성 → `python scripts/translate_i18n.py emails` 가 19 lang 자동 생성 (Haiku, Jinja2 표현 보존).
+- 사람 작성 ko/es 는 디폴트 보존 (`PRESERVE_HUMAN_AUTHORED`). `--lang ko`/`--force` explicit 시 재생성.
+- 사용자 `profiles.preferred_language` 기준 lang 선택. 미보유 lang ('xx' 등 CHECK 외) → `DEFAULT_LANG='en'` 폴백 (`_normalize_lang`).
+- `<html dir="rtl">` RTL (아랍어) 자동 적용 (스크립트 시스템 프롬프트).
 
 ### 17-5. 발송 우선순위
 

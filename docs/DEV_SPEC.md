@@ -1593,7 +1593,7 @@ Closes #123
 
 ### 20-1. Phase 1: 코어 (~6-8주)
 
-> 진행 상태: 2026-05-09 청크 F-i18n-1 완료. 3 lang → 20 lang 확장 + 단일 소스(`lib/i18n/config.ts` ↔ `app/core/locales.py`) + RTL + Haiku 번역 스크립트 + 19 lang messages JSON 자동 생성. **다음 진입점: F-i18n-2 (메일 17 lang 확장) → F2 (분석 결과 페이지).**
+> 진행 상태: 2026-05-09 청크 F-i18n-2 완료. F-i18n-1 (인프라 20 lang) + F-i18n-2 (메일 17 lang 자동 생성, 4 trigger × 17 lang = 68 HTML, ko/es 사람 작성 보존). EMAIL_TEMPLATE_LANGS = core.locales.SUPPORTED_LANGS (20 lang) 통합. **다음 진입점: F2 (분석 결과 페이지).**
 
 **Backend**:
 - [x] Supabase Auth JWT 검증 미들웨어 (청크 B)
@@ -1611,7 +1611,7 @@ Closes #123
 - [x] 트라이얼 만료 read-only 게이팅 (`require_writable_workspace_role`) (F)
 - [ ] pg_cron 자동 분석 스케줄러 (`017_pg_cron_setup.sql`)
 - [ ] grace_processor (워크스페이스 7일 + 사이트 cooldown 만료)
-- [ ] Resend 트랜잭셔널 이메일 (Magic Link / 분석 완료 / 초대 / 트라이얼 만료 시퀀스 3종)
+- [x] Resend 트랜잭셔널 이메일 — 분석 완료 (G7) + 트라이얼 만료 시퀀스 Day 7/30/90 (G8) + 20 lang 자동 번역 (F-i18n-2). Magic Link / 초대 는 Phase 2.
 - [ ] Redis advisory lock — 멀티 인스턴스 도입 시점 (Phase 1은 partial UNIQUE 안전망으로 충분)
 
 **Frontend**:

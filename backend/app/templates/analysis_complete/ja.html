@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>分析完了 — {{ site_domain }}</title>
+</head>
+<body style="margin:0;padding:0;background:#f4f5f7;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">
+{% set CAT_LABELS = {"technical": "技術的", "structured": "構造化データ", "content": "コンテンツ品質", "authority": "権威性", "visibility": "AI可視性"} %}
+{% set PRIO_LABELS = {"high": "高", "medium": "中", "low": "低"} %}
+{% set PRIO_COLORS = {"high": "#e74c3c", "medium": "#e6a817", "low": "#5eb6b2"} %}
+{% set EFFORT_LABELS = {"low": "少ない手間", "medium": "中程度の手間", "high": "多くの手間"} %}
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f4f5f7;padding:40px 20px;">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="600" cellspacing="0" cellpadding="0" style="background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.06);">
+
+          <tr>
+            <td style="background:linear-gradient(135deg,#153430,#0b1f1c);padding:32px 40px;text-align:center;">
+              <p style="margin:0;color:rgba(255,255,255,0.7);font-size:13px;letter-spacing:0.06em;text-transform:uppercase;">
+                AEO Visibility
+              </p>
+              <h1 style="margin:6px 0 0;color:#ffffff;font-size:24px;font-weight:700;letter-spacing:-0.02em;">
+                分析完了
+              </h1>
+              <p style="margin:8px 0 0;color:rgba(255,255,255,0.7);font-size:14px;">
+                {{ site_domain }}
+              </p>
+            </td>
+          </tr>
+
+          <tr>
+            <td style="padding:32px 40px;text-align:center;">
+              <div style="display:inline-block;width:120px;height:120px;border-radius:50%;background:{{ grade_color }};line-height:120px;text-align:center;">
+                <span style="color:#ffffff;font-size:42px;font-weight:700;">{{ overall_score }}</span>
+              </div>
+              <p style="margin:12px 0 0;font-size:18px;font-weight:700;color:#232329;">
+                評価: <span style="color:{{ grade_color }};">{{ grade }}</span>
+              </p>
+            </td>
+          </tr>
+
+          {% if summary %}
+          <tr>
+            <td style="padding:0 40px 24px;">
+              <h2 style="margin:0 0 8px;font-size:14px;font-weight:600;color:#68687b;letter-spacing:0.04em;text-transform:uppercase;">
+                サマリー
+              </h2>
+              <p style="margin:0;font-size:14px;color:#232329;line-height:1.6;">
+                {{ summary }}
+              </p>
+            </td>
+          </tr>
+          {% endif %}
+
+          {% if category_scores %}
+          <tr>
+            <td style="padding:0 40px 24px;">
+              <h2 style="margin:0 0 12px;font-size:14px;font-weight:600;color:#68687b;letter-spacing:0.04em;text-transform:uppercase;">
+                カテゴリスコア
+              </h2>
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
+                {% for cat, score in category_scores.items() %}
+                <tr>
+                  <td style="padding:6px 0;">
+                    <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td style="font-size:13px;font-weight:600;color:#232329;padding-bottom:4px;">{{ CAT_LABELS.get(cat, cat) }}</td>
+                        <td style="font-size:13px;font-weight:700;color:#5eb6b2;text-align:right;padding-bottom:4px;">{{ score }}/100</td>
+                      </tr>
+                      <tr>
+                        <td colspan="2">
+                          <div style="background:#e8e8ec;border-radius:999px;height:6px;overflow:hidden;">
+                            <div style="background:linear-gradient(90deg,#5eb6b2,#22908b);width:{{ score }}%;height:100%;border-radius:999px;"></div>
+                          </div>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                {% endfor %}
+              </table>
+            </td>
+          </tr>
+          {% endif %}
+
+          {% if improvements %}
+          <tr>
+            <td style="padding:0 40px 24px;">
+              <h2 style="margin:0 0 12px;font-size:14px;font-weight:600;color:#68687b;letter-spacing:0.04em;text-transform:uppercase;">
+                トップ改善提案
+              </h2>
+              {% for imp in improvements %}
+              <div style="padding:12px 16px;margin-bottom:8px;background:#f8f9fa;border-radius:10px;border-left:3px solid {{ PRIO_COLORS.get(imp.priority, '#5eb6b2') }};">
+                <p style="margin:0 0 4px;font-size:12px;font-weight:600;color:{{ PRIO_COLORS.get(imp.priority, '#5eb6b2') }};letter-spacing:0.04em;text-transform:uppercase;">
+                  {{ PRIO_LABELS.get(imp.priority, imp.priority) }} · {{ CAT_LABELS.get(imp.category, imp.category) }} · {{ EFFORT_LABELS.get(imp.estimated_effort, imp.estimated_effort) }}
+                </p>
+                <p style="margin:0;font-size:13px;color:#232329;line-height:1.5;">{{ imp.description }}</p>
+              </div>
+              {% endfor %}
+            </td>
+          </tr>
+          {% endif %}
+
+          <tr>
+            <td style="padding:8px 40px 32px;text-align:center;">
+              <a href="{{ result_url }}"
+                 style="display:inline-block;padding:14px 32px;background:#5eb6b2;color:#ffffff;text-decoration:none;border-radius:999px;font-size:14px;font-weight:600;">
+                完全なレポートを表示 →
+              </a>
+            </td>
+          </tr>
+
+          <tr>
+            <td style="padding:24px 40px;background:#f8f9fa;text-align:center;border-top:1px solid #e8e8ec;">
+              <p style="margin:0;font-size:12px;color:#a1a1af;line-height:1.5;">
+                AEO Visibility · ahxov.com<br />
+                このメールは、ワークスペースのオーナー、管理者、または分析をトリガーしたユーザーに送信されています。
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

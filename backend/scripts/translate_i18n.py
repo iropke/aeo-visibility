@@ -260,19 +260,142 @@ def translate_messages_json(
         print(f"     wrote {out_path}")
 
 
+def _email_system_prompt(target_native: str, target_english: str, target_code: str, rtl: bool) -> str:
+    intro = (
+        "You are a professional B2B SaaS email HTML translator. "
+        f"Translate the given English HTML email to {target_english} ({target_native})."
+    )
+    rtl_note = "8. **RTL:** Add `dir=\"rtl\"` to the `<html>` tag (this is a right-to-left script).\n" if rtl else ""
+    rules = (
+        "Critical rules:\n"
+        "1. Output ONLY the translated HTML. No markdown, no commentary, no code fences.\n"
+        "2. Preserve ALL Jinja2 template syntax exactly: `{% if %}`, `{% endif %}`, `{% for %}`, `{% endfor %}`, "
+        "`{{ var }}`, `{{ var | filter }}`. Do NOT translate variable names, filters, or Jinja keywords (if/endif/for/endfor/in/and/or/not/is/else/elif).\n"
+        "3. Preserve ALL HTML tags, attributes, inline styles, and structure exactly. "
+        "Translate ONLY text content between tags and human-readable attribute values like alt=\"...\", title=\"...\", aria-label=\"...\".\n"
+        "4. Preserve URLs, email addresses, brand names (\"AEO Visibility\", \"Stripe\"), CSS values, hex colors, percentages.\n"
+        f"5. Update `<html lang=\"...\">` from \"en\" to \"{target_code}\".\n"
+        "6. Match formal/business B2B SaaS register. "
+        "Korean: 존댓말. Japanese: です/ます調. German/French/Spanish/Italian/Portuguese/etc: formal \"you\" form.\n"
+        "7. Preserve numbers, dates, percentages, currency symbols. Translate currency word forms but keep amounts.\n"
+        f"{rtl_note}"
+    )
+    return f"{intro}\n\n{rules}"
+
+
+def _translate_html(
+    client: anthropic.Anthropic,
+    html_en: str,
+    target_native: str,
+    target_english: str,
+    target_code: str,
+    rtl: bool,
+) -> str:
+    response = client.messages.create(
+        model=MODEL,
+        max_tokens=MAX_TOKENS,
+        system=_email_system_prompt(target_native, target_english, target_code, rtl),
+        messages=[{"role": "user", "content": html_en}],
+    )
+    text_blocks = [b.text for b in response.content if hasattr(b, "text")]
+    raw = "".join(text_blocks).strip()
+
+    # Strip code fence if Haiku wrapped it.
+    if raw.startswith("```"):
+        raw = raw.split("\n", 1)[1] if "\n" in raw else raw
+        if raw.endswith("```"):
+            raw = raw.rsplit("```", 1)[0]
+        raw = raw.strip()
+        if raw.startswith("html"):
+            raw = raw[4:].strip()
+
+    return raw
+
+
+# 4 trigger 디렉토리. analysis_task.py / email_service.py 의 send_* helper 와 동일.
+EMAIL_TRIGGERS: tuple[str, ...] = (
+    "analysis_complete",
+    "trial_expiry_day7",
+    "trial_expiry_day30",
+    "trial_expiry_day90",
+)
+
+# 사람 작성 보존 — G7/G8 청크에서 사람이 직접 작성한 lang.
+# force=True 또는 explicit --lang 지정 시 재생성.
+PRESERVE_HUMAN_AUTHORED: frozenset[str] = frozenset({"ko", "es"})
+
+
 def translate_email_templates(
     client: anthropic.Anthropic,
     *,
     target_filter: str | None = None,
     force: bool = False,
 ) -> None:
-    """backend/app/templates/{trigger}/en.html → 17 lang HTML.
+    """backend/app/templates/{trigger}/en.html → 19 lang HTML.
 
-    F-i18n-2 청크 본 진입점. F-i18n-1 에서는 placeholder (호출 ❌).
+    캐싱: ``templates/{trigger}/.{lang}.cache.html`` 에 마지막 번역 시점의 영어 원문 스냅샷.
+    영어 마스터가 변경된 lang 만 재번역.
+
+    사람 작성 보존: G7/G8 청크에서 사람이 직접 작성한 ko/es 는 디폴트로 skip.
+    --force 또는 ``--lang ko`` / ``--lang es`` explicit 지정 시 재생성.
     """
-    print("⏸  email templates 번역은 F-i18n-2 청크에서 활성화", file=sys.stderr)
-    print(f"   대상 디렉토리: {BACKEND_TEMPLATES}", file=sys.stderr)
-    print(f"   _ = ({target_filter}, force={force})", file=sys.stderr)
+    targets = TARGET_LANGS if target_filter is None else [
+        t for t in TARGET_LANGS if t[0] == target_filter
+    ]
+    if not targets:
+        print(f"❌ no target matched filter: {target_filter}", file=sys.stderr)
+        sys.exit(1)
+
+    # rtl 매핑.
+    rtl_by_code = {code: rtl for code, _, _, rtl in LOCALES}
+
+    for trigger in EMAIL_TRIGGERS:
+        trigger_dir = BACKEND_TEMPLATES / trigger
+        en_path = trigger_dir / "en.html"
+        if not en_path.exists():
+            print(f"⚠ {trigger}/en.html not found, skipping", file=sys.stderr)
+            continue
+
+        html_en = en_path.read_text(encoding="utf-8")
+        print(f"📧 {trigger}/en.html ({len(html_en)} bytes)")
+
+        for code, native, english in targets:
+            out_path = trigger_dir / f"{code}.html"
+            cache_path = trigger_dir / f".{code}.cache.html"
+
+            # 사람 작성 보존 — explicit lang 지정 ❌ + force ❌ + 파일 존재 시 skip.
+            if (
+                code in PRESERVE_HUMAN_AUTHORED
+                and not force
+                and target_filter != code
+                and out_path.exists()
+            ):
+                print(f"  🛡  {code} ({english}) — human-authored, preserved")
+                continue
+
+            # 캐싱: 영어 마스터가 변경됐는지 확인.
+            if not force and out_path.exists() and cache_path.exists():
+                if cache_path.read_text(encoding="utf-8") == html_en:
+                    print(f"  ✅ {code} ({english}) — up to date, skipped")
+                    continue
+
+            print(f"  🌐 {code} ({english}) — translating...")
+            translated = _translate_html(
+                client,
+                html_en,
+                native,
+                english,
+                code,
+                rtl_by_code.get(code, False),
+            )
+
+            if not translated.strip():
+                print(f"     ⚠ empty response for {code}, skipped", file=sys.stderr)
+                continue
+
+            out_path.write_text(translated + "\n", encoding="utf-8")
+            cache_path.write_text(html_en, encoding="utf-8")
+            print(f"     wrote {out_path}")
 
 
 # ─── CLI ──────────────────────────────────────────────────────────────────
