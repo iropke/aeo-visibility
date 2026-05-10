@@ -14,6 +14,7 @@ from app.models.base import Base
 from app.models.monthly_usage import MonthlyUsage
 from app.models.plan import Plan
 from app.models.profile import Profile
+from app.models.report import Report, ReportFormat, ReportStatus
 from app.models.site import Site, SiteType
 from app.models.subscription import Subscription, SubscriptionStatus
 from app.models.workspace import Workspace, WorkspaceMember, WorkspaceRole
@@ -27,6 +28,9 @@ __all__ = [
     "MonthlyUsage",
     "Plan",
     "Profile",
+    "Report",
+    "ReportFormat",
+    "ReportStatus",
     "Site",
     "SiteType",
     "Subscription",
