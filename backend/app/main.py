@@ -8,6 +8,7 @@ from app.routers import (
     analyses,
     analysis,
     health,
+    internal,
     leads,
     members,
     reports,
@@ -50,6 +51,7 @@ def create_app() -> FastAPI:
     app.include_router(sites.router)
     app.include_router(analyses.router)
     app.include_router(reports.router)
+    app.include_router(internal.router)
 
     return app
 
