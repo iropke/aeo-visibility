@@ -65,6 +65,21 @@
       "settings": "Configuración",
       "logout": "Cerrar sesión"
     },
+    "trial": {
+      "badge": {
+        "days_remaining": "Prueba: {days, plural, one {# día restante} other {# días restantes}}",
+        "expired": "Prueba expirada"
+      },
+      "modal": {
+        "title_urgent": "Su prueba está por terminar",
+        "title_expired": "Su prueba ha terminado",
+        "body_urgent": "Le quedan {days, plural, =0 {menos de un día} one {# día} other {# días}} para actualizar y mantener el acceso completo a su workspace.",
+        "body_expired": "Su workspace ahora es de solo lectura. Actualice en cualquier momento para reanudar análisis y edición.",
+        "incentive_title": "Actualice ahora y ahorre",
+        "incentive_body": "Cambie a un plan de pago para mantener sus sitios bajo seguimiento y desbloquear la cuota completa.",
+        "upgrade_cta": "Ver planes"
+      }
+    },
     "dashboard": {
       "title": "Panel",
       "no_workspace": "Aún no tienes workspace.",
