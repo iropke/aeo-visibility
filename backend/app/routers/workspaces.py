@@ -26,7 +26,9 @@ from app.deps import (
     DbSession,
     require_workspace_role,
 )
+from app.models.subscription import Subscription
 from app.models.workspace import Workspace, WorkspaceMember, WorkspaceRole
+from app.schemas.subscription import SubscriptionResponse
 from app.schemas.workspace import (
     WorkspaceCreate,
     WorkspaceResponse,
@@ -169,6 +171,33 @@ async def update_workspace(
     await db.commit()
     await db.refresh(workspace)
     return WorkspaceResponse.model_validate(workspace).model_copy(update={"role": role})
+
+
+@router.get("/{workspace_id}/subscription", response_model=SubscriptionResponse)
+async def get_subscription(
+    workspace_id: UUID,
+    ctx: WorkspaceMemberCtx,
+    db: DbSession,
+) -> SubscriptionResponse:
+    """워크스페이스의 가장 최근 구독 row 반환.
+
+    트라이얼 잔여 일수 / 만료 모달 / Pricing 진입에 사용. viewer+ 가능.
+    009_subscriptions 트리거가 워크스페이스 생성 시 자동 INSERT 하므로 일반적으로
+    1건은 항상 존재. 없는 경우는 데이터 정합성 이슈 → 404.
+    """
+    _ = ctx
+    sub = await db.scalar(
+        select(Subscription)
+        .where(Subscription.workspace_id == workspace_id)
+        .order_by(Subscription.created_at.desc())
+        .limit(1)
+    )
+    if sub is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="No subscription record found for this workspace",
+        )
+    return SubscriptionResponse.model_validate(sub)
 
 
 @router.delete("/{workspace_id}", status_code=status.HTTP_204_NO_CONTENT, response_model=None)

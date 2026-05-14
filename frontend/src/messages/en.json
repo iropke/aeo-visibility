@@ -65,6 +65,21 @@
       "settings": "Settings",
       "logout": "Sign out"
     },
+    "trial": {
+      "badge": {
+        "days_remaining": "Trial: {days, plural, one {# day left} other {# days left}}",
+        "expired": "Trial expired"
+      },
+      "modal": {
+        "title_urgent": "Your trial ends soon",
+        "title_expired": "Your trial has ended",
+        "body_urgent": "You have {days, plural, =0 {less than a day} one {# day} other {# days}} left to upgrade and keep full access to your workspace.",
+        "body_expired": "Your workspace is now read-only. Upgrade any time to resume analyses and editing.",
+        "incentive_title": "Upgrade now and save",
+        "incentive_body": "Switch to a paid plan to keep your sites tracked and unlock the full quota.",
+        "upgrade_cta": "See plans"
+      }
+    },
     "dashboard": {
       "title": "Dashboard",
       "no_workspace": "You don't have a workspace yet.",

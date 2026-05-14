@@ -35,6 +35,13 @@ class Settings(BaseSettings):
     # IP rate-limit 키 hash 용 salt — env 로 주입. 빈 값도 허용 (개발).
     contact_ip_hash_salt: str = ""
 
+    # Internal cron (pg_cron → 백엔드 webhook). 019_pg_cron_setup 와 동일 secret.
+    # postgres 측: ALTER DATABASE postgres SET app.cron_hmac_secret = '<same>'
+    # 빈 값 → 라우터에서 500 (의도적: 실수로 활성화된 cron endpoint 차단).
+    internal_cron_hmac_secret: str = ""
+    # 타임스탬프 ± replay 방지 윈도우 (초). pg_cron 와 백엔드 시계 차이 허용 범위.
+    internal_cron_replay_window_seconds: int = 300
+
     # Frontend
     frontend_url: str = "http://localhost:3000"
     cors_origins: str = "http://localhost:3000"

@@ -9,9 +9,11 @@ from app.routers import (
     analysis,
     contact,
     health,
+    internal,
     leads,
     members,
     plans,
+    reports,
     sites,
     workspaces,
 )
@@ -50,9 +52,12 @@ def create_app() -> FastAPI:
     app.include_router(members.router)
     app.include_router(sites.router)
     app.include_router(analyses.router)
+    app.include_router(reports.router)
     # public (인증 ❌) — Pricing 페이지 / Contact 폼.
     app.include_router(plans.router)
     app.include_router(contact.router)
+    # internal (HMAC) — pg_cron 발화 트리거.
+    app.include_router(internal.router)
 
     return app
 
