@@ -712,20 +712,23 @@ SUPABASE_URL=
                                      + CHECK trigger_funding_consistency
    - 012_monthly_usage.sql           Custom 카운터 4-way (base/basic_pack/pro_pack/payg) + auto_run_completed_at
    - 013_analysis_active_uniq.sql    partial UNIQUE — 워크스페이스 단위 진행 중 1건 강제 (race window 안전망)
-   ── 잔여 청크 (G5 / 이메일 / cron) ──
-   - 014_reports.sql                 PDF/CSV 메타
-   - 015_audit_logs.sql
-   - 016_deletion_grace_queue.sql    워크스페이스 7일 + 데이터 1년 grace + sites cooldown 만료
-   - 017_pg_cron_setup.sql           매월 자동 분석 + 트라이얼 만료 시퀀스 + grace_processor
+   ── 청크 F-i18n-1 (적용 완료, 2026-05-09) ──
+   - 014_i18n_locales.sql            profiles.preferred_language + workspaces.primary_language CHECK
+                                     ('en','ko','es') → 20 lang 확장 (SPEC §16-1a)
+   ── 잔여 청크 (reports / cron / grace) ──
+   - 015_reports.sql                 PDF/CSV 메타  (구 014, F-i18n-1 진입 시 +1 시프트)
+   - 016_audit_logs.sql              (구 015)
+   - 017_deletion_grace_queue.sql    워크스페이스 7일 + 데이터 1년 grace + sites cooldown 만료 (구 016)
+   - 018_pg_cron_setup.sql           매월 자동 분석 + 트라이얼 만료 시퀀스 + grace_processor (구 017)
 
-3. Phase 2 마이그레이션 (018 ~ 020) — 결제 + 쿠폰
-   - 018_subscription_addons.sql     + ENUM addon_type (13종, SPEC §5-2)
-   - 019_workspace_invitations.sql
-   - 020_coupons.sql + coupon_redemptions.sql  (Phase 4 → Phase 2 당김)
+3. Phase 2 마이그레이션 (019 ~ 021) — 결제 + 쿠폰  (F-i18n-1 시프트 후 +1)
+   - 019_subscription_addons.sql     + ENUM addon_type (13종, SPEC §5-2)
+   - 020_workspace_invitations.sql
+   - 021_coupons.sql + coupon_redemptions.sql  (Phase 4 → Phase 2 당김)
                                      + auto_apply 모드 (시즌 프로모션)
 
 4. Phase 3 마이그레이션
-   - 021_pdf_csv_storage_buckets.sql  ← Supabase Storage 정책
+   - 022_pdf_csv_storage_buckets.sql  ← Supabase Storage 정책
 
 5. Phase 4 마이그레이션 (Wiki + Q&A 중심, 쿠폰은 Phase 2로 이미 이동됨)
    - 022_pgvector_extension.sql       ← CREATE EXTENSION vector
@@ -1590,7 +1593,7 @@ Closes #123
 
 ### 20-1. Phase 1: 코어 (~6-8주)
 
-> 진행 상태: 2026-05-03 청크 G6 완료 (커밋 `9ebf744`). G5 5종 + G6 LLM 통합 합성까지 분석 엔진 본 가치 가동.
+> 진행 상태: 2026-05-09 청크 F2 완료. F-i18n-1 (인프라 20 lang) + F-i18n-2 (메일 17 lang) + F2 (분석 결과 페이지: components/analysis/v2/{MetricRow, CategoryCard, InsightsPanel, ImprovementsList, AnalysisResultView} + `[result_id]/page.tsx` + i18n 49 신규 키 × 20 lang). 메일 result_url CTA 활성화. **다음 진입점: F3 (시계열 차트 + Pricing/Contact).**
 
 **Backend**:
 - [x] Supabase Auth JWT 검증 미들웨어 (청크 B)
@@ -1608,15 +1611,15 @@ Closes #123
 - [x] 트라이얼 만료 read-only 게이팅 (`require_writable_workspace_role`) (F)
 - [ ] pg_cron 자동 분석 스케줄러 (`017_pg_cron_setup.sql`)
 - [ ] grace_processor (워크스페이스 7일 + 사이트 cooldown 만료)
-- [ ] Resend 트랜잭셔널 이메일 (Magic Link / 분석 완료 / 초대 / 트라이얼 만료 시퀀스 3종)
+- [x] Resend 트랜잭셔널 이메일 — 분석 완료 (G7) + 트라이얼 만료 시퀀스 Day 7/30/90 (G8) + 20 lang 자동 번역 (F-i18n-2). Magic Link / 초대 는 Phase 2.
 - [ ] Redis advisory lock — 멀티 인스턴스 도입 시점 (Phase 1은 partial UNIQUE 안전망으로 충분)
 
 **Frontend**:
 - [x] Supabase Auth 통합 (Magic Link) (C)
 - [x] 워크스페이스 CRUD UI + 온보딩 (C)
-- [ ] 사이트 CRUD UI (변경 1회/월 표시)
-- [ ] 분석 진행/결과 대시보드 (analyses/active polling, raw_metrics 카드)
-- [ ] Custom 재분석 모달 (5축 체크박스 + 잔여 카운터 funding_source 별)
+- [x] 사이트 CRUD UI (변경 1회/월 표시) — F1
+- [x] 분석 진행/결과 대시보드 — `(app)/sites/[id]` (F1) + `(app)/sites/[id]/results/[result_id]` (F2) + 폴링 (useApi pollIntervalMs, status='running' 동안만)
+- [x] Custom 재분석 모달 (5축 체크박스 + 잔여 카운터 funding_source 별) — F1
 - [ ] 시계열 그래프 (recharts, 전체/부분 시각 구분)
 - [ ] 멤버 초대 UI (Phase 2 invitations 테이블 필요)
 - [ ] 트라이얼 만료 임박/직후 모달 + 잔여 일수 카운트다운
@@ -1624,10 +1627,12 @@ Closes #123
 
 **DB / Infra**:
 - [x] 마이그레이션 003-013 (Auth/Workspace/Subscription/Sites/Analysis/Usage/Active uniq)
-- [ ] 마이그레이션 014-017 잔여
+- [x] 마이그레이션 014_i18n_locales (F-i18n-1, 2026-05-09)
+- [ ] 마이그레이션 015-018 잔여 (reports/audit_logs/grace/pg_cron — F-i18n-1 시프트 후 +1)
 - [x] RLS 정책 — profiles/plans/workspaces/members/sites/analysis_results/monthly_usage 적용
 - [x] 시드 데이터 (plans 4-tier+trial+enterprise) (D0)
 - [x] Frontend ↔ Backend 인증 검증 (E2E `e2e_phase1.py`, 27 steps)
+- [x] **i18n 20 lang 확장 + 단일 소스 + Haiku 번역 스크립트** (F-i18n-1, 2026-05-09)
 
 ### 20-2. Phase 2: 결제 (~4-6주)
 

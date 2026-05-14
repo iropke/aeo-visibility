@@ -1,7 +1,7 @@
 {
   "common": {
     "site_title": "AEO Visibility",
-    "site_description": "Mide la visibilidad de tu sitio en los motores de respuesta de IA",
+    "site_description": "Mida la visibilidad de su sitio en los motores de respuesta de IA",
     "loading": "Cargando…",
     "error": "Algo salió mal",
     "save": "Guardar",
@@ -13,52 +13,52 @@
   },
   "auth": {
     "magic_link_form": {
-      "email_label": "Correo electrónico",
-      "email_placeholder": "tu@ejemplo.com",
+      "email_label": "Dirección de correo",
+      "email_placeholder": "usted@ejemplo.com",
       "submit": "Enviar enlace mágico",
       "checking": "Enviando…",
       "errors": {
-        "invalid_email": "Por favor, introduce un correo válido",
-        "send_failed": "No se pudo enviar el enlace. Inténtalo de nuevo."
+        "invalid_email": "Por favor, ingrese una dirección de correo válida",
+        "send_failed": "No se pudo enviar el enlace. Por favor, inténtelo de nuevo."
       }
     },
     "signup": {
-      "title": "Crea tu cuenta",
-      "subtitle": "Te enviaremos un enlace mágico por correo — sin contraseñas.",
-      "have_account": "¿Ya tienes cuenta?",
-      "login_link": "Inicia sesión"
+      "title": "Crear su cuenta",
+      "subtitle": "Le enviaremos un enlace mágico por correo — no se requiere contraseña.",
+      "have_account": "¿Ya tiene una cuenta?",
+      "login_link": "Iniciar sesión"
     },
     "login": {
-      "title": "Inicia sesión",
-      "subtitle": "Introduce tu correo y te enviaremos un enlace mágico.",
-      "no_account": "¿No tienes cuenta?",
-      "signup_link": "Crea una"
+      "title": "Iniciar sesión",
+      "subtitle": "Ingrese su correo y le enviaremos un enlace mágico.",
+      "no_account": "¿No tiene una cuenta?",
+      "signup_link": "Crear una"
     },
     "verify": {
-      "title": "Revisa tu correo",
-      "subtitle": "Enviamos un enlace mágico a {email}. Haz clic en el enlace del correo para continuar.",
-      "resend": "Reenviar enlace",
-      "did_not_receive": "¿No lo recibiste? Revisa spam o usa otro correo."
+      "title": "Revise su correo",
+      "subtitle": "Enviamos un enlace mágico a {email}. Haga clic en el enlace del correo para continuar.",
+      "resend": "Reenviar el enlace",
+      "did_not_receive": "¿No lo recibió? Revise la carpeta de spam o use un correo diferente."
     },
     "onboarding": {
-      "title": "Configura tu workspace",
-      "subtitle": "Los workspaces contienen tus sitios y análisis.",
-      "name_label": "Nombre del workspace",
+      "title": "Configure su espacio de trabajo",
+      "subtitle": "Los espacios de trabajo almacenan sus sitios y análisis.",
+      "name_label": "Nombre del espacio de trabajo",
       "name_placeholder": "Acme Marketing",
       "language_label": "Idioma principal",
       "timezone_label": "Zona horaria",
-      "submit": "Crear workspace",
+      "submit": "Crear espacio de trabajo",
       "creating": "Creando…"
     },
     "callback": {
-      "completing": "Iniciando sesión…",
+      "completing": "Iniciando su sesión…",
       "failed_title": "Error al iniciar sesión",
-      "failed_subtitle": "El enlace puede haber expirado. Solicita uno nuevo."
+      "failed_subtitle": "El enlace puede haber expirado. Intente solicitar uno nuevo."
     }
   },
   "app": {
     "nav": {
-      "dashboard": "Panel",
+      "dashboard": "Panel de control",
       "sites": "Sitios",
       "reports": "Informes",
       "qa": "P&R",
@@ -66,36 +66,36 @@
       "logout": "Cerrar sesión"
     },
     "dashboard": {
-      "title": "Panel",
-      "no_workspace": "Aún no tienes workspace.",
-      "create_workspace": "Crea tu primer workspace",
-      "your_workspaces": "Tus workspaces",
-      "manage_sites": "Gestionar sitios",
-      "role_owner": "Owner",
-      "role_admin": "Admin",
-      "role_member": "Member",
-      "role_viewer": "Viewer"
+      "title": "Panel de control",
+      "no_workspace": "Aún no tiene un espacio de trabajo.",
+      "create_workspace": "Crear su primer espacio de trabajo",
+      "your_workspaces": "Sus espacios de trabajo",
+      "manage_sites": "Administrar sitios",
+      "role_owner": "Propietario",
+      "role_admin": "Administrador",
+      "role_member": "Miembro",
+      "role_viewer": "Visualizador"
     },
     "sites": {
       "title": "Sitios",
-      "subtitle": "Sitios propios y competidores en {workspace}.",
-      "add_site": "Añadir sitio",
-      "own_sites": "Tus sitios",
+      "subtitle": "Sitios y competidores rastreados en {workspace}.",
+      "add_site": "Agregar sitio",
+      "own_sites": "Sus sitios",
       "competitor_sites": "Competidores",
-      "own_empty": "Añade tu primer sitio para empezar a medir la visibilidad AEO.",
-      "competitors_empty": "Aún no hay sitios competidores.",
-      "no_workspace_yet": "Configura un workspace para empezar a rastrear sitios.",
-      "create_workspace": "Crear workspace",
+      "own_empty": "Agregue su primer sitio para comenzar a medir la visibilidad en AEO.",
+      "competitors_empty": "Sin sitios de competidores aún.",
+      "no_workspace_yet": "Configure un espacio de trabajo para comenzar a rastrear sitios.",
+      "create_workspace": "Crear un espacio de trabajo",
       "last_analyzed": "Último análisis",
       "last_url_change": "Último cambio de URL",
       "run_analysis": "Ejecutar análisis",
       "analyses_history": "Análisis",
-      "analyses_empty": "Aún no hay análisis. Ejecuta el primero para ver resultados.",
+      "analyses_empty": "Sin análisis aún. Ejecute su primer análisis para ver los resultados.",
       "view_result": "Ver resultado",
       "back_to_sites": "Volver a sitios",
-      "site_not_found": "No encontramos este sitio en ninguno de tus workspaces.",
-      "delete_confirm": "¿Eliminar el sitio {domain}? Entrará en un período de espera de 30 días antes de poder volver a registrarse.",
-      "delete_forbidden": "Solo los administradores o propietarios del workspace pueden eliminar sitios.",
+      "site_not_found": "No pudimos encontrar este sitio en ninguno de sus espacios de trabajo.",
+      "delete_confirm": "¿Eliminar el sitio {domain}? Entrará en un período de espera de 30 días antes de que el dominio pueda agregarse nuevamente.",
+      "delete_forbidden": "Solo los administradores o propietarios del espacio de trabajo pueden eliminar sitios.",
       "categories": {
         "technical": "Técnico",
         "structured": "Estructurado",
@@ -105,53 +105,230 @@
       },
       "status": {
         "queued": "En cola",
-        "running": "En curso",
+        "running": "En ejecución",
         "completed": "Completado",
-        "failed": "Fallido"
+        "failed": "Error"
       },
       "form": {
-        "title_create": "Añadir sitio",
+        "title_create": "Agregar un sitio",
         "title_edit": "Editar sitio",
         "url_label": "URL",
         "url_placeholder": "https://ejemplo.com",
         "nickname_label": "Apodo (opcional)",
-        "nickname_placeholder": "Sitio en producción",
+        "nickname_placeholder": "Sitio de producción",
         "type_label": "Tipo",
-        "type_own": "Tu sitio",
-        "type_own_desc": "Un sitio que tú gestionas y quieres mejorar.",
+        "type_own": "Su sitio",
+        "type_own_desc": "Un sitio que posee y desea mejorar.",
         "type_competitor": "Competidor",
-        "type_competitor_desc": "Un sitio con el que quieres compararte.",
-        "create": "Añadir sitio",
+        "type_competitor_desc": "Un sitio que desea comparar.",
+        "create": "Agregar sitio",
         "saving": "Guardando…",
-        "url_required": "Por favor, introduce una URL.",
-        "err_invalid_url": "La URL no es válida o falta el dominio.",
-        "err_trial_expired": "Tu prueba ha terminado. Actualiza para continuar editando.",
-        "err_plan_limit": "Has alcanzado el límite de tu plan. Actualiza o elimina un sitio.",
-        "err_conflict": "Este dominio ya está registrado o en período de espera de 30 días.",
-        "err_url_change_limit": "Solo se permite un cambio de URL cada 30 días por workspace."
+        "url_required": "Por favor, ingrese una URL.",
+        "err_invalid_url": "La URL es inválida o no tiene un dominio.",
+        "err_trial_expired": "Su período de prueba ha terminado. Actualice para continuar editando.",
+        "err_plan_limit": "Se ha alcanzado el límite de su plan. Actualice o elimine un sitio.",
+        "err_conflict": "Este dominio ya está registrado o en un período de espera de 30 días.",
+        "err_url_change_limit": "Los cambios de URL se limitan a una vez cada 30 días por espacio de trabajo."
       },
       "analyze": {
         "title": "Ejecutar análisis",
-        "description": "Elige las categorías a analizar. El análisis completo cubre las cinco.",
+        "description": "Elija qué categorías analizar. Los análisis completos cubren las cinco.",
         "categories_label": "Categorías",
-        "select_at_least_one": "Selecciona al menos una categoría.",
+        "select_at_least_one": "Seleccione al menos una categoría.",
         "quota_loading": "Cargando cuota…",
         "quota_title": "Restante este mes ({ym})",
         "quota_remaining": "{remaining} de {quota}",
         "quota_unlimited": "Ilimitado",
-        "quota_none": "Tu plan no tiene análisis restantes este mes.",
+        "quota_none": "Su plan no tiene análisis restantes este mes.",
         "pack": {
-          "pro_pack": "Pro Pack",
-          "basic_pack": "Basic Pack",
+          "pro_pack": "Paquete Pro",
+          "basic_pack": "Paquete Básico",
           "base": "Base"
         },
-        "trigger_full": "Análisis completo",
-        "trigger_partial": "Analizar {n} categorías",
+        "trigger_full": "Ejecutar análisis completo",
+        "trigger_partial": "Ejecutar en {n} categorías",
         "triggering": "Iniciando…",
-        "err_quota_or_trial": "Sin análisis disponibles o prueba expirada. Actualiza para continuar.",
-        "err_forbidden": "No tienes permiso para ejecutar un análisis.",
-        "err_concurrent": "Ya hay un análisis en curso para este workspace.",
-        "err_cooldown": "Este sitio se analizó hace menos de una hora. Inténtalo más tarde."
+        "err_quota_or_trial": "Sin análisis o período de prueba expirado. Actualice para continuar.",
+        "err_forbidden": "No tiene permiso para activar un análisis.",
+        "err_concurrent": "Otro análisis ya se está ejecutando para este espacio de trabajo.",
+        "err_cooldown": "Este sitio fue analizado hace menos de una hora. Inténtelo más tarde."
+      },
+      "results": {
+        "back_to_site": "Volver al sitio",
+        "result_not_found": "No pudimos encontrar este resultado de análisis.",
+        "running_title": "Análisis en progreso",
+        "running_subtitle": "Estamos calificando su sitio. Esta página se actualizará automáticamente.",
+        "failed_title": "El análisis falló",
+        "queued_subtitle": "Esperando para comenzar…",
+        "completed_at": "Completado",
+        "triggered_at": "Iniciado",
+        "duration": "Duración",
+        "duration_seconds": "{seconds}s",
+        "version": "Versión",
+        "trigger_type_manual": "Manual",
+        "trigger_type_scheduled": "Programado",
+        "trigger_type_monthly_auto": "Auto mensual",
+        "funding_source": {
+          "pro_pack": "Pro Pack",
+          "basic_pack": "Basic Pack",
+          "base": "Base",
+          "payg": "Pago por uso",
+          "addon": "Complemento",
+          "trial": "Prueba"
+        },
+        "overall_score": "Puntuación general",
+        "no_score": "Sin puntuación",
+        "category_score": "Puntuación",
+        "categories_section": "Categorías",
+        "metrics_section": "Métricas",
+        "show_metrics": "Mostrar métricas",
+        "hide_metrics": "Ocultar métricas",
+        "metric_passed": "Aprobado",
+        "metric_failed": "Necesita mejoras",
+        "metric_weight": "Peso {pct}%",
+        "metric_threshold": "Umbral {value}",
+        "metric_value": "Valor",
+        "evidence": "Evidencia",
+        "insights_section": "Perspectivas",
+        "insights_unavailable": "Las perspectivas no están disponibles para este análisis.",
+        "insights_synthesized_by": "Sintetizado por {model}",
+        "insights_high_priority_capped": "Se degradaron algunos elementos de alta prioridad a prioridad media para mantener la lista enfocada.",
+        "improvements_section": "Mejoras",
+        "improvements_empty": "No se generaron mejoras específicas para este análisis.",
+        "improvement_priority": {
+          "high": "Alta",
+          "medium": "Media",
+          "low": "Baja"
+        },
+        "improvement_effort": {
+          "low": "Bajo esfuerzo",
+          "medium": "Esfuerzo medio",
+          "high": "Alto esfuerzo"
+        },
+        "improvement_impact": "Impacto {value}/10",
+        "improvement_related_metrics": "Métricas relacionadas",
+        "error_message": "Error",
+        "auto_refresh_paused": "Actualización automática pausada (pestaña inactiva)."
+      }
+    },
+    "charts": {
+      "timeseries_title": "Historial de puntuaciones",
+      "timeseries_empty": "Aún no hay análisis completados para mostrar en el gráfico.",
+      "timeseries_single_point": "Última puntuación: {score}/100 ({when}). Ejecute otro análisis para ver la tendencia.",
+      "timeseries_partial_legend": "Los marcadores ✕ indican análisis parciales (algunas categorías fueron omitidas).",
+      "radar_empty": "No hay puntuaciones de categoría disponibles para este análisis.",
+      "radar_value": "Puntuación",
+      "legend": {
+        "overall": "General",
+        "technical": "Técnico",
+        "structured": "Estructurado",
+        "content": "Contenido",
+        "authority": "Autoridad",
+        "visibility": "Visibilidad"
+      }
+    },
+    "pricing": {
+      "eyebrow": "Precios",
+      "title": "Planes que crecen con tu visibilidad",
+      "subtitle": "Comienza gratis durante 7 días. Actualiza cuando estés listo para rastrear competidores, expandir sitios y desbloquear tendencias históricas.",
+      "footnote": "Precios en USD. Los planes mensuales se pueden cancelar en cualquier momento. Los planes anuales ahorran hasta un 15%.",
+      "free": "Gratis",
+      "trial_duration": "Prueba de 7 días",
+      "per_month": "/ mes",
+      "per_month_billed_annually": "/ mes, facturado anualmente",
+      "unlimited": "Ilimitado",
+      "featured_badge": "Más popular",
+      "toggle": {
+        "monthly": "Mensual",
+        "annual": "Anual",
+        "annual_save": "Ahorra 15%"
+      },
+      "plans": {
+        "free": {
+          "name": "Prueba Gratuita",
+          "tagline": "Prueba todas las funciones durante 7 días. No se requiere tarjeta."
+        },
+        "basic": {
+          "name": "Basic",
+          "tagline": "Para fundadores autónomos que miden un único sitio."
+        },
+        "pro": {
+          "name": "Pro",
+          "tagline": "Para equipos de marketing que realizan comparaciones entre sitios."
+        },
+        "business": {
+          "name": "Business",
+          "tagline": "Para equipos en crecimiento con benchmarks de la industria y soporte SLA."
+        }
+      },
+      "features": {
+        "sites": "{count} sitios propios",
+        "competitors_per_site": "{count} competidores por sitio",
+        "custom_analyses": "{count} análisis personalizados / mes",
+        "timeseries": "{months} meses de historial de tendencias",
+        "members": "Hasta {count} miembros del equipo",
+        "csv_export": "Exportar CSV",
+        "competitor_comparison": "Comparación de competidores",
+        "industry_benchmark": "Benchmark de la industria",
+        "support": {
+          "self": "Documentación de autoservicio",
+          "email": "Soporte por correo electrónico",
+          "email_chat": "Soporte por correo electrónico + chat",
+          "email_chat_sla4h": "Correo electrónico + chat (SLA 4h)",
+          "dedicated": "Customer Success dedicado"
+        }
+      },
+      "cta": {
+        "start_trial": "Comenzar prueba gratuita",
+        "choose_plan": "Elegir plan"
+      },
+      "enterprise": {
+        "badge": "Enterprise",
+        "title": "Plan personalizado para grandes organizaciones",
+        "description": "Contrato anual con sitios, competidores y análisis personalizados ilimitados, más un gerente de éxito del cliente dedicado. Se aceptan transferencias bancarias.",
+        "bullet_unlimited": "Sitios y análisis ilimitados",
+        "bullet_dedicated": "Gerente de CS dedicado",
+        "bullet_audit": "Retención del registro de auditoría",
+        "bullet_sla": "SLA personalizado y transferencia bancaria",
+        "cta": "Hablar con ventas"
+      }
+    },
+    "contact": {
+      "eyebrow": "Contacto",
+      "title": "Hablemos",
+      "subtitle": "Cuéntanos qué necesitas — demostración, ventas, soporte o cualquier otra cosa. Normalmente respondemos dentro de un día hábil.",
+      "submit": "Enviar mensaje",
+      "submitting": "Enviando…",
+      "privacy_note": "Usamos tu mensaje solo para responder. Tus datos nunca se comparten.",
+      "fields": {
+        "name": "Nombre",
+        "email": "Correo electrónico",
+        "company": "Empresa (opcional)",
+        "topic": "¿De qué trata esto?",
+        "message": "Mensaje"
+      },
+      "topics": {
+        "general": "Consulta general",
+        "demo": "Solicitar una demostración",
+        "sales": "Pregunta de ventas",
+        "support": "Pregunta de soporte"
+      },
+      "errors": {
+        "name_required": "Por favor, ingresa tu nombre.",
+        "name_too_long": "El nombre debe tener 200 caracteres o menos.",
+        "email_required": "Por favor, ingresa tu correo electrónico.",
+        "email_invalid": "Por favor, ingresa una dirección de correo electrónico válida.",
+        "company_too_long": "La empresa debe tener 200 caracteres o menos.",
+        "message_required": "Por favor, ingresa un mensaje.",
+        "message_too_long": "El mensaje debe tener 5000 caracteres o menos.",
+        "rate_limit": "Has enviado varios mensajes recientemente. Por favor, intenta de nuevo en un minuto.",
+        "validation": "Por favor, revisa el formulario para detectar errores.",
+        "network": "No pudimos comunicarnos con el servidor. Verifica tu conexión e intenta de nuevo.",
+        "generic": "Algo salió mal al enviar tu mensaje. Por favor, intenta de nuevo."
+      },
+      "success": {
+        "title": "Gracias — recibimos tu mensaje.",
+        "description": "Revisaremos y responderemos a tu correo electrónico dentro de un día hábil."
       }
     }
   }

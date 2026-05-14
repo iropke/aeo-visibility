@@ -152,6 +152,183 @@
         "err_forbidden": "You don't have permission to trigger an analysis.",
         "err_concurrent": "Another analysis is already running for this workspace.",
         "err_cooldown": "This site was analyzed less than an hour ago. Try again later."
+      },
+      "results": {
+        "back_to_site": "Back to site",
+        "result_not_found": "We couldn't find this analysis result.",
+        "running_title": "Analysis in progress",
+        "running_subtitle": "We're scoring your site. This page will update automatically.",
+        "failed_title": "Analysis failed",
+        "queued_subtitle": "Waiting to start…",
+        "completed_at": "Completed",
+        "triggered_at": "Started",
+        "duration": "Duration",
+        "duration_seconds": "{seconds}s",
+        "version": "Version",
+        "trigger_type_manual": "Manual",
+        "trigger_type_scheduled": "Scheduled",
+        "trigger_type_monthly_auto": "Monthly auto",
+        "funding_source": {
+          "pro_pack": "Pro Pack",
+          "basic_pack": "Basic Pack",
+          "base": "Base",
+          "payg": "Pay-as-you-go",
+          "addon": "Add-on",
+          "trial": "Trial"
+        },
+        "overall_score": "Overall score",
+        "no_score": "No score",
+        "category_score": "Score",
+        "categories_section": "Categories",
+        "metrics_section": "Metrics",
+        "show_metrics": "Show metrics",
+        "hide_metrics": "Hide metrics",
+        "metric_passed": "Passed",
+        "metric_failed": "Needs work",
+        "metric_weight": "Weight {pct}%",
+        "metric_threshold": "Threshold {value}",
+        "metric_value": "Value",
+        "evidence": "Evidence",
+        "insights_section": "Insights",
+        "insights_unavailable": "Insights are not available for this analysis.",
+        "insights_synthesized_by": "Synthesized by {model}",
+        "insights_high_priority_capped": "Some high-priority items were demoted to medium to keep the list focused.",
+        "improvements_section": "Improvements",
+        "improvements_empty": "No specific improvements were generated for this analysis.",
+        "improvement_priority": {
+          "high": "High",
+          "medium": "Medium",
+          "low": "Low"
+        },
+        "improvement_effort": {
+          "low": "Low effort",
+          "medium": "Medium effort",
+          "high": "High effort"
+        },
+        "improvement_impact": "Impact {value}/10",
+        "improvement_related_metrics": "Related metrics",
+        "error_message": "Error",
+        "auto_refresh_paused": "Auto-refresh paused (tab inactive)."
+      }
+    },
+    "charts": {
+      "timeseries_title": "Score history",
+      "timeseries_empty": "No completed analyses to chart yet.",
+      "timeseries_single_point": "Latest score: {score}/100 ({when}). Run another analysis to see the trend.",
+      "timeseries_partial_legend": "✕ markers indicate partial analyses (some categories were skipped).",
+      "radar_empty": "No category scores available for this analysis.",
+      "radar_value": "Score",
+      "legend": {
+        "overall": "Overall",
+        "technical": "Technical",
+        "structured": "Structured",
+        "content": "Content",
+        "authority": "Authority",
+        "visibility": "Visibility"
+      }
+    },
+    "pricing": {
+      "eyebrow": "Pricing",
+      "title": "Plans that grow with your visibility",
+      "subtitle": "Start free for 7 days. Upgrade when you're ready to track competitors, expand sites, and unlock historical trends.",
+      "footnote": "Prices in USD. Monthly plans cancel anytime. Annual plans save up to 15%.",
+      "free": "Free",
+      "trial_duration": "7-day trial",
+      "per_month": "/ month",
+      "per_month_billed_annually": "/ month, billed annually",
+      "unlimited": "Unlimited",
+      "featured_badge": "Most popular",
+      "toggle": {
+        "monthly": "Monthly",
+        "annual": "Annual",
+        "annual_save": "Save 15%"
+      },
+      "plans": {
+        "free": {
+          "name": "Free Trial",
+          "tagline": "Try every feature for 7 days. No card required."
+        },
+        "basic": {
+          "name": "Basic",
+          "tagline": "For solo founders measuring a single site."
+        },
+        "pro": {
+          "name": "Pro",
+          "tagline": "For marketing teams running comparisons across sites."
+        },
+        "business": {
+          "name": "Business",
+          "tagline": "For growing teams with industry benchmarks and SLA support."
+        }
+      },
+      "features": {
+        "sites": "{count} owned sites",
+        "competitors_per_site": "{count} competitors per site",
+        "custom_analyses": "{count} custom analyses / month",
+        "timeseries": "{months} months of trend history",
+        "members": "Up to {count} team members",
+        "csv_export": "CSV export",
+        "competitor_comparison": "Competitor comparison",
+        "industry_benchmark": "Industry benchmark",
+        "support": {
+          "self": "Self-serve docs",
+          "email": "Email support",
+          "email_chat": "Email + chat support",
+          "email_chat_sla4h": "Email + chat (4h SLA)",
+          "dedicated": "Dedicated CS"
+        }
+      },
+      "cta": {
+        "start_trial": "Start free trial",
+        "choose_plan": "Choose plan"
+      },
+      "enterprise": {
+        "badge": "Enterprise",
+        "title": "Custom plan for large organizations",
+        "description": "Annual contract with unlimited sites, competitors, custom analyses, and a dedicated customer success manager. Wire transfer accepted.",
+        "bullet_unlimited": "Unlimited sites & analyses",
+        "bullet_dedicated": "Dedicated CS manager",
+        "bullet_audit": "Audit log retention",
+        "bullet_sla": "Custom SLA & wire transfer",
+        "cta": "Talk to sales"
+      }
+    },
+    "contact": {
+      "eyebrow": "Contact",
+      "title": "Let's talk",
+      "subtitle": "Tell us what you need — demo, sales, support, or anything else. We typically reply within one business day.",
+      "submit": "Send message",
+      "submitting": "Sending…",
+      "privacy_note": "We use your message only to reply. Your data is never shared.",
+      "fields": {
+        "name": "Name",
+        "email": "Email",
+        "company": "Company (optional)",
+        "topic": "What is this about?",
+        "message": "Message"
+      },
+      "topics": {
+        "general": "General inquiry",
+        "demo": "Request a demo",
+        "sales": "Sales question",
+        "support": "Support question"
+      },
+      "errors": {
+        "name_required": "Please enter your name.",
+        "name_too_long": "Name must be 200 characters or fewer.",
+        "email_required": "Please enter your email.",
+        "email_invalid": "Please enter a valid email address.",
+        "company_too_long": "Company must be 200 characters or fewer.",
+        "message_required": "Please enter a message.",
+        "message_too_long": "Message must be 5000 characters or fewer.",
+        "rate_limit": "You've sent several messages recently. Please try again in a minute.",
+        "validation": "Please check the form for errors.",
+        "network": "We couldn't reach the server. Check your connection and try again.",
+        "generic": "Something went wrong sending your message. Please try again."
+      },
+      "success": {
+        "title": "Thanks — we got your message.",
+        "description": "We'll review and reply to your email within one business day."
       }
     }
   }

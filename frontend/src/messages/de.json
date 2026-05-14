@@ -1,0 +1,335 @@
+{
+  "common": {
+    "site_title": "AEO Visibility",
+    "site_description": "Messen Sie, wie sichtbar Ihre Website für KI-Antwortsuchmaschinen ist",
+    "loading": "Lädt…",
+    "error": "Etwas ist schief gelaufen",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "delete": "Löschen",
+    "deleting": "Wird gelöscht…",
+    "edit": "Bearbeiten",
+    "back": "Zurück"
+  },
+  "auth": {
+    "magic_link_form": {
+      "email_label": "E-Mail-Adresse",
+      "email_placeholder": "you@example.com",
+      "submit": "Magic Link senden",
+      "checking": "Wird gesendet…",
+      "errors": {
+        "invalid_email": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
+        "send_failed": "Der Link konnte nicht gesendet werden. Bitte versuchen Sie es erneut."
+      }
+    },
+    "signup": {
+      "title": "Erstellen Sie Ihr Konto",
+      "subtitle": "Wir senden Ihnen einen Magic Link per E-Mail – kein Passwort erforderlich.",
+      "have_account": "Sie haben bereits ein Konto?",
+      "login_link": "Anmelden"
+    },
+    "login": {
+      "title": "Anmelden",
+      "subtitle": "Geben Sie Ihre E-Mail ein und wir senden Ihnen einen Magic Link.",
+      "no_account": "Sie haben noch kein Konto?",
+      "signup_link": "Erstellen Sie eines"
+    },
+    "verify": {
+      "title": "Überprüfen Sie Ihre E-Mail",
+      "subtitle": "Wir haben einen Magic Link an {email} gesendet. Klicken Sie auf den Link in der E-Mail, um fortzufahren.",
+      "resend": "Link erneut senden",
+      "did_not_receive": "Nicht erhalten? Überprüfen Sie den Spam-Ordner oder verwenden Sie eine andere E-Mail."
+    },
+    "onboarding": {
+      "title": "Richten Sie Ihren Arbeitsbereich ein",
+      "subtitle": "Arbeitsbereiche enthalten Ihre Websites und Analysen.",
+      "name_label": "Name des Arbeitsbereichs",
+      "name_placeholder": "Acme Marketing",
+      "language_label": "Primäre Sprache",
+      "timezone_label": "Zeitzone",
+      "submit": "Arbeitsbereich erstellen",
+      "creating": "Wird erstellt…"
+    },
+    "callback": {
+      "completing": "Sie werden angemeldet…",
+      "failed_title": "Anmeldung fehlgeschlagen",
+      "failed_subtitle": "Der Link ist möglicherweise abgelaufen. Versuchen Sie, einen neuen anzufordern."
+    }
+  },
+  "app": {
+    "nav": {
+      "dashboard": "Dashboard",
+      "sites": "Websites",
+      "reports": "Berichte",
+      "qa": "Fragen und Antworten",
+      "settings": "Einstellungen",
+      "logout": "Abmelden"
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "no_workspace": "Sie haben noch keinen Arbeitsbereich.",
+      "create_workspace": "Erstellen Sie Ihren ersten Arbeitsbereich",
+      "your_workspaces": "Ihre Arbeitsbereiche",
+      "manage_sites": "Websites verwalten",
+      "role_owner": "Eigentümer",
+      "role_admin": "Administrator",
+      "role_member": "Mitglied",
+      "role_viewer": "Betrachter"
+    },
+    "sites": {
+      "title": "Websites",
+      "subtitle": "Websites und Konkurrenten, die in {workspace} nachverfolgt werden.",
+      "add_site": "Website hinzufügen",
+      "own_sites": "Ihre Websites",
+      "competitor_sites": "Konkurrenten",
+      "own_empty": "Fügen Sie Ihre erste Website hinzu, um die AEO-Sichtbarkeit zu messen.",
+      "competitors_empty": "Noch keine Konkurrenz-Websites.",
+      "no_workspace_yet": "Richten Sie einen Arbeitsbereich ein, um mit der Nachverfolgung von Websites zu beginnen.",
+      "create_workspace": "Arbeitsbereich erstellen",
+      "last_analyzed": "Zuletzt analysiert",
+      "last_url_change": "Letzte URL-Änderung",
+      "run_analysis": "Analyse ausführen",
+      "analyses_history": "Analysen",
+      "analyses_empty": "Noch keine Analysen. Führen Sie Ihre erste Analyse aus, um Ergebnisse zu sehen.",
+      "view_result": "Ergebnis anzeigen",
+      "back_to_sites": "Zurück zu Websites",
+      "site_not_found": "Wir konnten diese Website in keinem Ihrer Arbeitsbereiche finden.",
+      "delete_confirm": "Website {domain} löschen? Sie wird für 30 Tage gesperrt, bevor die Domain erneut hinzugefügt werden kann.",
+      "delete_forbidden": "Nur Arbeitsbereich-Administratoren oder -Eigentümer können Websites löschen.",
+      "categories": {
+        "technical": "Technisch",
+        "structured": "Strukturiert",
+        "content": "Inhalt",
+        "authority": "Autorität",
+        "visibility": "Sichtbarkeit"
+      },
+      "status": {
+        "queued": "In Warteschlange",
+        "running": "Wird ausgeführt",
+        "completed": "Abgeschlossen",
+        "failed": "Fehlgeschlagen"
+      },
+      "form": {
+        "title_create": "Website hinzufügen",
+        "title_edit": "Website bearbeiten",
+        "url_label": "URL",
+        "url_placeholder": "https://example.com",
+        "nickname_label": "Spitzname (optional)",
+        "nickname_placeholder": "Produktions-Website",
+        "type_label": "Typ",
+        "type_own": "Ihre Website",
+        "type_own_desc": "Eine Website, die Sie besitzen und verbessern möchten.",
+        "type_competitor": "Konkurrenz",
+        "type_competitor_desc": "Eine Website, die Sie als Benchmark verwenden möchten.",
+        "create": "Website hinzufügen",
+        "saving": "Wird gespeichert…",
+        "url_required": "Bitte geben Sie eine URL ein.",
+        "err_invalid_url": "URL ist ungültig oder hat keine Domain.",
+        "err_trial_expired": "Ihre Testversion ist abgelaufen. Aktualisieren Sie, um fortzufahren.",
+        "err_plan_limit": "Das Limit Ihres Plans wurde erreicht. Aktualisieren Sie oder entfernen Sie eine Website.",
+        "err_conflict": "Diese Domain ist bereits registriert oder in einer 30-Tage-Sperrfrist.",
+        "err_url_change_limit": "URL-Änderungen sind auf einmal pro 30 Tage pro Arbeitsbereich begrenzt."
+      },
+      "analyze": {
+        "title": "Analyse ausführen",
+        "description": "Wählen Sie die Kategorien aus, die analysiert werden sollen. Vollständige Scans decken alle fünf ab.",
+        "categories_label": "Kategorien",
+        "select_at_least_one": "Wählen Sie mindestens eine Kategorie aus.",
+        "quota_loading": "Kontingent wird geladen…",
+        "quota_title": "Verbleibend diesen Monat ({ym})",
+        "quota_remaining": "{remaining} von {quota}",
+        "quota_unlimited": "Unbegrenzt",
+        "quota_none": "Ihr Plan hat in diesem Monat keine Analysen mehr.",
+        "pack": {
+          "pro_pack": "Pro Pack",
+          "basic_pack": "Basic Pack",
+          "base": "Basis"
+        },
+        "trigger_full": "Vollständige Analyse ausführen",
+        "trigger_partial": "Auf {n} Kategorien ausführen",
+        "triggering": "Wird gestartet…",
+        "err_quota_or_trial": "Keine Analysen mehr oder Testversion abgelaufen. Aktualisieren Sie, um fortzufahren.",
+        "err_forbidden": "Sie haben keine Berechtigung, eine Analyse auszulösen.",
+        "err_concurrent": "Eine andere Analyse wird bereits für diesen Arbeitsbereich ausgeführt.",
+        "err_cooldown": "Diese Website wurde vor weniger als einer Stunde analysiert. Versuchen Sie es später erneut."
+      },
+      "results": {
+        "back_to_site": "Zurück zur Website",
+        "result_not_found": "Wir konnten dieses Analyseergebnis nicht finden.",
+        "running_title": "Analyse läuft",
+        "running_subtitle": "Wir bewerten Ihre Website. Diese Seite wird automatisch aktualisiert.",
+        "failed_title": "Analyse fehlgeschlagen",
+        "queued_subtitle": "Warten auf Start…",
+        "completed_at": "Abgeschlossen",
+        "triggered_at": "Gestartet",
+        "duration": "Dauer",
+        "duration_seconds": "{seconds}s",
+        "version": "Version",
+        "trigger_type_manual": "Manuell",
+        "trigger_type_scheduled": "Geplant",
+        "trigger_type_monthly_auto": "Monatlich automatisch",
+        "funding_source": {
+          "pro_pack": "Pro Pack",
+          "basic_pack": "Basic Pack",
+          "base": "Basis",
+          "payg": "Nutzungsbasiert",
+          "addon": "Add-on",
+          "trial": "Testversion"
+        },
+        "overall_score": "Gesamtbewertung",
+        "no_score": "Keine Bewertung",
+        "category_score": "Bewertung",
+        "categories_section": "Kategorien",
+        "metrics_section": "Metriken",
+        "show_metrics": "Metriken anzeigen",
+        "hide_metrics": "Metriken ausblenden",
+        "metric_passed": "Bestanden",
+        "metric_failed": "Verbesserung erforderlich",
+        "metric_weight": "Gewichtung {pct}%",
+        "metric_threshold": "Schwellwert {value}",
+        "metric_value": "Wert",
+        "evidence": "Nachweise",
+        "insights_section": "Erkenntnisse",
+        "insights_unavailable": "Erkenntnisse sind für diese Analyse nicht verfügbar.",
+        "insights_synthesized_by": "Zusammengefasst von {model}",
+        "insights_high_priority_capped": "Einige hochpriorisierte Elemente wurden auf Mittlere Priorität herabgestuft, um die Liste fokussiert zu halten.",
+        "improvements_section": "Verbesserungen",
+        "improvements_empty": "Für diese Analyse wurden keine spezifischen Verbesserungen generiert.",
+        "improvement_priority": {
+          "high": "Hoch",
+          "medium": "Mittel",
+          "low": "Niedrig"
+        },
+        "improvement_effort": {
+          "low": "Geringer Aufwand",
+          "medium": "Mittlerer Aufwand",
+          "high": "Hoher Aufwand"
+        },
+        "improvement_impact": "Auswirkung {value}/10",
+        "improvement_related_metrics": "Zugehörige Metriken",
+        "error_message": "Fehler",
+        "auto_refresh_paused": "Automatische Aktualisierung unterbrochen (Tab inaktiv)."
+      }
+    },
+    "charts": {
+      "timeseries_title": "Punkteverlauf",
+      "timeseries_empty": "Es gibt noch keine abgeschlossenen Analysen zum Darstellen.",
+      "timeseries_single_point": "Neueste Bewertung: {score}/100 ({when}). Führen Sie eine weitere Analyse durch, um den Trend zu sehen.",
+      "timeseries_partial_legend": "✕ Markierungen kennzeichnen teilweise Analysen (einige Kategorien wurden übersprungen).",
+      "radar_empty": "Für diese Analyse sind keine Kategoriebewertungen verfügbar.",
+      "radar_value": "Bewertung",
+      "legend": {
+        "overall": "Gesamt",
+        "technical": "Technisch",
+        "structured": "Strukturiert",
+        "content": "Inhalt",
+        "authority": "Autorität",
+        "visibility": "Sichtbarkeit"
+      }
+    },
+    "pricing": {
+      "eyebrow": "Preise",
+      "title": "Pläne, die mit Ihrer Sichtbarkeit wachsen",
+      "subtitle": "Kostenlos 7 Tage testen. Upgraden Sie, wenn Sie bereit sind, Konkurrenten zu verfolgen, Websites zu erweitern und historische Trends freizuschalten.",
+      "footnote": "Preise in USD. Monatliche Pläne können jederzeit gekündigt werden. Jahrespläne sparen bis zu 15%.",
+      "free": "Kostenlos",
+      "trial_duration": "7-Tage-Testversion",
+      "per_month": "/ Monat",
+      "per_month_billed_annually": "/ Monat, jährlich abgerechnet",
+      "unlimited": "Unbegrenzt",
+      "featured_badge": "Am beliebtesten",
+      "toggle": {
+        "monthly": "Monatlich",
+        "annual": "Jährlich",
+        "annual_save": "Sparen Sie 15%"
+      },
+      "plans": {
+        "free": {
+          "name": "Kostenlose Testversion",
+          "tagline": "Testen Sie alle Funktionen 7 Tage lang. Keine Karte erforderlich."
+        },
+        "basic": {
+          "name": "Basic",
+          "tagline": "Für einzelne Gründer, die eine einzelne Website messen."
+        },
+        "pro": {
+          "name": "Pro",
+          "tagline": "Für Marketing-Teams, die Vergleiche über mehrere Websites durchführen."
+        },
+        "business": {
+          "name": "Business",
+          "tagline": "Für wachsende Teams mit Branchen-Benchmarks und SLA-Support."
+        }
+      },
+      "features": {
+        "sites": "{count} eigene Websites",
+        "competitors_per_site": "{count} Konkurrenten pro Website",
+        "custom_analyses": "{count} benutzerdefinierte Analysen / Monat",
+        "timeseries": "{months} Monate Trend-Verlauf",
+        "members": "Bis zu {count} Teamkollegen",
+        "csv_export": "CSV-Export",
+        "competitor_comparison": "Konkurrenzvergleich",
+        "industry_benchmark": "Branchen-Benchmark",
+        "support": {
+          "self": "Self-Service-Dokumentation",
+          "email": "E-Mail-Support",
+          "email_chat": "E-Mail- und Chat-Support",
+          "email_chat_sla4h": "E-Mail und Chat (4h SLA)",
+          "dedicated": "Dedizierter Customer Success"
+        }
+      },
+      "cta": {
+        "start_trial": "Kostenlose Testversion starten",
+        "choose_plan": "Plan wählen"
+      },
+      "enterprise": {
+        "badge": "Enterprise",
+        "title": "Benutzerdefinierter Plan für große Organisationen",
+        "description": "Jahresvertrag mit unbegrenzten Websites, Konkurrenten, benutzerdefinierten Analysen und einem dedizierten Customer Success Manager. Banküberweisung akzeptiert.",
+        "bullet_unlimited": "Unbegrenzte Websites und Analysen",
+        "bullet_dedicated": "Dedizierter CS-Manager",
+        "bullet_audit": "Audit-Log-Aufbewahrung",
+        "bullet_sla": "Benutzerdefinierte SLA und Banküberweisung",
+        "cta": "Mit Verkauf sprechen"
+      }
+    },
+    "contact": {
+      "eyebrow": "Kontakt",
+      "title": "Lassen Sie uns sprechen",
+      "subtitle": "Teilen Sie uns mit, was Sie benötigen – eine Demo, Vertrieb, Support oder etwas anderes. Wir antworten in der Regel innerhalb eines Geschäftstages.",
+      "submit": "Nachricht senden",
+      "submitting": "Wird gesendet…",
+      "privacy_note": "Wir verwenden Ihre Nachricht nur zur Beantwortung. Ihre Daten werden nie weitergegeben.",
+      "fields": {
+        "name": "Name",
+        "email": "E-Mail",
+        "company": "Unternehmen (optional)",
+        "topic": "Worum geht es?",
+        "message": "Nachricht"
+      },
+      "topics": {
+        "general": "Allgemeine Anfrage",
+        "demo": "Demo anfordern",
+        "sales": "Vertriebsfrage",
+        "support": "Support-Frage"
+      },
+      "errors": {
+        "name_required": "Bitte geben Sie Ihren Namen ein.",
+        "name_too_long": "Der Name darf nicht länger als 200 Zeichen sein.",
+        "email_required": "Bitte geben Sie Ihre E-Mail-Adresse ein.",
+        "email_invalid": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
+        "company_too_long": "Das Unternehmen darf nicht länger als 200 Zeichen sein.",
+        "message_required": "Bitte geben Sie eine Nachricht ein.",
+        "message_too_long": "Die Nachricht darf nicht länger als 5000 Zeichen sein.",
+        "rate_limit": "Sie haben in letzter Zeit mehrere Nachrichten gesendet. Bitte versuchen Sie es in einer Minute erneut.",
+        "validation": "Bitte überprüfen Sie das Formular auf Fehler.",
+        "network": "Wir konnten den Server nicht erreichen. Überprüfen Sie Ihre Verbindung und versuchen Sie es erneut.",
+        "generic": "Beim Senden Ihrer Nachricht ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
+      },
+      "success": {
+        "title": "Danke – wir haben Ihre Nachricht erhalten.",
+        "description": "Wir werden Ihre E-Mail überprüfen und innerhalb eines Geschäftstages antworten."
+      }
+    }
+  }
+}

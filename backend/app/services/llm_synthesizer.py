@@ -47,6 +47,11 @@ log = logging.getLogger(__name__)
 
 SYNTHESIZER_MAX_TOKENS: int = 4096
 HIGH_PRIORITY_CAP: int = 3
+# Synthesizer LLM 출력 lang. **profiles/workspaces 의 20 lang ENUM 과 별개:**
+# F-i18n-1 시점에 ENUM 은 20 lang 으로 확장됐지만, synth 출력은 Phase 3 까지 3 lang.
+# workspace.primary_language='fr' 같은 경우 synth 는 'en/ko/es' 키만 채움 → email_service 가
+# `summary_obj.get(lang) or summary_obj.get('en')` 으로 graceful degrade. Phase 3 청크에서
+# 20 lang 으로 확장 + 비용/품질 검토.
 SUPPORTED_LANGUAGES: tuple[str, ...] = ("en", "ko", "es")
 TOOL_NAME: str = "produce_synthesis"
 

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useEffect, useMemo, useState } from "react";
 
+import { TimeSeriesChart } from "@/components/charts/TimeSeriesChart";
 import { Button } from "@/components/ui/Button";
 import {
   analysesApi,
@@ -248,6 +249,8 @@ export function SiteDetailView({ lang, siteId }: Props) {
           </Button>
         </div>
       </div>
+
+      <TimeSeriesChart analyses={analyses} lang={lang} />
 
       <section>
         <h2 className="text-xs font-medium text-gs-secondary-1 uppercase tracking-wider mb-3">

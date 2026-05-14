@@ -3,7 +3,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
-import { isLocale, locales } from "@/lib/i18n/config";
+import { getDirection, isLocale, locales } from "@/lib/i18n/config";
 import "@/styles/globals.css";
 
 export function generateStaticParams() {
@@ -36,9 +36,10 @@ export default async function LangLayout({
 
   setRequestLocale(lang);
   const messages = await getMessages();
+  const dir = getDirection(lang);
 
   return (
-    <html lang={lang} data-lang={lang}>
+    <html lang={lang} dir={dir} data-lang={lang}>
       <head>
         <link
           href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap"

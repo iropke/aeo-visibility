@@ -188,9 +188,10 @@ def test_render_template():
     )
     _check("T04c es template has 'Análisis completado'", "Análisis completado" in es_html)
 
-    # T05 — 미지원 lang → en 폴백.
+    # T05 — 미지원 lang (CHECK 외) → en 폴백. F-i18n-2 이후 20 lang 모두 지원이라
+    # 임의의 ISO 코드 'xx' 사용.
     fallback_html = render_template(
-        TRIGGER_ANALYSIS_COMPLETE, "fr",  # 미지원
+        TRIGGER_ANALYSIS_COMPLETE, "xx",  # 미지원 (CHECK 외)
         build_analysis_complete_context(
             analysis=analysis, site=site, lang="en",
             frontend_url="https://app.ahxov.com",
@@ -621,7 +622,7 @@ def test_normalize_lang():
     _check("T44 en → en", _normalize_lang("en") == "en")
     _check("T45 ko → ko", _normalize_lang("ko") == "ko")
     _check("T46 es → es", _normalize_lang("es") == "es")
-    _check("T47 unsupported → en", _normalize_lang("fr") == DEFAULT_LANG)
+    _check("T47 unsupported → en", _normalize_lang("xx") == DEFAULT_LANG)
     _check("T48 None → en", _normalize_lang(None) == DEFAULT_LANG)
 
 

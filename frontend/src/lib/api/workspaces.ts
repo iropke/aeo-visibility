@@ -4,6 +4,8 @@
  */
 "use client";
 
+import type { Locale } from "@/lib/i18n/config";
+
 import { apiFetch } from "./client";
 
 export type WorkspaceRole = "owner" | "admin" | "member" | "viewer";
@@ -12,7 +14,7 @@ export interface Workspace {
   id: string;
   name: string;
   slug: string;
-  primary_language: "en" | "ko" | "es";
+  primary_language: Locale;
   timezone: string;
   owner_id: string;
   plan_id: string;
@@ -33,13 +35,13 @@ export interface WorkspaceMember {
 
 export interface WorkspaceCreatePayload {
   name: string;
-  primary_language?: "en" | "ko" | "es";
+  primary_language?: Locale;
   timezone?: string;
 }
 
 export interface WorkspaceUpdatePayload {
   name?: string;
-  primary_language?: "en" | "ko" | "es";
+  primary_language?: Locale;
   timezone?: string;
 }
 

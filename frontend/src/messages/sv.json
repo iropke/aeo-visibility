@@ -1,0 +1,335 @@
+{
+  "common": {
+    "site_title": "AEO Visibility",
+    "site_description": "Mät hur synlig din webbplats är för AI-svarsmotor",
+    "loading": "Läser in…",
+    "error": "Något gick fel",
+    "save": "Spara",
+    "cancel": "Avbryt",
+    "delete": "Ta bort",
+    "deleting": "Tar bort…",
+    "edit": "Redigera",
+    "back": "Tillbaka"
+  },
+  "auth": {
+    "magic_link_form": {
+      "email_label": "E-postadress",
+      "email_placeholder": "du@exempel.com",
+      "submit": "Skicka magisk länk",
+      "checking": "Skickar…",
+      "errors": {
+        "invalid_email": "Ange en giltig e-postadress.",
+        "send_failed": "Kunde inte skicka länken. Försök igen."
+      }
+    },
+    "signup": {
+      "title": "Skapa ditt konto",
+      "subtitle": "Vi skickar dig en magisk länk via e-post — inget lösenord krävs.",
+      "have_account": "Har du redan ett konto?",
+      "login_link": "Logga in"
+    },
+    "login": {
+      "title": "Logga in",
+      "subtitle": "Ange din e-postadress och vi skickar en magisk länk.",
+      "no_account": "Har du inget konto?",
+      "signup_link": "Skapa ett"
+    },
+    "verify": {
+      "title": "Kontrollera din e-post",
+      "subtitle": "Vi skickade en magisk länk till {email}. Klicka på länken i e-postmeddelandet för att fortsätta.",
+      "resend": "Skicka länken igen",
+      "did_not_receive": "Mottog du den inte? Kontrollera skräppostmappen eller använd en annan e-postadress."
+    },
+    "onboarding": {
+      "title": "Konfigurera din arbetsyta",
+      "subtitle": "Arbetsytor innehåller dina webbplatser och analyser.",
+      "name_label": "Namn på arbetsyta",
+      "name_placeholder": "Acme Marketing",
+      "language_label": "Primärt språk",
+      "timezone_label": "Tidszon",
+      "submit": "Skapa arbetsyta",
+      "creating": "Skapar…"
+    },
+    "callback": {
+      "completing": "Loggar in dig…",
+      "failed_title": "Inloggning misslyckades",
+      "failed_subtitle": "Länken kan ha upphört att gälla. Försök begära en ny."
+    }
+  },
+  "app": {
+    "nav": {
+      "dashboard": "Instrumentpanel",
+      "sites": "Webbplatser",
+      "reports": "Rapporter",
+      "qa": "Frågor och svar",
+      "settings": "Inställningar",
+      "logout": "Logga ut"
+    },
+    "dashboard": {
+      "title": "Instrumentpanel",
+      "no_workspace": "Du har ännu ingen arbetsyta.",
+      "create_workspace": "Skapa din första arbetsyta",
+      "your_workspaces": "Dina arbetsytor",
+      "manage_sites": "Hantera webbplatser",
+      "role_owner": "Ägare",
+      "role_admin": "Admin",
+      "role_member": "Medlem",
+      "role_viewer": "Visare"
+    },
+    "sites": {
+      "title": "Webbplatser",
+      "subtitle": "Webbplatser och konkurrenter spårade i {workspace}.",
+      "add_site": "Lägg till webbplats",
+      "own_sites": "Dina webbplatser",
+      "competitor_sites": "Konkurrenter",
+      "own_empty": "Lägg till din första webbplats för att börja mäta AEO-synlighet.",
+      "competitors_empty": "Inga konkurrentwebbplatser ännu.",
+      "no_workspace_yet": "Konfigurera en arbetsyta för att börja spåra webbplatser.",
+      "create_workspace": "Skapa en arbetsyta",
+      "last_analyzed": "Senast analyserad",
+      "last_url_change": "Senaste URL-ändring",
+      "run_analysis": "Kör analys",
+      "analyses_history": "Analyser",
+      "analyses_empty": "Inga analyser ännu. Kör din första analys för att se resultaten.",
+      "view_result": "Visa resultat",
+      "back_to_sites": "Tillbaka till webbplatser",
+      "site_not_found": "Vi kunde inte hitta denna webbplats i någon av dina arbetsytor.",
+      "delete_confirm": "Ta bort webbplats {domain}? Den går in i en 30-dagars nedkylningsperiod innan domänen kan läggas till igen.",
+      "delete_forbidden": "Endast arbetsytans administratörer eller ägare kan ta bort webbplatser.",
+      "categories": {
+        "technical": "Teknisk",
+        "structured": "Strukturerad",
+        "content": "Innehåll",
+        "authority": "Auktoritet",
+        "visibility": "Synlighet"
+      },
+      "status": {
+        "queued": "I kö",
+        "running": "Körs",
+        "completed": "Slutförd",
+        "failed": "Misslyckad"
+      },
+      "form": {
+        "title_create": "Lägg till en webbplats",
+        "title_edit": "Redigera webbplats",
+        "url_label": "URL",
+        "url_placeholder": "https://exempel.com",
+        "nickname_label": "Smeknamn (valfritt)",
+        "nickname_placeholder": "Produktionswebbplats",
+        "type_label": "Typ",
+        "type_own": "Din webbplats",
+        "type_own_desc": "En webbplats du äger och vill förbättra.",
+        "type_competitor": "Konkurrent",
+        "type_competitor_desc": "En webbplats du vill jämföra dig mot.",
+        "create": "Lägg till webbplats",
+        "saving": "Sparar…",
+        "url_required": "Ange en URL.",
+        "err_invalid_url": "URL är ogiltig eller saknar en domän.",
+        "err_trial_expired": "Din testperiod har upphört. Uppgradera för att fortsätta redigera.",
+        "err_plan_limit": "Din planlimit har nåtts. Uppgradera eller ta bort en webbplats.",
+        "err_conflict": "Denna domän är redan registrerad eller i en 30-dagars nedkylningsperiod.",
+        "err_url_change_limit": "URL-ändringar är begränsade till en gång per 30 dagar per arbetsyta."
+      },
+      "analyze": {
+        "title": "Kör analys",
+        "description": "Välj vilka kategorier som ska analyseras. Fullständiga skanningar täcker alla fem.",
+        "categories_label": "Kategorier",
+        "select_at_least_one": "Välj minst en kategori.",
+        "quota_loading": "Läser in kvot…",
+        "quota_title": "Återstår denna månad ({ym})",
+        "quota_remaining": "{remaining} av {quota}",
+        "quota_unlimited": "Obegränsat",
+        "quota_none": "Din plan har inga analyser kvar denna månad.",
+        "pack": {
+          "pro_pack": "Pro Pack",
+          "basic_pack": "Basic Pack",
+          "base": "Bas"
+        },
+        "trigger_full": "Kör fullständig analys",
+        "trigger_partial": "Kör på {n} kategorier",
+        "triggering": "Startar…",
+        "err_quota_or_trial": "Inga analyser kvar eller testperioden upphörd. Uppgradera för att fortsätta.",
+        "err_forbidden": "Du har inte behörighet att starta en analys.",
+        "err_concurrent": "En annan analys körs redan för denna arbetsyta.",
+        "err_cooldown": "Denna webbplats analyserades för mindre än en timme sedan. Försök senare."
+      },
+      "results": {
+        "back_to_site": "Tillbaka till webbplats",
+        "result_not_found": "Vi kunde inte hitta detta analysresultat.",
+        "running_title": "Analys pågår",
+        "running_subtitle": "Vi beräknar din webbplats poäng. Den här sidan uppdateras automatiskt.",
+        "failed_title": "Analys misslyckades",
+        "queued_subtitle": "Väntar på start…",
+        "completed_at": "Slutfört",
+        "triggered_at": "Startat",
+        "duration": "Varaktighet",
+        "duration_seconds": "{seconds}s",
+        "version": "Version",
+        "trigger_type_manual": "Manuell",
+        "trigger_type_scheduled": "Schemalagd",
+        "trigger_type_monthly_auto": "Månatlig automatisk",
+        "funding_source": {
+          "pro_pack": "Pro Pack",
+          "basic_pack": "Basic Pack",
+          "base": "Bas",
+          "payg": "Betala per användning",
+          "addon": "Tillägg",
+          "trial": "Testversion"
+        },
+        "overall_score": "Sammanfattande poäng",
+        "no_score": "Inget poäng",
+        "category_score": "Poäng",
+        "categories_section": "Kategorier",
+        "metrics_section": "Mätvärden",
+        "show_metrics": "Visa mätvärden",
+        "hide_metrics": "Dölj mätvärden",
+        "metric_passed": "Godkänd",
+        "metric_failed": "Behöver förbättras",
+        "metric_weight": "Vikt {pct}%",
+        "metric_threshold": "Tröskelvärde {value}",
+        "metric_value": "Värde",
+        "evidence": "Bevis",
+        "insights_section": "Insikter",
+        "insights_unavailable": "Insikter är inte tillgängliga för denna analys.",
+        "insights_synthesized_by": "Sammanfattad av {model}",
+        "insights_high_priority_capped": "Vissa högt prioriterade objekt degraderades till medium för att hålla listan fokuserad.",
+        "improvements_section": "Förbättringar",
+        "improvements_empty": "Inga specifika förbättringar genererades för denna analys.",
+        "improvement_priority": {
+          "high": "Högt",
+          "medium": "Medel",
+          "low": "Lågt"
+        },
+        "improvement_effort": {
+          "low": "Låg insats",
+          "medium": "Medel insats",
+          "high": "Högt arbete"
+        },
+        "improvement_impact": "Inverkan {value}/10",
+        "improvement_related_metrics": "Relaterade mätvärden",
+        "error_message": "Fel",
+        "auto_refresh_paused": "Automatisk uppdatering pausad (fliken inaktiv)."
+      }
+    },
+    "charts": {
+      "timeseries_title": "Poänghistorik",
+      "timeseries_empty": "Inga slutförda analyser att visa ännu.",
+      "timeseries_single_point": "Senaste poäng: {score}/100 ({when}). Kör en annan analys för att se trenden.",
+      "timeseries_partial_legend": "✕ markeringar indikerar partiella analyser (vissa kategorier hoppades över).",
+      "radar_empty": "Inga kategoripoäng tillgängliga för denna analys.",
+      "radar_value": "Poäng",
+      "legend": {
+        "overall": "Övergripande",
+        "technical": "Teknisk",
+        "structured": "Strukturerad",
+        "content": "Innehål",
+        "authority": "Auktoritet",
+        "visibility": "Synlighet"
+      }
+    },
+    "pricing": {
+      "eyebrow": "Prissättning",
+      "title": "Planer som växer med din synlighet",
+      "subtitle": "Börja gratis i 7 dagar. Uppgradera när du är redo att spåra konkurrenter, expandera webbplatser och låsa upp historiska trender.",
+      "footnote": "Priser i USD. Månatliga planer kan sägas upp när som helst. Årsplaner sparar upp till 15%.",
+      "free": "Gratis",
+      "trial_duration": "7-dagars provperiod",
+      "per_month": "/ månad",
+      "per_month_billed_annually": "/ månad, faktureras årligen",
+      "unlimited": "Obegränsad",
+      "featured_badge": "Mest populär",
+      "toggle": {
+        "monthly": "Månatlig",
+        "annual": "Årlig",
+        "annual_save": "Spara 15%"
+      },
+      "plans": {
+        "free": {
+          "name": "Gratis provperiod",
+          "tagline": "Prova varje funktion i 7 dagar. Inget kort krävs."
+        },
+        "basic": {
+          "name": "Basic",
+          "tagline": "För enskilda grundare som mäter en enskild webbplats."
+        },
+        "pro": {
+          "name": "Pro",
+          "tagline": "För marknadsföringsteam som kör jämförelser över webbplatser."
+        },
+        "business": {
+          "name": "Business",
+          "tagline": "För växande team med branschstandarder och SLA-stöd."
+        }
+      },
+      "features": {
+        "sites": "{count} ägda webbplatser",
+        "competitors_per_site": "{count} konkurrenter per webbplats",
+        "custom_analyses": "{count} anpassade analyser / månad",
+        "timeseries": "{months} månaders trendhistorik",
+        "members": "Upp till {count} teammedlemmar",
+        "csv_export": "CSV-export",
+        "competitor_comparison": "Konkurrentjämförelse",
+        "industry_benchmark": "Branschstandard",
+        "support": {
+          "self": "Självbetjäningsdokumentation",
+          "email": "E-poststöd",
+          "email_chat": "E-post + chattstöd",
+          "email_chat_sla4h": "E-post + chatt (4h SLA)",
+          "dedicated": "Dedikerad CS"
+        }
+      },
+      "cta": {
+        "start_trial": "Starta gratis provperiod",
+        "choose_plan": "Välj plan"
+      },
+      "enterprise": {
+        "badge": "Enterprise",
+        "title": "Anpassad plan för stora organisationer",
+        "description": "Årskontrakt med obegränsade webbplatser, konkurrenter, anpassade analyser och en dedikerad kundsupportansvarig. Banköverföring accepteras.",
+        "bullet_unlimited": "Obegränsade webbplatser och analyser",
+        "bullet_dedicated": "Dedikerad CS-ansvarig",
+        "bullet_audit": "Granskning av loggbevarandehistorik",
+        "bullet_sla": "Anpassad SLA och banköverföring",
+        "cta": "Prata med försäljning"
+      }
+    },
+    "contact": {
+      "eyebrow": "Kontakt",
+      "title": "Låt oss prata",
+      "subtitle": "Berätta vad du behöver — demo, försäljning, support eller något annat. Vi svarar vanligtvis inom en arbetsdag.",
+      "submit": "Skicka meddelande",
+      "submitting": "Skickar…",
+      "privacy_note": "Vi använder ditt meddelande endast för att svara. Dina data delas aldrig.",
+      "fields": {
+        "name": "Namn",
+        "email": "E-post",
+        "company": "Företag (valfritt)",
+        "topic": "Vad gäller detta?",
+        "message": "Meddelande"
+      },
+      "topics": {
+        "general": "Allmän förfrågan",
+        "demo": "Begär en demo",
+        "sales": "Försäljningsfråga",
+        "support": "Supportfråga"
+      },
+      "errors": {
+        "name_required": "Ange ditt namn.",
+        "name_too_long": "Namnet måste vara 200 tecken eller färre.",
+        "email_required": "Ange din e-postadress.",
+        "email_invalid": "Ange en giltig e-postadress.",
+        "company_too_long": "Företag måste vara 200 tecken eller färre.",
+        "message_required": "Ange ett meddelande.",
+        "message_too_long": "Meddelandet måste vara 5000 tecken eller färre.",
+        "rate_limit": "Du har skickat flera meddelanden nyligen. Försök igen om en minut.",
+        "validation": "Kontrollera formuläret för fel.",
+        "network": "Vi kunde inte nå servern. Kontrollera din anslutning och försök igen.",
+        "generic": "Något gick fel när du skickade meddelandet. Försök igen."
+      },
+      "success": {
+        "title": "Tack — vi fick ditt meddelande.",
+        "description": "Vi granskar och svarar på din e-post inom en arbetsdag."
+      }
+    }
+  }
+}

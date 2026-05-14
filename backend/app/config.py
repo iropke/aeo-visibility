@@ -27,6 +27,13 @@ class Settings(BaseSettings):
 
     # Email
     resend_api_key: str = ""
+    # F3-pricing — Contact 폼 알림 메일.
+    # resend_from_contact 미지정 시 분석/트라이얼 메일과 동일 no-reply 사용.
+    # contact_notification_to 는 콤마 분리 가능 (예: "ops@x.com,sales@x.com").
+    resend_from_contact: str = "AEO Visibility <hello@ahxov.com>"
+    contact_notification_to: str = "hello@ahxov.com"
+    # IP rate-limit 키 hash 용 salt — env 로 주입. 빈 값도 허용 (개발).
+    contact_ip_hash_salt: str = ""
 
     # Frontend
     frontend_url: str = "http://localhost:3000"

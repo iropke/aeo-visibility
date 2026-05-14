@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Still curious about AEO Visibility? — 50% off</title>
+</head>
+<body style="margin:0;padding:0;background:#f4f5f7;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f4f5f7;padding:40px 20px;">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="600" cellspacing="0" cellpadding="0" style="background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.06);">
+
+          <tr>
+            <td style="background:linear-gradient(135deg,#153430,#0b1f1c);padding:32px 40px;text-align:center;">
+              <p style="margin:0;color:rgba(255,255,255,0.7);font-size:13px;letter-spacing:0.06em;text-transform:uppercase;">
+                AEO Visibility
+              </p>
+              <h1 style="margin:6px 0 0;color:#ffffff;font-size:24px;font-weight:700;letter-spacing:-0.02em;">
+                ยังสนใจหรือไม่
+              </h1>
+              <p style="margin:8px 0 0;color:rgba(255,255,255,0.7);font-size:14px;">
+                เราบันทึกข้อมูลของคุณไว้แล้ว ทำต่อจากที่คุณหยุดไป
+              </p>
+            </td>
+          </tr>
+
+          <tr>
+            <td style="padding:32px 40px 16px;">
+              {% if display_name %}
+              <p style="margin:0 0 16px;font-size:14px;color:#232329;line-height:1.6;">
+                สวัสดี {{ display_name }}
+              </p>
+              {% endif %}
+              <p style="margin:0 0 16px;font-size:14px;color:#232329;line-height:1.6;">
+                ระยะเวลาทดลองใช้ของ <strong>{{ workspace_name }}</strong> ได้สิ้นสุดไปประมาณหนึ่งเดือนแล้ว ไซต์และการวิเคราะห์ของคุณยังปลอดภัย คุณสามารถเริ่มติดตามคะแนน AEO ของคุณได้ตลอดเวลา
+              </p>
+              <p style="margin:0;font-size:14px;color:#232329;line-height:1.6;">
+                นี่คือข้อเสนอที่จะต้อนรับคุณกลับมา เพื่อให้ง่ายขึ้น
+              </p>
+            </td>
+          </tr>
+
+          <tr>
+            <td style="padding:8px 40px 24px;">
+              <div style="background:#f0faf9;border:1px solid #b8e0dd;border-radius:12px;padding:24px;text-align:center;">
+                <p style="margin:0 0 4px;font-size:13px;font-weight:600;color:#22908b;letter-spacing:0.04em;text-transform:uppercase;">
+                  ข้อเสนอต้อนรับกลับมา
+                </p>
+                <p style="margin:0;font-size:32px;font-weight:700;color:#153430;letter-spacing:-0.02em;">
+                  {{ discount_percent }}% off
+                </p>
+                <p style="margin:4px 0 0;font-size:14px;color:#68687b;">
+                  สำหรับเดือนแรกของคุณ แผนใดก็ได้
+                </p>
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td style="padding:0 40px 32px;text-align:center;">
+              <a href="{{ pricing_url }}"
+                 style="display:inline-block;padding:14px 32px;background:#5eb6b2;color:#ffffff;text-decoration:none;border-radius:999px;font-size:14px;font-weight:600;">
+                เริ่มต้นใหม่พร้อมส่วนลด 50% →
+              </a>
+            </td>
+          </tr>
+
+          <tr>
+            <td style="padding:24px 40px;background:#f8f9fa;text-align:center;border-top:1px solid #e8e8ec;">
+              <p style="margin:0;font-size:12px;color:#a1a1af;line-height:1.5;">
+                AEO Visibility · ahxov.com<br />
+                คุณได้รับอีเมลนี้เพราะว่าระยะเวลาทดลองใช้ของคุณได้สิ้นสุดไปประมาณหนึ่งเดือนแล้ว
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

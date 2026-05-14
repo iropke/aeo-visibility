@@ -54,12 +54,13 @@ export interface AnalysisResultListItem {
   categories: string[];
   /** Decimal — JSON 으로 string 으로 직렬화될 수 있어 union. */
   overall_score: number | string | null;
+  /** 5축 시계열 차트용 — `{ technical: 73.5, structured: ..., ... }`. */
+  category_scores: Record<string, number | string | null> | null;
   analysis_version: string;
 }
 
 export interface AnalysisResultDetail extends AnalysisResultListItem {
   triggered_by: string | null;
-  category_scores: Record<string, unknown> | null;
   raw_metrics: Record<string, unknown> | null;
   insights: Record<string, unknown> | null;
   improvements: Record<string, unknown> | null;

@@ -1,0 +1,335 @@
+{
+  "common": {
+    "site_title": "AEO Visibility",
+    "site_description": "Måle hvor synlig dit websted er for AI-svarmaskiner",
+    "loading": "Indlæser…",
+    "error": "Der opstod en fejl",
+    "save": "Gem",
+    "cancel": "Annuller",
+    "delete": "Slet",
+    "deleting": "Sletter…",
+    "edit": "Rediger",
+    "back": "Tilbage"
+  },
+  "auth": {
+    "magic_link_form": {
+      "email_label": "E-mailadresse",
+      "email_placeholder": "du@eksempel.dk",
+      "submit": "Send magisk link",
+      "checking": "Sender…",
+      "errors": {
+        "invalid_email": "Indtast venligst en gyldig e-mailadresse",
+        "send_failed": "Linket kunne ikke sendes. Prøv igen."
+      }
+    },
+    "signup": {
+      "title": "Opret din konto",
+      "subtitle": "Vi sender dig et magisk link pr. e-mail — intet kodeord påkrævet.",
+      "have_account": "Har du allerede en konto?",
+      "login_link": "Log ind"
+    },
+    "login": {
+      "title": "Log ind",
+      "subtitle": "Indtast din e-mailadresse, og vi sender et magisk link.",
+      "no_account": "Har du ikke en konto?",
+      "signup_link": "Opret en"
+    },
+    "verify": {
+      "title": "Tjek din e-mail",
+      "subtitle": "Vi har sendt et magisk link til {email}. Klik på linket i e-mailen for at fortsætte.",
+      "resend": "Send linket igen",
+      "did_not_receive": "Modtog du det ikke? Tjek spam, eller brug en anden e-mailadresse."
+    },
+    "onboarding": {
+      "title": "Opsætning af dit arbejdsrum",
+      "subtitle": "Arbejdsrum indeholder dine websteder og analyser.",
+      "name_label": "Arbejdsrumsnavn",
+      "name_placeholder": "Acme Marketing",
+      "language_label": "Primært sprog",
+      "timezone_label": "Tidszone",
+      "submit": "Opret arbejdsrum",
+      "creating": "Opretter…"
+    },
+    "callback": {
+      "completing": "Logger dig ind…",
+      "failed_title": "Log ind mislykkedes",
+      "failed_subtitle": "Linket kan være udløbet. Prøv at anmode om et nyt."
+    }
+  },
+  "app": {
+    "nav": {
+      "dashboard": "Dashboard",
+      "sites": "Websteder",
+      "reports": "Rapporter",
+      "qa": "Spørgsmål og svar",
+      "settings": "Indstillinger",
+      "logout": "Log ud"
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "no_workspace": "Du har endnu ikke et arbejdsrum.",
+      "create_workspace": "Opret dit første arbejdsrum",
+      "your_workspaces": "Dine arbejdsrum",
+      "manage_sites": "Administrer websteder",
+      "role_owner": "Ejer",
+      "role_admin": "Administrator",
+      "role_member": "Medlem",
+      "role_viewer": "Seer"
+    },
+    "sites": {
+      "title": "Websteder",
+      "subtitle": "Websteder og konkurrenter sporet i {workspace}.",
+      "add_site": "Tilføj websted",
+      "own_sites": "Dine websteder",
+      "competitor_sites": "Konkurrenter",
+      "own_empty": "Tilføj dit første websted for at begynde at måle AEO-synlighed.",
+      "competitors_empty": "Ingen konkurrentwebsteder endnu.",
+      "no_workspace_yet": "Opsætning af et arbejdsrum for at begynde at spore websteder.",
+      "create_workspace": "Opret et arbejdsrum",
+      "last_analyzed": "Sidst analyseret",
+      "last_url_change": "Sidste URL-ændring",
+      "run_analysis": "Kør analyse",
+      "analyses_history": "Analyser",
+      "analyses_empty": "Ingen analyser endnu. Kør din første analyse for at se resultaterne.",
+      "view_result": "Se resultat",
+      "back_to_sites": "Tilbage til websteder",
+      "site_not_found": "Vi kunne ikke finde dette websted i nogen af dine arbejdsrum.",
+      "delete_confirm": "Slet websted {domain}? Det vil indgå i en 30-dages kuldeperiode, før domænet kan tilføjes igen.",
+      "delete_forbidden": "Kun arbejdsrumsadministratorer eller ejere kan slette websteder.",
+      "categories": {
+        "technical": "Teknisk",
+        "structured": "Struktureret",
+        "content": "Indhold",
+        "authority": "Autoritet",
+        "visibility": "Synlighed"
+      },
+      "status": {
+        "queued": "I kø",
+        "running": "Kører",
+        "completed": "Afsluttet",
+        "failed": "Mislykket"
+      },
+      "form": {
+        "title_create": "Tilføj et websted",
+        "title_edit": "Rediger websted",
+        "url_label": "URL",
+        "url_placeholder": "https://eksempel.dk",
+        "nickname_label": "Kaldenavn (valgfrit)",
+        "nickname_placeholder": "Produktionswebsted",
+        "type_label": "Type",
+        "type_own": "Dit websted",
+        "type_own_desc": "Et websted, som du ejer, og som du gerne vil forbedre.",
+        "type_competitor": "Konkurrent",
+        "type_competitor_desc": "Et websted, som du gerne vil måle dig selv imod.",
+        "create": "Tilføj websted",
+        "saving": "Gemmer…",
+        "url_required": "Indtast venligst en URL.",
+        "err_invalid_url": "URL er ugyldig eller mangler et domæne.",
+        "err_trial_expired": "Din prøveperiode er udløbet. Opgrader for at fortsætte redigeringen.",
+        "err_plan_limit": "Din plangrænse er nået. Opgrader eller fjern et websted.",
+        "err_conflict": "Dette domæne er allerede registreret eller i en 30-dages kuldeperiode.",
+        "err_url_change_limit": "URL-ændringer er begrænset til en gang pr. 30 dage pr. arbejdsrum."
+      },
+      "analyze": {
+        "title": "Kør analyse",
+        "description": "Vælg hvilke kategorier du vil analysere. Fulde scan dækker alle fem.",
+        "categories_label": "Kategorier",
+        "select_at_least_one": "Vælg mindst én kategori.",
+        "quota_loading": "Indlæser kvote…",
+        "quota_title": "Resterende denne måned ({ym})",
+        "quota_remaining": "{remaining} af {quota}",
+        "quota_unlimited": "Ubegrænset",
+        "quota_none": "Din plan har ingen analyser tilbage denne måned.",
+        "pack": {
+          "pro_pack": "Pro-pakke",
+          "basic_pack": "Basis-pakke",
+          "base": "Base"
+        },
+        "trigger_full": "Kør fuld analyse",
+        "trigger_partial": "Kør på {n} kategorier",
+        "triggering": "Starter…",
+        "err_quota_or_trial": "Ingen analyser tilbage, eller prøveperiode udløbet. Opgrader for at fortsætte.",
+        "err_forbidden": "Du har ikke tilladelse til at udløse en analyse.",
+        "err_concurrent": "En anden analyse kører allerede for dette arbejdsrum.",
+        "err_cooldown": "Dette websted blev analyseret for mindre end en time siden. Prøv igen senere."
+      },
+      "results": {
+        "back_to_site": "Tilbage til websted",
+        "result_not_found": "Vi kunne ikke finde dette analyseresultat.",
+        "running_title": "Analyse i gang",
+        "running_subtitle": "Vi scorer dit websted. Denne side opdateres automatisk.",
+        "failed_title": "Analyse mislykkedes",
+        "queued_subtitle": "Afventer start…",
+        "completed_at": "Fuldført",
+        "triggered_at": "Startet",
+        "duration": "Varighed",
+        "duration_seconds": "{seconds}s",
+        "version": "Version",
+        "trigger_type_manual": "Manuel",
+        "trigger_type_scheduled": "Planlagt",
+        "trigger_type_monthly_auto": "Månedlig automatisk",
+        "funding_source": {
+          "pro_pack": "Pro Pack",
+          "basic_pack": "Basic Pack",
+          "base": "Base",
+          "payg": "Betaling efter forbrug",
+          "addon": "Tilføjelse",
+          "trial": "Prøveperiode"
+        },
+        "overall_score": "Samlet score",
+        "no_score": "Ingen score",
+        "category_score": "Score",
+        "categories_section": "Kategorier",
+        "metrics_section": "Målinger",
+        "show_metrics": "Vis målinger",
+        "hide_metrics": "Skjul målinger",
+        "metric_passed": "Bestået",
+        "metric_failed": "Kræver arbejde",
+        "metric_weight": "Vægt {pct}%",
+        "metric_threshold": "Tærskel {value}",
+        "metric_value": "Værdi",
+        "evidence": "Bevis",
+        "insights_section": "Indsigter",
+        "insights_unavailable": "Indsigter er ikke tilgængelige for denne analyse.",
+        "insights_synthesized_by": "Syntetiseret af {model}",
+        "insights_high_priority_capped": "Nogle højprioriterings-elementer blev degraderet til medium for at holde listen fokuseret.",
+        "improvements_section": "Forbedringer",
+        "improvements_empty": "Der blev ikke genereret specifikke forbedringer for denne analyse.",
+        "improvement_priority": {
+          "high": "Høj",
+          "medium": "Mellem",
+          "low": "Lav"
+        },
+        "improvement_effort": {
+          "low": "Lav indsats",
+          "medium": "Mellem indsats",
+          "high": "Høj indsats"
+        },
+        "improvement_impact": "Påvirkning {value}/10",
+        "improvement_related_metrics": "Relaterede målinger",
+        "error_message": "Fejl",
+        "auto_refresh_paused": "Automatisk opdatering paused (fane inaktiv)."
+      }
+    },
+    "charts": {
+      "timeseries_title": "Scorehistorik",
+      "timeseries_empty": "Ingen færdige analyser at vise i diagram endnu.",
+      "timeseries_single_point": "Seneste score: {score}/100 ({when}). Kør en anden analyse for at se udviklingen.",
+      "timeseries_partial_legend": "✕ markører angiver delvise analyser (nogle kategorier blev sprunget over).",
+      "radar_empty": "Ingen kategoriscores tilgængelige for denne analyse.",
+      "radar_value": "Score",
+      "legend": {
+        "overall": "Samlet",
+        "technical": "Teknisk",
+        "structured": "Struktureret",
+        "content": "Indhold",
+        "authority": "Autoritet",
+        "visibility": "Synlighed"
+      }
+    },
+    "pricing": {
+      "eyebrow": "Priser",
+      "title": "Planer, der vokser med din synlighed",
+      "subtitle": "Start gratis i 7 dage. Opgrader, når du er klar til at spore konkurrenter, udvide websteder og låse historiske trends op.",
+      "footnote": "Priser i USD. Månedlige planer kan annulleres når som helst. Årlige planer sparer op til 15%.",
+      "free": "Gratis",
+      "trial_duration": "7-dages prøveperiode",
+      "per_month": "/ måned",
+      "per_month_billed_annually": "/ måned, faktureret årligt",
+      "unlimited": "Ubegrænset",
+      "featured_badge": "Mest populær",
+      "toggle": {
+        "monthly": "Månedlig",
+        "annual": "Årlig",
+        "annual_save": "Spar 15%"
+      },
+      "plans": {
+        "free": {
+          "name": "Gratis prøveperiode",
+          "tagline": "Prøv alle funktioner i 7 dage. Intet kort påkrævet."
+        },
+        "basic": {
+          "name": "Basic",
+          "tagline": "For solo-grundlæggere, der måler et enkelt websted."
+        },
+        "pro": {
+          "name": "Pro",
+          "tagline": "For marketingteams, der sammenligner på tværs af websteder."
+        },
+        "business": {
+          "name": "Business",
+          "tagline": "For voksende teams med branchebenchmarks og SLA-support."
+        }
+      },
+      "features": {
+        "sites": "{count} ejede websteder",
+        "competitors_per_site": "{count} konkurrenter pr. websted",
+        "custom_analyses": "{count} brugerdefinerede analyser / måned",
+        "timeseries": "{months} måneders trendhistorik",
+        "members": "Op til {count} teammedlemmer",
+        "csv_export": "CSV-eksport",
+        "competitor_comparison": "Konkurrentsammenligning",
+        "industry_benchmark": "Branchebenchmark",
+        "support": {
+          "self": "Selvbetjenelses-dokumentation",
+          "email": "Emailsupport",
+          "email_chat": "Email- og chatsupport",
+          "email_chat_sla4h": "Email + chat (4t SLA)",
+          "dedicated": "Dedikeret CS"
+        }
+      },
+      "cta": {
+        "start_trial": "Start gratis prøveperiode",
+        "choose_plan": "Vælg plan"
+      },
+      "enterprise": {
+        "badge": "Enterprise",
+        "title": "Brugerdefineret plan til store organisationer",
+        "description": "Årlig kontrakt med ubegrænsede websteder, konkurrenter, brugerdefinerede analyser og en dedikeret kundesucces-manager. Bankoverførsel accepteret.",
+        "bullet_unlimited": "Ubegrænsede websteder og analyser",
+        "bullet_dedicated": "Dedikeret CS-manager",
+        "bullet_audit": "Audit log-opbevaring",
+        "bullet_sla": "Brugerdefineret SLA og bankoverførsel",
+        "cta": "Tal med salg"
+      }
+    },
+    "contact": {
+      "eyebrow": "Kontakt",
+      "title": "Lad os tale",
+      "subtitle": "Fortæl os hvad du har brug for — demo, salg, support eller andet. Vi svarer typisk inden for en arbejdsdag.",
+      "submit": "Send besked",
+      "submitting": "Sender…",
+      "privacy_note": "Vi bruger kun din besked til at svare. Dine data deles aldrig.",
+      "fields": {
+        "name": "Navn",
+        "email": "Email",
+        "company": "Virksomhed (valgfri)",
+        "topic": "Hvad handler dette om?",
+        "message": "Besked"
+      },
+      "topics": {
+        "general": "Generel forespørgsel",
+        "demo": "Anmod om demo",
+        "sales": "Salg spørgsmål",
+        "support": "Support spørgsmål"
+      },
+      "errors": {
+        "name_required": "Angiv venligst dit navn.",
+        "name_too_long": "Navn skal være 200 tegn eller færre.",
+        "email_required": "Angiv venligst din email.",
+        "email_invalid": "Angiv venligst en gyldig emailadresse.",
+        "company_too_long": "Virksomhed skal være 200 tegn eller færre.",
+        "message_required": "Angiv venligst en besked.",
+        "message_too_long": "Besked skal være 5000 tegn eller færre.",
+        "rate_limit": "Du har sendt flere beskeder for nylig. Prøv igen om et minut.",
+        "validation": "Kontroller formularen for fejl.",
+        "network": "Vi kunne ikke nå serveren. Kontroller din forbindelse og prøv igen.",
+        "generic": "Noget gik galt ved afsendelse af din besked. Prøv igen."
+      },
+      "success": {
+        "title": "Tak — vi modtog din besked.",
+        "description": "Vi gennemgår og svarer på din email inden for en arbejdsdag."
+      }
+    }
+  }
+}

@@ -5,13 +5,15 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 import { workspaceApi } from "@/lib/api/workspaces";
+import type { Locale } from "@/lib/i18n/config";
+import { LanguageSelect } from "@/components/ui/LanguageSelect";
 
-export function OnboardingForm({ lang }: { lang: "en" | "ko" | "es" }) {
+export function OnboardingForm({ lang }: { lang: Locale }) {
   const t = useTranslations("auth.onboarding");
   const router = useRouter();
 
   const [name, setName] = useState("");
-  const [primaryLanguage, setPrimaryLanguage] = useState<"en" | "ko" | "es">(lang);
+  const [primaryLanguage, setPrimaryLanguage] = useState<Locale>(lang);
   const [timezone, setTimezone] = useState("UTC");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -54,16 +56,11 @@ export function OnboardingForm({ lang }: { lang: "en" | "ko" | "es" }) {
         <label htmlFor="lang" className="block text-sm font-medium mb-1">
           {t("language_label")}
         </label>
-        <select
+        <LanguageSelect
           id="lang"
           value={primaryLanguage}
-          onChange={(e) => setPrimaryLanguage(e.target.value as "en" | "ko" | "es")}
-          className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-primary focus:outline-none"
-        >
-          <option value="en">English</option>
-          <option value="ko">한국어</option>
-          <option value="es">Español</option>
-        </select>
+          onChange={setPrimaryLanguage}
+        />
       </div>
       <div>
         <label htmlFor="tz" className="block text-sm font-medium mb-1">

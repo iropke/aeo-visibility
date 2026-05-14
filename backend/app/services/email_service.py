@@ -40,6 +40,10 @@ from sqlalchemy import select, text
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.config import get_settings
+from app.core.locales import (
+    DEFAULT_LANG as _CORE_DEFAULT_LANG,
+    SUPPORTED_LANGS as _CORE_SUPPORTED_LANGS,
+)
 from app.models.analysis_result import AnalysisResult
 from app.models.profile import Profile
 from app.models.site import Site
@@ -53,10 +57,20 @@ log = logging.getLogger(__name__)
 
 TEMPLATES_DIR: Path = Path(__file__).parent.parent / "templates"
 
-# i18n 지원 언어 — profiles.preferred_language CHECK 와 동일.
-SUPPORTED_LANGS: tuple[str, ...] = ("en", "ko", "es")
-SUPPORTED_LANG_SET: frozenset[str] = frozenset(SUPPORTED_LANGS)
-DEFAULT_LANG: str = "en"
+# i18n 메일 템플릿 디스크 보유 lang.
+# F-i18n-2 청크 (2026-05-09): 영어 마스터 → Haiku 자동 생성 + 사람 작성 ko/es 보존.
+# 결과: profiles.preferred_language 의 20 lang 모두 템플릿 보유 → core.locales.SUPPORTED_LANGS
+# 와 동일. 새 lang 추가 시 `python scripts/translate_i18n.py emails` 1회 실행.
+EMAIL_TEMPLATE_LANGS: tuple[str, ...] = _CORE_SUPPORTED_LANGS
+EMAIL_TEMPLATE_LANG_SET: frozenset[str] = frozenset(EMAIL_TEMPLATE_LANGS)
+
+# 폴백 lang. core.locales.DEFAULT_LANG 와 동일 값.
+DEFAULT_LANG: str = _CORE_DEFAULT_LANG
+
+# 하위 호환 alias — 기존 `SUPPORTED_LANGS` import 처.
+# F-i18n-2 이후 EMAIL_TEMPLATE_LANGS = core.locales.SUPPORTED_LANGS = 20 lang.
+SUPPORTED_LANGS: tuple[str, ...] = EMAIL_TEMPLATE_LANGS
+SUPPORTED_LANG_SET: frozenset[str] = EMAIL_TEMPLATE_LANG_SET
 
 # 발송 alias — SPEC §17-1 (no-reply@ahxov.com), 도메인 ahxov.com 확정 (2026-05-03).
 FROM_ADDRESS: str = "AEO Visibility <no-reply@ahxov.com>"
@@ -106,8 +120,12 @@ def _get_jinja_env() -> Environment:
 
 
 def _normalize_lang(lang: str | None) -> str:
-    """SUPPORTED_LANGS 외 → DEFAULT_LANG 폴백."""
-    return lang if lang in SUPPORTED_LANG_SET else DEFAULT_LANG
+    """메일 템플릿 디스크 보유 lang 으로 정규화. 미보유 lang → DEFAULT_LANG 폴백.
+
+    예: lang='fr' (profiles 에는 valid) → templates/fr.html 미존재 → 'en' 반환.
+    F-i18n-2 청크에서 17 lang 템플릿 자동 생성 후 미보유 lang ❌.
+    """
+    return lang if lang in EMAIL_TEMPLATE_LANG_SET else DEFAULT_LANG
 
 
 def render_template(trigger: str, lang: str, ctx: dict[str, Any]) -> str:
@@ -285,15 +303,19 @@ def _resend_send_sync(payload: dict[str, Any]) -> None:
 
 
 async def _send_one(
-    *, to: str, subject: str, html: str,
+    *, to: str, subject: str, html: str, from_address: str | None = None,
 ) -> bool:
-    """단일 수신자 발송. 실패 시 swallow + log → False 반환."""
+    """단일 수신자 발송. 실패 시 swallow + log → False 반환.
+
+    ``from_address`` 미지정 시 ``FROM_ADDRESS`` (no-reply@). Contact 알림 메일은
+    ``settings.resend_from_contact`` (hello@) 같이 다른 sender 로 override 가능.
+    """
     settings = get_settings()
     if not settings.resend_api_key:
         log.info("email_service: resend_api_key empty, skip send to=%s", to)
         return False
     payload = {
-        "from": FROM_ADDRESS,
+        "from": from_address or FROM_ADDRESS,
         "to": [to],
         "subject": subject,
         "html": html,
@@ -573,6 +595,110 @@ async def send_trial_expiry_email(
         **owner, "ok": ok, "reason": "sent" if ok else "send_failed",
     }
     return summary
+
+
+# ─── Contact 폼 알림 메일 (Phase 1 F3-pricing 진입점) ────────────────
+
+# admin 이 보는 메일이라 다국어 ❌ — 영문 단일 템플릿.
+TRIGGER_CONTACT_NOTIFICATION: str = "contact_notification"
+
+# 운영자에게 가는 알림 메일 subject — topic 별 분기로 inbox 필터링 용이.
+_CONTACT_TOPIC_SUBJECT: dict[str, str] = {
+    "demo": "[ahxov] Demo request from {name}",
+    "sales": "[ahxov] Sales inquiry from {name}",
+    "support": "[ahxov] Support inquiry from {name}",
+    "general": "[ahxov] Contact form — {name}",
+}
+
+
+def build_contact_notification_context(
+    *,
+    submission: Any,
+    submission_id: UUID,
+) -> dict[str, Any]:
+    """Contact notification 메일 컨텍스트.
+
+    ``submission`` 은 ``ContactSubmission`` ORM row 또는 동등 dict-like.
+    ``submission_id`` 는 admin 콘솔/로그에서 추적용.
+    """
+    def _get(attr: str, default: Any = None) -> Any:
+        if isinstance(submission, dict):
+            return submission.get(attr, default)
+        return getattr(submission, attr, default)
+
+    topic_val = _get("topic")
+    if hasattr(topic_val, "value"):  # Enum
+        topic_str = topic_val.value
+    else:
+        topic_str = str(topic_val) if topic_val else "general"
+
+    return {
+        "submission_id": str(submission_id),
+        "name": _get("name", ""),
+        "email": _get("email", ""),
+        "company": _get("company") or "—",
+        "topic": topic_str,
+        "message": _get("message", ""),
+        "locale": _get("locale", "en"),
+        "referrer_url": _get("referrer_url") or "—",
+    }
+
+
+async def send_contact_notification(
+    *,
+    submission: Any,
+    submission_id: UUID,
+) -> bool:
+    """Contact 폼 응답 → 운영자 inbox 알림.
+
+    수신자: ``settings.contact_notification_to`` (콤마 분리 가능, 기본 hello@ahxov.com).
+    발송자: ``settings.resend_from_contact`` (기본 FROM_ADDRESS — no-reply@).
+    실패 시 swallow + log → False (DB row 는 이미 저장된 상태이므로 best-effort).
+
+    호출자(``app.routers.contact``)는 ``BackgroundTasks`` 로 fire-and-forget.
+    """
+    settings = get_settings()
+    if not settings.resend_api_key:
+        log.info(
+            "email_service: resend_api_key empty, skip contact notification id=%s",
+            submission_id,
+        )
+        return False
+
+    # subject — topic 별.
+    ctx = build_contact_notification_context(
+        submission=submission, submission_id=submission_id,
+    )
+    subject_tpl = _CONTACT_TOPIC_SUBJECT.get(ctx["topic"]) or _CONTACT_TOPIC_SUBJECT["general"]
+    subject = subject_tpl.format(name=ctx["name"] or "Anonymous")
+
+    # 본문 렌더 — en 단일 템플릿.
+    try:
+        html = render_template(TRIGGER_CONTACT_NOTIFICATION, "en", ctx)
+    except Exception as exc:  # noqa: BLE001
+        log.error(
+            "email_service: contact_notification render failed id=%s err=%s",
+            submission_id, exc,
+        )
+        return False
+
+    # 수신자 — 콤마 분리.
+    recipients_raw = (settings.contact_notification_to or "").strip()
+    if not recipients_raw:
+        log.warning(
+            "email_service: contact_notification_to empty, skip id=%s", submission_id,
+        )
+        return False
+    recipients = [r.strip() for r in recipients_raw.split(",") if r.strip()]
+
+    from_address = settings.resend_from_contact or FROM_ADDRESS
+    any_sent = False
+    for rcp in recipients:
+        ok = await _send_one(
+            to=rcp, subject=subject, html=html, from_address=from_address,
+        )
+        any_sent = any_sent or ok
+    return any_sent
 
 
 # ─── v1 deprecated stub (leads.py 호출자 보존) ───────────────────────

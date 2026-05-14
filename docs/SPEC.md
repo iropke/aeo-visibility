@@ -302,7 +302,7 @@ audit_logs
 CREATE TABLE profiles (
     id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
     display_name TEXT,
-    preferred_language TEXT NOT NULL DEFAULT 'en' CHECK (preferred_language IN ('en', 'ko', 'es')),
+    preferred_language TEXT NOT NULL DEFAULT 'en' CHECK (preferred_language IN (20 lang, §16-1a)),  -- 014_i18n_locales 갱신
     timezone TEXT NOT NULL DEFAULT 'UTC',
     marketing_consent BOOLEAN NOT NULL DEFAULT FALSE,
     marketing_consent_at TIMESTAMPTZ,
@@ -352,7 +352,7 @@ CREATE TABLE workspaces (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name TEXT NOT NULL,
     slug TEXT UNIQUE NOT NULL,
-    primary_language TEXT NOT NULL DEFAULT 'en' CHECK (primary_language IN ('en', 'ko', 'es')),
+    primary_language TEXT NOT NULL DEFAULT 'en' CHECK (primary_language IN (20 lang, §16-1a)),  -- 014_i18n_locales 갱신
     timezone TEXT NOT NULL DEFAULT 'UTC',
     owner_id UUID NOT NULL REFERENCES profiles(id),
     plan_id TEXT NOT NULL REFERENCES plans(id) DEFAULT 'free',
@@ -1594,13 +1594,66 @@ DB coupon DELETE 또는 is_active=false
 - 타입 안전 (TypeScript 통합)
 - 메시지 번들 분리 가능
 
+### 16-1a. 지원 언어 (20 lang, 사용자 지정 정렬 순서)
+
+F-i18n-1 청크 (2026-05-09) 에서 3 lang → 20 lang 확장. 셀렉트 박스 노출 순서 = 아래 표 순서 (alphabetical ❌).
+
+| # | code | English | Native | RTL |
+|---|------|---------|--------|-----|
+| 1 | en | English | English | |
+| 2 | zh | Mandarin | 中文 | |
+| 3 | ja | Japanese | 日本語 | |
+| 4 | de | German | Deutsch | |
+| 5 | fr | French | Français | |
+| 6 | es | Spanish | Español | |
+| 7 | ko | Korean | 한국어 | |
+| 8 | pt | Portuguese | Português | |
+| 9 | hi | Hindi | हिन्दी | |
+| 10 | ru | Russian | Русский | |
+| 11 | nl | Dutch | Nederlands | |
+| 12 | it | Italian | Italiano | |
+| 13 | ar | Arabic | العربية | ✅ |
+| 14 | sv | Swedish | Svenska | |
+| 15 | th | Thai | ไทย | |
+| 16 | pl | Polish | Polski | |
+| 17 | id | Indonesian | Bahasa Indonesia | |
+| 18 | ms | Malay | Bahasa Melayu | |
+| 19 | da | Danish | Dansk | |
+| 20 | tr | Turkish | Türkçe | |
+
+**단일 소스:**
+- `frontend/src/lib/i18n/config.ts` — `LOCALES_ORDERED`, `LOCALE_META`, `RTL_LOCALES`
+- `backend/app/core/locales.py` — `SUPPORTED_LANGS`, `LOCALE_META`, `RTL_LANGS`, `LangLiteral` (Pydantic)
+- `supabase/migrations/014_i18n_locales.sql` — `profiles.preferred_language` + `workspaces.primary_language` CHECK 제약
+
+**RTL 처리:** `<html dir="rtl">` 자동 스위칭 (`getDirection(locale)`). Tailwind 3.4 `rtl:` / `ltr:` 변형 native 지원.
+
+**번역 워크플로:** Claude Haiku API + 빌드 시점 정적 생성 (`backend/scripts/translate_i18n.py`). 영어 마스터 → 19 lang 자동 생성 + git commit. 변경 키만 호출 (캐싱).
+
 ### 16-2. 메시지 구조
 
 ```
-messages/
-  ├─ en.json
+frontend/src/messages/
+  ├─ en.json   # 영어 마스터 (사람 작성)
+  ├─ zh.json   # 자동 생성 (Haiku)
+  ├─ ja.json   # ↓
+  ├─ de.json
+  ├─ fr.json
+  ├─ es.json
   ├─ ko.json
-  └─ es.json
+  ├─ pt.json
+  ├─ hi.json
+  ├─ ru.json
+  ├─ nl.json
+  ├─ it.json
+  ├─ ar.json
+  ├─ sv.json
+  ├─ th.json
+  ├─ pl.json
+  ├─ id.json
+  ├─ ms.json
+  ├─ da.json
+  └─ tr.json
 ```
 
 **구조**:
@@ -1623,9 +1676,10 @@ messages/
 
 ### 16-3. 라우팅
 
-- `/[lang]/...` 패턴 (lang ∈ {ko, en, es})
-- middleware.ts에서 Accept-Language 감지 → 기본 redirect
-- 사용자 로그인 후 `profiles.preferred_language` 우선
+- `/[lang]/...` 패턴 (lang ∈ 20 lang, §16-1a 표).
+- `[lang]/layout.tsx` 의 `generateStaticParams` 가 `LOCALES_ORDERED` 자동 prerender → 20 정적 경로.
+- `middleware.ts` 에서 Accept-Language `slice(0,2)` 협상 → 매칭 ❌ → `defaultLocale='en'` redirect.
+- 사용자 로그인 후 `profiles.preferred_language` 우선.
 
 ### 16-4. 동적 콘텐츠 다국어
 
@@ -1693,9 +1747,12 @@ messages/
 
 ### 17-4. 다국어 템플릿
 
-- Resend 템플릿 ID를 언어별로 분리: `auth_magic_link_en`, `_ko`, `_es`
-- 또는 Jinja2 템플릿 + Resend HTML 직접 발송
-- 사용자 `profiles.preferred_language` 기준
+- Jinja2 템플릿 + Resend HTML 직접 발송 (`backend/app/services/email_service.py::render_template`).
+- 디렉토리 구조: `backend/app/templates/{trigger}/{lang}.html`. 4 trigger × 20 lang = 80 파일 (F-i18n-2, 2026-05-09).
+- 영어 마스터 사람 작성 → `python scripts/translate_i18n.py emails` 가 19 lang 자동 생성 (Haiku, Jinja2 표현 보존).
+- 사람 작성 ko/es 는 디폴트 보존 (`PRESERVE_HUMAN_AUTHORED`). `--lang ko`/`--force` explicit 시 재생성.
+- 사용자 `profiles.preferred_language` 기준 lang 선택. 미보유 lang ('xx' 등 CHECK 외) → `DEFAULT_LANG='en'` 폴백 (`_normalize_lang`).
+- `<html dir="rtl">` RTL (아랍어) 자동 적용 (스크립트 시스템 프롬프트).
 
 ### 17-5. 발송 우선순위
 

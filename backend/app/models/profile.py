@@ -6,6 +6,7 @@ from sqlalchemy import Boolean, CheckConstraint, DateTime, ForeignKey, String, T
 from sqlalchemy.dialects.postgresql import UUID as PG_UUID
 from sqlalchemy.orm import Mapped, mapped_column
 
+from app.core.locales import sql_check_clause
 from app.models.base import Base
 
 
@@ -39,7 +40,7 @@ class Profile(Base):
 
     __table_args__ = (
         CheckConstraint(
-            "preferred_language IN ('en', 'ko', 'es')",
+            sql_check_clause("preferred_language"),
             name="profiles_preferred_language_check",
         ),
     )

@@ -1,0 +1,335 @@
+{
+  "common": {
+    "site_title": "AEO Visibility",
+    "site_description": "Sitenizin AI yanıt motorlarına ne kadar görünür olduğunu ölçün",
+    "loading": "Yükleniyor…",
+    "error": "Bir şeyler yanlış gitti",
+    "save": "Kaydet",
+    "cancel": "İptal et",
+    "delete": "Sil",
+    "deleting": "Siliniyor…",
+    "edit": "Düzenle",
+    "back": "Geri"
+  },
+  "auth": {
+    "magic_link_form": {
+      "email_label": "E-posta adresi",
+      "email_placeholder": "sizin@ornek.com",
+      "submit": "Sihirli bağlantı gönder",
+      "checking": "Gönderiliyor…",
+      "errors": {
+        "invalid_email": "Lütfen geçerli bir e-posta adresi girin",
+        "send_failed": "Bağlantı gönderilemedi. Lütfen tekrar deneyin."
+      }
+    },
+    "signup": {
+      "title": "Hesabınızı oluşturun",
+      "subtitle": "Size bir sihirli bağlantı göndereceğiz — şifre gerekmez.",
+      "have_account": "Zaten bir hesabınız var mı?",
+      "login_link": "Oturum aç"
+    },
+    "login": {
+      "title": "Oturum aç",
+      "subtitle": "E-posta adresinizi girin ve size bir sihirli bağlantı göndereceğiz.",
+      "no_account": "Hesabınız yok mu?",
+      "signup_link": "Bir tane oluşturun"
+    },
+    "verify": {
+      "title": "E-postanızı kontrol edin",
+      "subtitle": "{email} adresine bir sihirli bağlantı gönderdik. Devam etmek için e-postadaki bağlantıyı tıklayın.",
+      "resend": "Bağlantıyı yeniden gönder",
+      "did_not_receive": "Almadınız mı? Spam klasörünü kontrol edin veya farklı bir e-posta adresi kullanın."
+    },
+    "onboarding": {
+      "title": "Çalışma alanınızı kurun",
+      "subtitle": "Çalışma alanları sitenizi ve analizlerinizi tutar.",
+      "name_label": "Çalışma alanı adı",
+      "name_placeholder": "Acme Pazarlama",
+      "language_label": "Birincil dil",
+      "timezone_label": "Saat dilimi",
+      "submit": "Çalışma alanı oluştur",
+      "creating": "Oluşturuluyor…"
+    },
+    "callback": {
+      "completing": "Oturum açılıyor…",
+      "failed_title": "Oturum açma başarısız oldu",
+      "failed_subtitle": "Bağlantı süresi dolmuş olabilir. Yeni bir bağlantı istemeyi deneyin."
+    }
+  },
+  "app": {
+    "nav": {
+      "dashboard": "Pano",
+      "sites": "Siteler",
+      "reports": "Raporlar",
+      "qa": "S&C",
+      "settings": "Ayarlar",
+      "logout": "Oturumu kapat"
+    },
+    "dashboard": {
+      "title": "Pano",
+      "no_workspace": "Henüz bir çalışma alanınız yok.",
+      "create_workspace": "İlk çalışma alanınızı oluşturun",
+      "your_workspaces": "Çalışma alanlarınız",
+      "manage_sites": "Siteleri yönet",
+      "role_owner": "Sahibi",
+      "role_admin": "Yönetici",
+      "role_member": "Üye",
+      "role_viewer": "Görüntüleyici"
+    },
+    "sites": {
+      "title": "Siteler",
+      "subtitle": "{workspace} içinde izlenen siteler ve rakipler.",
+      "add_site": "Site ekle",
+      "own_sites": "Siteniz",
+      "competitor_sites": "Rakipler",
+      "own_empty": "AEO görünürlüğünü ölçmeye başlamak için ilk sitenizi ekleyin.",
+      "competitors_empty": "Henüz rakip site yok.",
+      "no_workspace_yet": "Siteleri izlemeye başlamak için bir çalışma alanı kurun.",
+      "create_workspace": "Çalışma alanı oluştur",
+      "last_analyzed": "Son analiz",
+      "last_url_change": "Son URL değişikliği",
+      "run_analysis": "Analiz çalıştır",
+      "analyses_history": "Analizler",
+      "analyses_empty": "Henüz analiz yok. Sonuçları görmek için ilk analizinizi çalıştırın.",
+      "view_result": "Sonucu görüntüle",
+      "back_to_sites": "Sitelere geri dön",
+      "site_not_found": "Bu siteyi çalışma alanlarınızdan hiçbirinde bulamadık.",
+      "delete_confirm": "{domain} sitesini sil? Alan adı yeniden eklenebilmesi için 30 günlük bir bekleme süresine girecektir.",
+      "delete_forbidden": "Yalnızca çalışma alanı yöneticileri veya sahipleri siteleri silebilir.",
+      "categories": {
+        "technical": "Teknik",
+        "structured": "Yapılandırılmış",
+        "content": "İçerik",
+        "authority": "Otorite",
+        "visibility": "Görünürlük"
+      },
+      "status": {
+        "queued": "Sırada",
+        "running": "Çalışıyor",
+        "completed": "Tamamlandı",
+        "failed": "Başarısız"
+      },
+      "form": {
+        "title_create": "Site ekle",
+        "title_edit": "Siteyi düzenle",
+        "url_label": "URL",
+        "url_placeholder": "https://ornek.com",
+        "nickname_label": "Takma ad (isteğe bağlı)",
+        "nickname_placeholder": "Üretim sitesi",
+        "type_label": "Tür",
+        "type_own": "Siteniz",
+        "type_own_desc": "Sahip olduğunuz ve iyileştirmek istediğiniz bir site.",
+        "type_competitor": "Rakip",
+        "type_competitor_desc": "Karşılaştırma yapmak istediğiniz bir site.",
+        "create": "Site ekle",
+        "saving": "Kaydediliyor…",
+        "url_required": "Lütfen bir URL girin.",
+        "err_invalid_url": "URL geçersiz veya bir alan adı eksik.",
+        "err_trial_expired": "Deneme süresi sona erdi. Devam etmek için yükseltin.",
+        "err_plan_limit": "Plan sınırınıza ulaşıldı. Yükseltin veya bir site kaldırın.",
+        "err_conflict": "Bu alan adı zaten kayıtlı veya 30 günlük bekleme süresi içinde.",
+        "err_url_change_limit": "URL değişiklikleri çalışma alanı başına 30 günde bir ile sınırlıdır."
+      },
+      "analyze": {
+        "title": "Analiz çalıştır",
+        "description": "Hangi kategorileri analiz edeceğinizi seçin. Tam taramalar beş kategorinin tümünü kapsar.",
+        "categories_label": "Kategoriler",
+        "select_at_least_one": "En az bir kategori seçin.",
+        "quota_loading": "Kota yükleniyor…",
+        "quota_title": "Bu ay kalan ({ym})",
+        "quota_remaining": "{remaining} / {quota}",
+        "quota_unlimited": "Sınırsız",
+        "quota_none": "Planınızda bu ay için analiz kalmadı.",
+        "pack": {
+          "pro_pack": "Pro Paket",
+          "basic_pack": "Temel Paket",
+          "base": "Temel"
+        },
+        "trigger_full": "Tam analiz çalıştır",
+        "trigger_partial": "{n} kategori üzerinde çalıştır",
+        "triggering": "Başlatılıyor…",
+        "err_quota_or_trial": "Analiz kalmadı veya deneme süresi sona erdi. Devam etmek için yükseltin.",
+        "err_forbidden": "Analiz tetikleme izniniz yok.",
+        "err_concurrent": "Bu çalışma alanı için zaten başka bir analiz çalışıyor.",
+        "err_cooldown": "Bu site bir saatten daha kısa süre önce analiz edildi. Daha sonra tekrar deneyin."
+      },
+      "results": {
+        "back_to_site": "Siteye geri dön",
+        "result_not_found": "Bu analiz sonucunu bulamadık.",
+        "running_title": "Analiz devam ediyor",
+        "running_subtitle": "Sitenizi puanlandırıyoruz. Bu sayfa otomatik olarak güncellenecek.",
+        "failed_title": "Analiz başarısız oldu",
+        "queued_subtitle": "Başlamayı bekliyor…",
+        "completed_at": "Tamamlandı",
+        "triggered_at": "Başlatıldı",
+        "duration": "Süre",
+        "duration_seconds": "{seconds}s",
+        "version": "Sürüm",
+        "trigger_type_manual": "Manuel",
+        "trigger_type_scheduled": "Planlanmış",
+        "trigger_type_monthly_auto": "Aylık otomatik",
+        "funding_source": {
+          "pro_pack": "Pro Paketi",
+          "basic_pack": "Temel Paketi",
+          "base": "Temel",
+          "payg": "Kullandıkça öde",
+          "addon": "Eklenti",
+          "trial": "Deneme"
+        },
+        "overall_score": "Genel puan",
+        "no_score": "Puan yok",
+        "category_score": "Puan",
+        "categories_section": "Kategoriler",
+        "metrics_section": "Metrikler",
+        "show_metrics": "Metrikleri göster",
+        "hide_metrics": "Metrikleri gizle",
+        "metric_passed": "Başarılı",
+        "metric_failed": "Geliştirilmesi gerekiyor",
+        "metric_weight": "Ağırlık {pct}%",
+        "metric_threshold": "Eşik {value}",
+        "metric_value": "Değer",
+        "evidence": "Kanıt",
+        "insights_section": "İçgörüler",
+        "insights_unavailable": "Bu analiz için içgörüler kullanılamıyor.",
+        "insights_synthesized_by": "{model} tarafından sentezlendi",
+        "insights_high_priority_capped": "Listeyi odaklanmış tutmak için bazı yüksek öncelikli öğeler orta seviyeye indirildi.",
+        "improvements_section": "İyileştirmeler",
+        "improvements_empty": "Bu analiz için hiçbir özel iyileştirme oluşturulmadı.",
+        "improvement_priority": {
+          "high": "Yüksek",
+          "medium": "Orta",
+          "low": "Düşük"
+        },
+        "improvement_effort": {
+          "low": "Düşük çaba",
+          "medium": "Orta çaba",
+          "high": "Yüksek çaba"
+        },
+        "improvement_impact": "Etki {value}/10",
+        "improvement_related_metrics": "İlgili metrikler",
+        "error_message": "Hata",
+        "auto_refresh_paused": "Otomatik yenileme duraklatıldı (sekme etkin değil)."
+      }
+    },
+    "charts": {
+      "timeseries_title": "Skor geçmişi",
+      "timeseries_empty": "Henüz grafiğe eklenecek tamamlanmış analiz yok.",
+      "timeseries_single_point": "Son skor: {score}/100 ({when}). Trendi görmek için başka bir analiz çalıştırın.",
+      "timeseries_partial_legend": "✕ işaretleri kısmi analizleri gösterir (bazı kategoriler atlanmıştır).",
+      "radar_empty": "Bu analiz için kategori skorları mevcut değil.",
+      "radar_value": "Skor",
+      "legend": {
+        "overall": "Genel",
+        "technical": "Teknik",
+        "structured": "Yapılandırılmış",
+        "content": "İçerik",
+        "authority": "Otorite",
+        "visibility": "Görünürlük"
+      }
+    },
+    "pricing": {
+      "eyebrow": "Fiyatlandırma",
+      "title": "Görünürlüğünüzle birlikte büyüyen planlar",
+      "subtitle": "7 gün ücretsiz başlayın. Rakipleri takip etmeye, siteleri genişletmeye ve geçmiş eğilimleri açığa çıkarmaya hazır olduğunuzda yükseltin.",
+      "footnote": "Fiyatlar USD cinsindendir. Aylık planlar istediğiniz zaman iptal edilebilir. Yıllık planlar %15'e kadar tasarruf sağlar.",
+      "free": "Ücretsiz",
+      "trial_duration": "7 günlük deneme",
+      "per_month": "/ ay",
+      "per_month_billed_annually": "/ ay, yıllık faturalandırılır",
+      "unlimited": "Sınırsız",
+      "featured_badge": "En popüler",
+      "toggle": {
+        "monthly": "Aylık",
+        "annual": "Yıllık",
+        "annual_save": "%15 tasarruf edin"
+      },
+      "plans": {
+        "free": {
+          "name": "Ücretsiz Deneme",
+          "tagline": "Her özelliği 7 gün boyunca deneyin. Kart gerekmez."
+        },
+        "basic": {
+          "name": "Temel",
+          "tagline": "Tek bir siteyi ölçen solo kurucular için."
+        },
+        "pro": {
+          "name": "Pro",
+          "tagline": "Siteler arasında karşılaştırma yapan pazarlama ekipleri için."
+        },
+        "business": {
+          "name": "İşletme",
+          "tagline": "Endüstri karşılaştırmaları ve SLA desteği ile büyüyen ekipler için."
+        }
+      },
+      "features": {
+        "sites": "{count} sahip olunan site",
+        "competitors_per_site": "Site başına {count} rakip",
+        "custom_analyses": "Ayda {count} özel analiz",
+        "timeseries": "{months} aylık trend geçmişi",
+        "members": "En fazla {count} takım üyesi",
+        "csv_export": "CSV dışa aktarma",
+        "competitor_comparison": "Rakip karşılaştırması",
+        "industry_benchmark": "Endüstri karşılaştırması",
+        "support": {
+          "self": "Kendi kendine yardım belgeleri",
+          "email": "E-posta desteği",
+          "email_chat": "E-posta + sohbet desteği",
+          "email_chat_sla4h": "E-posta + sohbet (4s SLA)",
+          "dedicated": "Özel CS"
+        }
+      },
+      "cta": {
+        "start_trial": "Ücretsiz denemeyi başlat",
+        "choose_plan": "Plan seç"
+      },
+      "enterprise": {
+        "badge": "Kurumsal",
+        "title": "Büyük kuruluşlar için özel plan",
+        "description": "Sınırsız siteler, rakipler, özel analizler ve özel bir müşteri başarısı yöneticisi içeren yıllık sözleşme. Banka havalesi kabul edilir.",
+        "bullet_unlimited": "Sınırsız siteler ve analizler",
+        "bullet_dedicated": "Özel CS yöneticisi",
+        "bullet_audit": "Denetim günlüğü saklama",
+        "bullet_sla": "Özel SLA ve banka havalesi",
+        "cta": "Satış ekibiyle görüşün"
+      }
+    },
+    "contact": {
+      "eyebrow": "İletişim",
+      "title": "Konuşalım",
+      "subtitle": "Neye ihtiyacınız olduğunu bize söyleyin — demo, satış, destek veya başka bir şey. Genellikle bir iş günü içinde yanıt veririz.",
+      "submit": "Mesaj gönder",
+      "submitting": "Gönderiliyor…",
+      "privacy_note": "Mesajınızı yalnızca yanıt vermek için kullanırız. Verileriniz asla paylaşılmaz.",
+      "fields": {
+        "name": "Ad",
+        "email": "E-posta",
+        "company": "Şirket (opsiyonel)",
+        "topic": "Bu ne hakkında?",
+        "message": "Mesaj"
+      },
+      "topics": {
+        "general": "Genel soruşturma",
+        "demo": "Demo talep et",
+        "sales": "Satış sorusu",
+        "support": "Destek sorusu"
+      },
+      "errors": {
+        "name_required": "Lütfen adınızı girin.",
+        "name_too_long": "Ad 200 karakterden az olmalıdır.",
+        "email_required": "Lütfen e-postanızı girin.",
+        "email_invalid": "Lütfen geçerli bir e-posta adresi girin.",
+        "company_too_long": "Şirket 200 karakterden az olmalıdır.",
+        "message_required": "Lütfen bir mesaj girin.",
+        "message_too_long": "Mesaj 5000 karakterden az olmalıdır.",
+        "rate_limit": "Son zamanlarda birkaç mesaj gönderdikten sonra. Lütfen bir dakika içinde tekrar deneyin.",
+        "validation": "Lütfen formu hatalar açısından kontrol edin.",
+        "network": "Sunucuya ulaşamadık. Bağlantınızı kontrol edin ve tekrar deneyin.",
+        "generic": "Mesajınız gönderilirken bir sorun oluştu. Lütfen tekrar deneyin."
+      },
+      "success": {
+        "title": "Teşekkürler — mesajınızı aldık.",
+        "description": "Gözden geçireceğiz ve bir iş günü içinde e-postanıza yanıt vereceğiz."
+      }
+    }
+  }
+}

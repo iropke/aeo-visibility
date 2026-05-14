@@ -1,0 +1,335 @@
+{
+  "common": {
+    "site_title": "AEO Visibility",
+    "site_description": "قيس مدى ظهور موقعك لمحركات الإجابة بالذكاء الاصطناعي",
+    "loading": "جاري التحميل…",
+    "error": "حدث خطأ ما",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "delete": "حذف",
+    "deleting": "جاري الحذف…",
+    "edit": "تعديل",
+    "back": "رجوع"
+  },
+  "auth": {
+    "magic_link_form": {
+      "email_label": "عنوان البريد الإلكتروني",
+      "email_placeholder": "you@example.com",
+      "submit": "إرسال رابط سحري",
+      "checking": "جاري الإرسال…",
+      "errors": {
+        "invalid_email": "يرجى إدخال عنوان بريد إلكتروني صحيح",
+        "send_failed": "لم يتمكن من إرسال الرابط. يرجى المحاولة مرة أخرى."
+      }
+    },
+    "signup": {
+      "title": "إنشاء حسابك",
+      "subtitle": "سنرسل إليك رابطًا سحريًا عبر البريد الإلكتروني — لا حاجة لكلمة مرور.",
+      "have_account": "هل لديك حساب بالفعل؟",
+      "login_link": "تسجيل الدخول"
+    },
+    "login": {
+      "title": "تسجيل الدخول",
+      "subtitle": "أدخل بريدك الإلكتروني وسنرسل إليك رابطًا سحريًا.",
+      "no_account": "ليس لديك حساب؟",
+      "signup_link": "إنشاء واحد"
+    },
+    "verify": {
+      "title": "تحقق من بريدك الإلكتروني",
+      "subtitle": "أرسلنا رابطًا سحريًا إلى {email}. انقر على الرابط في البريد الإلكتروني للمتابعة.",
+      "resend": "إعادة إرسال الرابط",
+      "did_not_receive": "لم تستقبله؟ تحقق من البريد العشوائي، أو استخدم بريدًا إلكترونيًا مختلفًا."
+    },
+    "onboarding": {
+      "title": "إعداد مساحة عملك",
+      "subtitle": "تحتوي مساحات العمل على مواقعك والتحليلات الخاصة بك.",
+      "name_label": "اسم مساحة العمل",
+      "name_placeholder": "Acme Marketing",
+      "language_label": "اللغة الأساسية",
+      "timezone_label": "المنطقة الزمنية",
+      "submit": "إنشاء مساحة عمل",
+      "creating": "جاري الإنشاء…"
+    },
+    "callback": {
+      "completing": "جاري تسجيل دخولك…",
+      "failed_title": "فشل تسجيل الدخول",
+      "failed_subtitle": "قد يكون الرابط قد انتهت صلاحيته. حاول طلب رابط جديد."
+    }
+  },
+  "app": {
+    "nav": {
+      "dashboard": "لوحة التحكم",
+      "sites": "المواقع",
+      "reports": "التقارير",
+      "qa": "الأسئلة والإجابات",
+      "settings": "الإعدادات",
+      "logout": "تسجيل الخروج"
+    },
+    "dashboard": {
+      "title": "لوحة التحكم",
+      "no_workspace": "ليس لديك مساحة عمل حتى الآن.",
+      "create_workspace": "إنشاء مساحة عملك الأولى",
+      "your_workspaces": "مساحات عملك",
+      "manage_sites": "إدارة المواقع",
+      "role_owner": "المالك",
+      "role_admin": "مسؤول",
+      "role_member": "عضو",
+      "role_viewer": "عارض"
+    },
+    "sites": {
+      "title": "المواقع",
+      "subtitle": "المواقع والمنافسين المتتبعين في {workspace}.",
+      "add_site": "إضافة موقع",
+      "own_sites": "مواقعك",
+      "competitor_sites": "المنافسون",
+      "own_empty": "أضف موقعك الأول لبدء قياس ظهور AEO.",
+      "competitors_empty": "لا توجد مواقع منافسة حتى الآن.",
+      "no_workspace_yet": "قم بإعداد مساحة عمل لبدء تتبع المواقع.",
+      "create_workspace": "إنشاء مساحة عمل",
+      "last_analyzed": "آخر تحليل",
+      "last_url_change": "آخر تغيير في عنوان URL",
+      "run_analysis": "تشغيل التحليل",
+      "analyses_history": "التحليلات",
+      "analyses_empty": "لا توجد تحليلات حتى الآن. شغّل أول تحليل لك لعرض النتائج.",
+      "view_result": "عرض النتيجة",
+      "back_to_sites": "العودة إلى المواقع",
+      "site_not_found": "لم نتمكن من العثور على هذا الموقع في أي من مساحات عملك.",
+      "delete_confirm": "حذف الموقع {domain}؟ سيدخل فترة انتظار مدتها 30 يومًا قبل أن يمكن إعادة إضافة المجال.",
+      "delete_forbidden": "فقط مسؤولو مساحة العمل أو المالكون يمكنهم حذف المواقع.",
+      "categories": {
+        "technical": "تقني",
+        "structured": "منظم",
+        "content": "محتوى",
+        "authority": "السلطة",
+        "visibility": "الظهور"
+      },
+      "status": {
+        "queued": "قيد الانتظار",
+        "running": "قيد التشغيل",
+        "completed": "مكتمل",
+        "failed": "فشل"
+      },
+      "form": {
+        "title_create": "إضافة موقع",
+        "title_edit": "تعديل الموقع",
+        "url_label": "عنوان URL",
+        "url_placeholder": "https://example.com",
+        "nickname_label": "الاسم المستعار (اختياري)",
+        "nickname_placeholder": "موقع الإنتاج",
+        "type_label": "النوع",
+        "type_own": "موقعك",
+        "type_own_desc": "موقع تملكه وتريد تحسينه.",
+        "type_competitor": "منافس",
+        "type_competitor_desc": "موقع تريد المقارنة معه.",
+        "create": "إضافة موقع",
+        "saving": "جاري الحفظ…",
+        "url_required": "يرجى إدخال عنوان URL.",
+        "err_invalid_url": "عنوان URL غير صحيح أو يفتقد مجالًا.",
+        "err_trial_expired": "انتهت نسخة التجربة الخاصة بك. قم بالترقية للمتابعة.",
+        "err_plan_limit": "تم الوصول إلى حد خطتك. قم بالترقية أو إزالة موقع.",
+        "err_conflict": "هذا المجال مسجل بالفعل أو في فترة انتظار مدتها 30 يومًا.",
+        "err_url_change_limit": "تغييرات عنوان URL محدودة بمرة واحدة كل 30 يومًا لكل مساحة عمل."
+      },
+      "analyze": {
+        "title": "تشغيل التحليل",
+        "description": "اختر الفئات المراد تحليلها. تغطي الفحوصات الكاملة جميع الفئات الخمس.",
+        "categories_label": "الفئات",
+        "select_at_least_one": "اختر فئة واحدة على الأقل.",
+        "quota_loading": "جاري تحميل الحصة…",
+        "quota_title": "المتبقي هذا الشهر ({ym})",
+        "quota_remaining": "{remaining} من {quota}",
+        "quota_unlimited": "غير محدود",
+        "quota_none": "خطتك لم تترك تحليلات متبقية هذا الشهر.",
+        "pack": {
+          "pro_pack": "Pro Pack",
+          "basic_pack": "Basic Pack",
+          "base": "أساسي"
+        },
+        "trigger_full": "تشغيل التحليل الكامل",
+        "trigger_partial": "تشغيل على {n} فئات",
+        "triggering": "جاري البدء…",
+        "err_quota_or_trial": "انتهت التحليلات أو انتهت نسخة التجربة. قم بالترقية للمتابعة.",
+        "err_forbidden": "ليس لديك إذن لتشغيل تحليل.",
+        "err_concurrent": "تحليل آخر قيد التشغيل بالفعل لمساحة العمل هذه.",
+        "err_cooldown": "تم تحليل هذا الموقع منذ أقل من ساعة. حاول لاحقًا."
+      },
+      "results": {
+        "back_to_site": "العودة إلى الموقع",
+        "result_not_found": "لم نتمكن من العثور على نتيجة التحليل هذه.",
+        "running_title": "جارٍ تحليل الموقع",
+        "running_subtitle": "نحن نقيّم موقعك. سيتم تحديث هذه الصفحة تلقائياً.",
+        "failed_title": "فشل التحليل",
+        "queued_subtitle": "في انتظار البدء…",
+        "completed_at": "مكتمل",
+        "triggered_at": "بدأ",
+        "duration": "المدة",
+        "duration_seconds": "{seconds}ث",
+        "version": "الإصدار",
+        "trigger_type_manual": "يدوي",
+        "trigger_type_scheduled": "مجدول",
+        "trigger_type_monthly_auto": "تلقائي شهري",
+        "funding_source": {
+          "pro_pack": "حزمة Pro",
+          "basic_pack": "حزمة Basic",
+          "base": "أساسي",
+          "payg": "الدفع حسب الاستخدام",
+          "addon": "إضافة",
+          "trial": "نسخة تجريبية"
+        },
+        "overall_score": "النتيجة الإجمالية",
+        "no_score": "لا توجد نتيجة",
+        "category_score": "النتيجة",
+        "categories_section": "الفئات",
+        "metrics_section": "المقاييس",
+        "show_metrics": "عرض المقاييس",
+        "hide_metrics": "إخفاء المقاييس",
+        "metric_passed": "نجح",
+        "metric_failed": "يحتاج إلى تحسين",
+        "metric_weight": "الوزن {pct}%",
+        "metric_threshold": "الحد الأدنى {value}",
+        "metric_value": "القيمة",
+        "evidence": "الأدلة",
+        "insights_section": "الرؤى",
+        "insights_unavailable": "الرؤى غير متاحة لهذا التحليل.",
+        "insights_synthesized_by": "تم تجميعها بواسطة {model}",
+        "insights_high_priority_capped": "تم خفض بعض العناصر ذات الأولوية العالية إلى الأولوية المتوسطة للحفاظ على تركيز القائمة.",
+        "improvements_section": "التحسينات",
+        "improvements_empty": "لم يتم إنشاء تحسينات محددة لهذا التحليل.",
+        "improvement_priority": {
+          "high": "عالية",
+          "medium": "متوسطة",
+          "low": "منخفضة"
+        },
+        "improvement_effort": {
+          "low": "جهد منخفض",
+          "medium": "جهد متوسط",
+          "high": "جهد عالي"
+        },
+        "improvement_impact": "التأثير {value}/10",
+        "improvement_related_metrics": "المقاييس ذات الصلة",
+        "error_message": "خطأ",
+        "auto_refresh_paused": "إيقاف التحديث التلقائي (علامة التبويب غير نشطة)."
+      }
+    },
+    "charts": {
+      "timeseries_title": "سجل النقاط",
+      "timeseries_empty": "لا توجد تحليلات مكتملة لعرضها في الرسم البياني حتى الآن.",
+      "timeseries_single_point": "آخر نقاط: {score}/100 ({when}). قم بتشغيل تحليل آخر لمشاهدة الاتجاه.",
+      "timeseries_partial_legend": "تشير علامات ✕ إلى تحليلات جزئية (تم تخطي بعض الفئات).",
+      "radar_empty": "لا توجد درجات الفئات المتاحة لهذا التحليل.",
+      "radar_value": "النقاط",
+      "legend": {
+        "overall": "الإجمالي",
+        "technical": "التقني",
+        "structured": "المنظم",
+        "content": "المحتوى",
+        "authority": "الموثوقية",
+        "visibility": "الظهور"
+      }
+    },
+    "pricing": {
+      "eyebrow": "التسعير",
+      "title": "خطط تنمو مع ظهورك",
+      "subtitle": "ابدأ مجاناً لمدة 7 أيام. ترقِّ عندما تكون مستعداً لتتبع المنافسين وتوسيع المواقع وفتح الاتجاهات التاريخية.",
+      "footnote": "الأسعار بالدولار الأمريكي. يمكن إلغاء الخطط الشهرية في أي وقت. توفر الخطط السنوية حتى 15%.",
+      "free": "مجاني",
+      "trial_duration": "تجربة 7 أيام",
+      "per_month": "/ شهر",
+      "per_month_billed_annually": "/ شهر، بفاتورة سنوية",
+      "unlimited": "غير محدود",
+      "featured_badge": "الأكثر شهرة",
+      "toggle": {
+        "monthly": "شهري",
+        "annual": "سنوي",
+        "annual_save": "وفر 15%"
+      },
+      "plans": {
+        "free": {
+          "name": "تجربة مجانية",
+          "tagline": "جرب كل ميزة لمدة 7 أيام. لا تحتاج إلى بطاقة."
+        },
+        "basic": {
+          "name": "أساسي",
+          "tagline": "للمؤسسين الفرادى الذين يقيسون موقعاً واحداً."
+        },
+        "pro": {
+          "name": "احترافي",
+          "tagline": "لفرق التسويق التي تجري مقارنات عبر المواقع."
+        },
+        "business": {
+          "name": "الأعمال",
+          "tagline": "للفرق المتنامية التي تحتوي على معايير الصناعة ودعم SLA."
+        }
+      },
+      "features": {
+        "sites": "{count} موقع مملوك",
+        "competitors_per_site": "{count} منافس لكل موقع",
+        "custom_analyses": "{count} تحليل مخصص / شهر",
+        "timeseries": "{months} شهر من سجل الاتجاهات",
+        "members": "حتى {count} عضو في الفريق",
+        "csv_export": "تصدير CSV",
+        "competitor_comparison": "مقارنة المنافسين",
+        "industry_benchmark": "معيار الصناعة",
+        "support": {
+          "self": "مستندات الخدمة الذاتية",
+          "email": "دعم البريد الإلكتروني",
+          "email_chat": "دعم البريد الإلكتروني + الدردشة",
+          "email_chat_sla4h": "البريد الإلكتروني + الدردشة (SLA 4 ساعات)",
+          "dedicated": "مدير نجاح مخصص"
+        }
+      },
+      "cta": {
+        "start_trial": "ابدأ التجربة المجانية",
+        "choose_plan": "اختر خطة"
+      },
+      "enterprise": {
+        "badge": "مؤسسة",
+        "title": "خطة مخصصة للمؤسسات الكبيرة",
+        "description": "عقد سنوي مع مواقع وحلفاء وتحليلات مخصصة غير محدودة ومدير نجاح عميل مخصص. يتم قبول التحويل البنكي.",
+        "bullet_unlimited": "مواقع وتحليلات غير محدودة",
+        "bullet_dedicated": "مدير نجاح مخصص",
+        "bullet_audit": "الاحتفاظ بسجل التدقيق",
+        "bullet_sla": "SLA مخصص والتحويل البنكي",
+        "cta": "تحدث إلى فريق المبيعات"
+      }
+    },
+    "contact": {
+      "eyebrow": "اتصل",
+      "title": "دعنا نتحدث",
+      "subtitle": "أخبرنا بما تحتاجه — عرض توضيحي أو مبيعات أو دعم أو أي شيء آخر. عادةً ما نرد في غضون يوم عمل واحد.",
+      "submit": "إرسال رسالة",
+      "submitting": "جاري الإرسال…",
+      "privacy_note": "نستخدم رسالتك فقط للرد. لا يتم أبداً مشاركة بيانات الخاص بك.",
+      "fields": {
+        "name": "الاسم",
+        "email": "البريد الإلكتروني",
+        "company": "الشركة (اختياري)",
+        "topic": "ما هو الموضوع؟",
+        "message": "الرسالة"
+      },
+      "topics": {
+        "general": "استفسار عام",
+        "demo": "طلب عرض توضيحي",
+        "sales": "سؤال المبيعات",
+        "support": "سؤال الدعم"
+      },
+      "errors": {
+        "name_required": "يرجى إدخال اسمك.",
+        "name_too_long": "يجب أن يكون الاسم 200 حرف أو أقل.",
+        "email_required": "يرجى إدخال بريدك الإلكتروني.",
+        "email_invalid": "يرجى إدخال عنوان بريد إلكتروني صحيح.",
+        "company_too_long": "يجب أن تكون الشركة 200 حرف أو أقل.",
+        "message_required": "يرجى إدخال رسالة.",
+        "message_too_long": "يجب أن تكون الرسالة 5000 حرف أو أقل.",
+        "rate_limit": "لقد أرسلت عدة رسائل مؤخراً. يرجى المحاولة مرة أخرى في دقيقة.",
+        "validation": "يرجى فحص النموذج بحثاً عن الأخطاء.",
+        "network": "لم نتمكن من الوصول إلى الخادم. تحقق من اتصالك وحاول مرة أخرى.",
+        "generic": "حدث خطأ ما عند إرسال رسالتك. يرجى المحاولة مرة أخرى."
+      },
+      "success": {
+        "title": "شكراً - لقد تلقينا رسالتك.",
+        "description": "سنراجع ونرد على بريدك الإلكتروني في غضون يوم عمل واحد."
+      }
+    }
+  }
+}

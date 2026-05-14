@@ -1,0 +1,335 @@
+{
+  "common": {
+    "site_title": "AEO Visibility",
+    "site_description": "Ukur seberapa terlihat laman anda kepada enjin jawapan AI",
+    "loading": "Memuatkan…",
+    "error": "Sesuatu telah berlaku",
+    "save": "Simpan",
+    "cancel": "Batal",
+    "delete": "Padam",
+    "deleting": "Memadamkan…",
+    "edit": "Edit",
+    "back": "Kembali"
+  },
+  "auth": {
+    "magic_link_form": {
+      "email_label": "Alamat e-mel",
+      "email_placeholder": "anda@contoh.com",
+      "submit": "Hantar pautan ajaib",
+      "checking": "Menghantar…",
+      "errors": {
+        "invalid_email": "Sila masukkan alamat e-mel yang sah",
+        "send_failed": "Tidak dapat menghantar pautan. Sila cuba lagi."
+      }
+    },
+    "signup": {
+      "title": "Buat akaun anda",
+      "subtitle": "Kami akan menghantar pautan ajaib kepada anda melalui e-mel — tidak perlu kata laluan.",
+      "have_account": "Sudah mempunyai akaun?",
+      "login_link": "Daftar masuk"
+    },
+    "login": {
+      "title": "Daftar masuk",
+      "subtitle": "Masukkan e-mel anda dan kami akan menghantar pautan ajaib.",
+      "no_account": "Tidak mempunyai akaun?",
+      "signup_link": "Buat satu"
+    },
+    "verify": {
+      "title": "Semak e-mel anda",
+      "subtitle": "Kami telah menghantar pautan ajaib ke {email}. Klik pautan dalam e-mel untuk meneruskan.",
+      "resend": "Hantar semula pautan",
+      "did_not_receive": "Tidak menerimanya? Periksa spam atau gunakan e-mel yang berbeza."
+    },
+    "onboarding": {
+      "title": "Sediakan ruang kerja anda",
+      "subtitle": "Ruang kerja menyimpan laman dan analisis anda.",
+      "name_label": "Nama ruang kerja",
+      "name_placeholder": "Acme Marketing",
+      "language_label": "Bahasa utama",
+      "timezone_label": "Zon masa",
+      "submit": "Buat ruang kerja",
+      "creating": "Membuat…"
+    },
+    "callback": {
+      "completing": "Mendaftar masuk…",
+      "failed_title": "Gagal mendaftar masuk",
+      "failed_subtitle": "Pautan mungkin telah tamat tempoh. Cuba minta yang baru."
+    }
+  },
+  "app": {
+    "nav": {
+      "dashboard": "Papan pemuka",
+      "sites": "Laman",
+      "reports": "Laporan",
+      "qa": "Soalan & Jawapan",
+      "settings": "Tetapan",
+      "logout": "Daftar keluar"
+    },
+    "dashboard": {
+      "title": "Papan pemuka",
+      "no_workspace": "Anda belum mempunyai ruang kerja.",
+      "create_workspace": "Buat ruang kerja pertama anda",
+      "your_workspaces": "Ruang kerja anda",
+      "manage_sites": "Kelola laman",
+      "role_owner": "Pemilik",
+      "role_admin": "Admin",
+      "role_member": "Ahli",
+      "role_viewer": "Penjelihat"
+    },
+    "sites": {
+      "title": "Laman",
+      "subtitle": "Laman dan pesaing yang dijejaki dalam {workspace}.",
+      "add_site": "Tambah laman",
+      "own_sites": "Laman anda",
+      "competitor_sites": "Pesaing",
+      "own_empty": "Tambah laman pertama anda untuk mula mengukur keterlihatan AEO.",
+      "competitors_empty": "Belum ada laman pesaing.",
+      "no_workspace_yet": "Sediakan ruang kerja untuk mula menjejaki laman.",
+      "create_workspace": "Buat ruang kerja",
+      "last_analyzed": "Dianalisis terakhir",
+      "last_url_change": "Perubahan URL terakhir",
+      "run_analysis": "Jalankan analisis",
+      "analyses_history": "Analisis",
+      "analyses_empty": "Belum ada analisis. Jalankan analisis pertama anda untuk melihat keputusan.",
+      "view_result": "Lihat keputusan",
+      "back_to_sites": "Kembali ke laman",
+      "site_not_found": "Kami tidak dapat mencari laman ini dalam mana-mana ruang kerja anda.",
+      "delete_confirm": "Padam laman {domain}? Ia akan memasuki tempoh penyejukan 30 hari sebelum domain boleh ditambah semula.",
+      "delete_forbidden": "Hanya admin atau pemilik ruang kerja boleh memadamkan laman.",
+      "categories": {
+        "technical": "Teknikal",
+        "structured": "Berstruktur",
+        "content": "Kandungan",
+        "authority": "Autoriti",
+        "visibility": "Keterlihatan"
+      },
+      "status": {
+        "queued": "Beratur",
+        "running": "Berjalan",
+        "completed": "Selesai",
+        "failed": "Gagal"
+      },
+      "form": {
+        "title_create": "Tambah laman",
+        "title_edit": "Edit laman",
+        "url_label": "URL",
+        "url_placeholder": "https://contoh.com",
+        "nickname_label": "Nama panggilan (pilihan)",
+        "nickname_placeholder": "Laman Produksi",
+        "type_label": "Jenis",
+        "type_own": "Laman anda",
+        "type_own_desc": "Laman yang anda miliki dan ingin tingkatkan.",
+        "type_competitor": "Pesaing",
+        "type_competitor_desc": "Laman yang ingin anda bandingkan.",
+        "create": "Tambah laman",
+        "saving": "Menyimpan…",
+        "url_required": "Sila masukkan URL.",
+        "err_invalid_url": "URL tidak sah atau hilang domain.",
+        "err_trial_expired": "Percubaan anda telah tamat. Tingkatkan untuk meneruskan pengeditan.",
+        "err_plan_limit": "Had had pelan anda telah tercapai. Tingkatkan atau alih keluar laman.",
+        "err_conflict": "Domain ini sudah berdaftar atau dalam tempoh penyejukan 30 hari.",
+        "err_url_change_limit": "Perubahan URL terhad kepada sekali per 30 hari bagi setiap ruang kerja."
+      },
+      "analyze": {
+        "title": "Jalankan analisis",
+        "description": "Pilih kategori yang ingin dianalisis. Imbasan penuh merangkumi semua lima.",
+        "categories_label": "Kategori",
+        "select_at_least_one": "Pilih sekurang-kurangnya satu kategori.",
+        "quota_loading": "Memuatkan kuota…",
+        "quota_title": "Baki bulan ini ({ym})",
+        "quota_remaining": "{remaining} daripada {quota}",
+        "quota_unlimited": "Tanpa had",
+        "quota_none": "Pelan anda tidak mempunyai analisis baki bulan ini.",
+        "pack": {
+          "pro_pack": "Pakej Pro",
+          "basic_pack": "Pakej Asas",
+          "base": "Asas"
+        },
+        "trigger_full": "Jalankan analisis penuh",
+        "trigger_partial": "Jalankan pada {n} kategori",
+        "triggering": "Memulai…",
+        "err_quota_or_trial": "Analisis habis atau percubaan tamat. Tingkatkan untuk meneruskan.",
+        "err_forbidden": "Anda tidak mempunyai kebenaran untuk mencetuskan analisis.",
+        "err_concurrent": "Analisis lain sudah berjalan untuk ruang kerja ini.",
+        "err_cooldown": "Laman ini telah dianalisis kurang dari satu jam yang lalu. Cuba lagi kemudian."
+      },
+      "results": {
+        "back_to_site": "Kembali ke situs",
+        "result_not_found": "Kami tidak dapat menemukan hasil analisis ini.",
+        "running_title": "Analisis sedang berjalan",
+        "running_subtitle": "Kami sedang menilai situs Anda. Halaman ini akan diperbarui secara otomatis.",
+        "failed_title": "Analisis gagal",
+        "queued_subtitle": "Menunggu untuk dimulai…",
+        "completed_at": "Selesai",
+        "triggered_at": "Dimulai",
+        "duration": "Durasi",
+        "duration_seconds": "{seconds}d",
+        "version": "Versi",
+        "trigger_type_manual": "Manual",
+        "trigger_type_scheduled": "Terjadwal",
+        "trigger_type_monthly_auto": "Otomatis bulanan",
+        "funding_source": {
+          "pro_pack": "Pro Pack",
+          "basic_pack": "Basic Pack",
+          "base": "Dasar",
+          "payg": "Bayar sesuai penggunaan",
+          "addon": "Add-on",
+          "trial": "Uji coba"
+        },
+        "overall_score": "Skor keseluruhan",
+        "no_score": "Tidak ada skor",
+        "category_score": "Skor",
+        "categories_section": "Kategori",
+        "metrics_section": "Metrik",
+        "show_metrics": "Tampilkan metrik",
+        "hide_metrics": "Sembunyikan metrik",
+        "metric_passed": "Lulus",
+        "metric_failed": "Perlu perbaikan",
+        "metric_weight": "Bobot {pct}%",
+        "metric_threshold": "Ambang batas {value}",
+        "metric_value": "Nilai",
+        "evidence": "Bukti",
+        "insights_section": "Wawasan",
+        "insights_unavailable": "Wawasan tidak tersedia untuk analisis ini.",
+        "insights_synthesized_by": "Disintesis oleh {model}",
+        "insights_high_priority_capped": "Beberapa item prioritas tinggi diturunkan ke menengah untuk menjaga daftar tetap terfokus.",
+        "improvements_section": "Perbaikan",
+        "improvements_empty": "Tidak ada perbaikan spesifik yang dihasilkan untuk analisis ini.",
+        "improvement_priority": {
+          "high": "Tinggi",
+          "medium": "Menengah",
+          "low": "Rendah"
+        },
+        "improvement_effort": {
+          "low": "Usaha rendah",
+          "medium": "Usaha menengah",
+          "high": "Usaha tinggi"
+        },
+        "improvement_impact": "Dampak {value}/10",
+        "improvement_related_metrics": "Metrik terkait",
+        "error_message": "Kesalahan",
+        "auto_refresh_paused": "Penyegaran otomatis dijeda (tab tidak aktif)."
+      }
+    },
+    "charts": {
+      "timeseries_title": "Sejarah skor",
+      "timeseries_empty": "Tiada analisis yang selesai untuk dipaparkan pada carta lagi.",
+      "timeseries_single_point": "Skor terbaru: {score}/100 ({when}). Jalankan analisis lain untuk melihat aliran.",
+      "timeseries_partial_legend": "Penanda ✕ menunjukkan analisis separa (beberapa kategori telah ditinggalkan).",
+      "radar_empty": "Tiada skor kategori tersedia untuk analisis ini.",
+      "radar_value": "Skor",
+      "legend": {
+        "overall": "Keseluruhan",
+        "technical": "Teknikal",
+        "structured": "Berstruktur",
+        "content": "Kandungan",
+        "authority": "Autoriti",
+        "visibility": "Keterlihatan"
+      }
+    },
+    "pricing": {
+      "eyebrow": "Harga",
+      "title": "Pelan yang berkembang bersama keterlihatan anda",
+      "subtitle": "Mulai percuma selama 7 hari. Tingkatkan apabila anda siap untuk menjejaki pesaing, mengembangkan tapak, dan membuka arah aliran bersejarah.",
+      "footnote": "Harga dalam USD. Pelan bulanan boleh dibatalkan pada bila-bila masa. Pelan tahunan jimat sehingga 15%.",
+      "free": "Percuma",
+      "trial_duration": "Percubaan 7 hari",
+      "per_month": "/ bulan",
+      "per_month_billed_annually": "/ bulan, dibilkan setiap tahun",
+      "unlimited": "Tanpa had",
+      "featured_badge": "Paling popular",
+      "toggle": {
+        "monthly": "Bulanan",
+        "annual": "Tahunan",
+        "annual_save": "Jimat 15%"
+      },
+      "plans": {
+        "free": {
+          "name": "Percubaan Percuma",
+          "tagline": "Cubalah setiap ciri selama 7 hari. Tiada kad diperlukan."
+        },
+        "basic": {
+          "name": "Asas",
+          "tagline": "Untuk pengasas solo yang mengukur satu tapak."
+        },
+        "pro": {
+          "name": "Pro",
+          "tagline": "Untuk pasukan pemasaran yang menjalankan perbandingan di seluruh tapak."
+        },
+        "business": {
+          "name": "Perniagaan",
+          "tagline": "Untuk pasukan yang berkembang dengan penanda aras industri dan sokongan SLA."
+        }
+      },
+      "features": {
+        "sites": "{count} tapak milik",
+        "competitors_per_site": "{count} pesaing setiap tapak",
+        "custom_analyses": "{count} analisis tersuai / bulan",
+        "timeseries": "{months} bulan sejarah aliran",
+        "members": "Sehingga {count} anggota pasukan",
+        "csv_export": "Eksport CSV",
+        "competitor_comparison": "Perbandingan pesaing",
+        "industry_benchmark": "Penanda aras industri",
+        "support": {
+          "self": "Dokumentasi swalayan",
+          "email": "Sokongan e-mel",
+          "email_chat": "Sokongan e-mel + sembang",
+          "email_chat_sla4h": "E-mel + sembang (SLA 4j)",
+          "dedicated": "CS Berdedikasi"
+        }
+      },
+      "cta": {
+        "start_trial": "Mulai percubaan percuma",
+        "choose_plan": "Pilih pelan"
+      },
+      "enterprise": {
+        "badge": "Perusahaan",
+        "title": "Pelan tersuai untuk organisasi besar",
+        "description": "Kontrak tahunan dengan tapak tanpa had, pesaing, analisis tersuai, dan pengurus kejayaan pelanggan berdedikasi. Pemindahan kawat diterima.",
+        "bullet_unlimited": "Tapak & analisis tanpa had",
+        "bullet_dedicated": "Pengurus CS berdedikasi",
+        "bullet_audit": "Pengekalan log audit",
+        "bullet_sla": "SLA & pemindahan kawat tersuai",
+        "cta": "Bercakap dengan penjualan"
+      }
+    },
+    "contact": {
+      "eyebrow": "Hubungi",
+      "title": "Mari kita bercakap",
+      "subtitle": "Beritahu kami apa yang anda perlukan — demo, penjualan, sokongan, atau apa pun lagi. Kami biasanya membalas dalam satu hari perniagaan.",
+      "submit": "Hantar mesej",
+      "submitting": "Menghantar…",
+      "privacy_note": "Kami hanya menggunakan mesej anda untuk membalas. Data anda tidak pernah dikongsi.",
+      "fields": {
+        "name": "Nama",
+        "email": "E-mel",
+        "company": "Syarikat (pilihan)",
+        "topic": "Apakah ini mengenai?",
+        "message": "Mesej"
+      },
+      "topics": {
+        "general": "Pertanyaan umum",
+        "demo": "Minta demo",
+        "sales": "Soalan penjualan",
+        "support": "Soalan sokongan"
+      },
+      "errors": {
+        "name_required": "Sila masukkan nama anda.",
+        "name_too_long": "Nama mesti 200 aksara atau kurang.",
+        "email_required": "Sila masukkan e-mel anda.",
+        "email_invalid": "Sila masukkan alamat e-mel yang sah.",
+        "company_too_long": "Syarikat mesti 200 aksara atau kurang.",
+        "message_required": "Sila masukkan mesej.",
+        "message_too_long": "Mesej mesti 5000 aksara atau kurang.",
+        "rate_limit": "Anda telah menghantar beberapa mesej baru-baru ini. Sila cuba lagi dalam seminit.",
+        "validation": "Sila semak borang untuk ralat.",
+        "network": "Kami tidak dapat menjangkau pelayan. Periksa sambungan anda dan cuba lagi.",
+        "generic": "Sesuatu yang salah berlaku semasa menghantar mesej anda. Sila cuba lagi."
+      },
+      "success": {
+        "title": "Terima kasih — kami telah menerima mesej anda.",
+        "description": "Kami akan menyemak dan membalas e-mel anda dalam satu hari perniagaan."
+      }
+    }
+  }
+}
