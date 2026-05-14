@@ -345,6 +345,23 @@
         "title": "Thanks — we got your message.",
         "description": "We'll review and reply to your email within one business day."
       }
+    },
+    "legal": {
+      "effective_date_label": "Effective Date",
+      "last_updated_label": "Last Updated",
+      "back_to_home": "Back to home",
+      "terms": {
+        "title": "Terms of Service",
+        "subtitle": "The agreement that governs your use of AHXOV."
+      },
+      "privacy": {
+        "title": "Privacy Policy",
+        "subtitle": "How we collect, use, and protect your information."
+      },
+      "refund": {
+        "title": "Refund Policy",
+        "subtitle": "When and how we issue refunds for paid plans."
+      }
     }
   }
 }

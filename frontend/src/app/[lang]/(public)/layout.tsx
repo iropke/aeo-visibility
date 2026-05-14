@@ -24,7 +24,7 @@ export default async function PublicLayout({
       <main className="flex-1 w-full max-w-shell mx-auto px-4 sm:px-5 pt-8 pb-20">
         {children}
       </main>
-      <Footer dict={dict} />
+      <Footer dict={dict} lang={lang} />
     </>
   );
 }
